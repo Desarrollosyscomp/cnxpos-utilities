@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../components/HelloWorld.vue";
 import { DailySalesRouter } from "../apps/web-reporter/modules/daily-sales/routes/daily-sales.router";
+import { AuthRoutes } from "../modules/auth/router/auth.routes";
 
 const routes = [
   {
@@ -44,7 +45,7 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     ...routes,
-    
+    ...AuthRoutes
   ],
 });
 

@@ -1,0 +1,71 @@
+.bubble {
+  --border: 3px;
+  --border-color: red;
+  --background: blue;
+  --triangle-size: 1;
+  --triangle-x: 0px;
+  --triangle-y: 0px;
+
+  position: relative;
+  background: var(--background);
+  border-radius: 12px;
+  border: var(--border) solid var(--border-color);
+  font-family: sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 25px;
+  padding: 10px;
+}
+
+/* Base común */
+.bubble::before {
+  content: "";
+  position: absolute;
+  width: calc(10px * var(--triangle-size));
+  height: calc(10px * var(--triangle-size));
+  border-top: var(--border) solid var(--border-color);
+  border-left: var(--border) solid var(--border-color);
+  background: linear-gradient(135deg, var(--background) 50%, transparent 50%);
+}
+
+.bubble-up::before {
+  top: 0;
+  right: calc(10px + var(--triangle-x));
+  transform: translateY(calc(-50% - (var(--border) / 2))) rotate(45deg);
+}
+
+.bubble-down::before {
+  bottom: 0;
+  right: calc(10px + var(--triangle-x));
+  transform: translateY(calc(50% + (var(--border) / 2))) rotate(225deg);
+}
+
+.bubble-left::before {
+  left: 0;
+  top: calc(10px + var(--triangle-y));
+  transform: translateX(calc(-50% - (var(--border) / 2))) rotate(-45deg);
+}
+
+.bubble-right::before {
+  right: 0;
+  top: calc(10px + var(--triangle-y));
+  transform: translateX(calc(50% + (var(--border) / 2))) rotate(135deg);
+}
+
+/*   
+  .bubble-a.bubble{
+    --border: 2px;
+    --background: yellow;
+    --border-color: purple;
+    --triangle-size: 1;
+    --triangle-y: 20px;
+  }
+  
+  .bubble-b.bubble{
+    --border: 2px;
+    --background: green;
+    --border-color: purple;
+    --triangle-size: 1;
+    --triangle-y: 40px;
+  } */

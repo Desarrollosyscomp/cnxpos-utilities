@@ -9,33 +9,20 @@
         <main class="layout-main">
             <slot></slot>
         </main>
-        <LeftMenu v-if="showMenu" @close-menu="closeMenu">
-            
+        <LeftMenu :is-open="showMenu" @close-menu="closeMenu">
                 <div class="">Menu</div>
                 <div class="" @click="toggleTheme">light | dark</div>
-            
         </LeftMenu>
     </div>
 </template>
 <script setup>
 import { ref } from 'vue-demi';
 import LeftMenu from '../components/LeftMenu.vue';
+import { toggleTheme } from '../utils/theme-transitions';
 
 const showMenu = ref(false) 
 const title = ref('')
 
-const toggleTheme = () => {
-
-
-const html = document.documentElement
-const theme = html.getAttribute('data-theme')
-
-html.setAttribute(
-    'data-theme',
-    theme === 'dark' ? 'light' : 'dark'
-)
-
-}
 const closeMenu = () => {
     showMenu.value = false
 }
