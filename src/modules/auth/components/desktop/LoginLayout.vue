@@ -8,14 +8,14 @@
             </beto-message>
             
             <theme-mode-icon @click="toggleTheme" class="toggle-theme clickable" width="30px" height="30px" />
-                <router-view />
+            <router-view />
         </div>
     </div>
 </template>
 <script setup>
-import ConexionPosLogo from '../../../assets/logos/ConexionPosLogo.vue';
-import { toggleTheme } from '../../../utils/theme-transitions';
-import ThemeModeIcon from '../../../assets/general/icons/ThemeModeIcon.vue';
+import ConexionPosLogo from '../../../../assets/logos/ConexionPosLogo.vue';
+import { toggleTheme } from '../../../../utils/theme-transitions';
+import ThemeModeIcon from '../../../../assets/general/icons/ThemeModeIcon.vue';
 import BetoMessage from './BetoMessage.vue';
 import { useRoute } from 'vue-router'
 import { computed, defineAsyncComponent } from 'vue-demi'
@@ -28,7 +28,7 @@ const Header = computed(() => {
 console.log(Header.value)
 </script>
 <style scoped>
-@import "../../../styles/backgrounds.css";
+@import "../../../../styles/backgrounds.css";
 
 .auth-container{
     width: 100vw;

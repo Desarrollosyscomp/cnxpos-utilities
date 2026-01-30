@@ -7,11 +7,11 @@
     </div>
 </template>
 <script setup>
-import BetoImg from "../../../assets/avatars/beto.svg"
+import BetoImg from "../../../../assets/avatars/beto.svg"
 
 </script>
 <style scoped>
-@import "../../../utils/css/dialog-bubble.css";
+@import "../../../../utils/css/dialog-bubble.css";
 .beto-message-container{
     display:flex;
     align-items: center;

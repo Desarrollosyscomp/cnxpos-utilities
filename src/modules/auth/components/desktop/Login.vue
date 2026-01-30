@@ -10,7 +10,7 @@
 </script>
 
 <style scoped>
-@import '../../../styles/forms.css';
+@import '../../../../styles/forms.css';
 .login-container{
     display: flex;
     flex-direction: column;
