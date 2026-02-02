@@ -2,15 +2,13 @@
   --color-cnx-orange: #d95118;
   --color-cnx-brown: #c5351b;
   --color-cnx-grey: #5c5961;
-  
+
   --color-primary-light: white;
   --color-primary: #f3f3f3;
   --color-primary-dark: #e5e5e5;
   --color-primary-dark-2: #d1d1d1;
   --color-accent: #ff4c00;
   --color-contrast: #2f1310;
-
-
 }
 
 * {
@@ -19,28 +17,21 @@
 }
 
 [data-theme="dark"] {
-  
   --color-primary-light: #80352d;
   --color-primary: #581c15;
   --color-primary-dark: #401c17;
   --color-primary-dark-2: #220e0c;
   --color-accent: #ff4c00;
   --color-contrast: #f3f3f3;
-  
-
 }
 
 .theme-transition * {
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease,
-    border-color 0.3s ease,
-    fill 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease,
+    border-color 0.3s ease, fill 0.3s ease;
 }
 
-
-.clickable{
-  cursor:pointer
+.clickable {
+  cursor: pointer;
 }
 
 .hide-on-light {
@@ -57,4 +48,30 @@
 
 [data-theme="dark"] .hide-on-dark {
   display: none;
+}
+
+@media (orientation: portrait) {
+  .hide-on-portrait {
+    display: none;
+  }
+}
+@media (orientation: landscape) {
+  .hide-on-landscape {
+    display: none;
+  }
+}
+
+.hide-on-mobile{
+  display: none;
+}
+.hide-on-desktop{
+  display: block;
+}
+@media (min-width: 1024px){
+    .hide-on-desktop{
+      display: none;
+    }
+    .hide-on-mobile{
+      display: block;
+    }
 }

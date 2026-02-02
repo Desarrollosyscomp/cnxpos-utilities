@@ -13,9 +13,6 @@
 </template>
 <script setup>
 import { ref } from 'vue-demi';
-import SvgIcon from '@jamescoyle/vue-icon'
-import { mdiAccount } from '@mdi/js'
-
 let showPassword = ref(false);
 
 </script>

@@ -1,7 +1,6 @@
 <template>
     <div class="auth-background"></div>
     <conexion-pos-logo class="logo" width="85vw" height="85vh" />
-    <p>esto es un diseño movil</p>
     <div class="auth-container">
         <div class="auth-card">
             <component v-if="Header" :is="Header" />            

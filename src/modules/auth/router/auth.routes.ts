@@ -1,8 +1,11 @@
 export const AuthRoutes = [
     {
         path: '/auth',
-        // @ts-ignore
-        component: () => import('../components/desktop/LoginLayout.vue'),
+        component: () => import.meta.env.VITE_TARGET === 'mobile'
+            // @ts-ignore
+            ? import('../../pages/MobileAuthPage.vue')
+            // @ts-ignore
+            : import('../../pages/AuthPage.vue'),
 
         children: [
             {
