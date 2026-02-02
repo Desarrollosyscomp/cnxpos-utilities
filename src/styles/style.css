@@ -42,3 +42,19 @@
 .clickable{
   cursor:pointer
 }
+
+.hide-on-light {
+  display: none;
+}
+
+[data-theme="dark"] .hide-on-light {
+  display: block;
+}
+
+.hide-on-dark {
+  display: block;
+}
+
+[data-theme="dark"] .hide-on-dark {
+  display: none;
+}
