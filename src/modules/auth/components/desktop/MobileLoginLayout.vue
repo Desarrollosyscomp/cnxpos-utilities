@@ -16,7 +16,7 @@
 import ConexionPosLogo from '../../../../assets/logos/ConexionPosLogo.vue';
 import { toggleTheme } from '../../../../utils/theme-transitions';
 import ThemeModeIcon from '../../../../assets/general/icons/ThemeModeIcon.vue';
-import BetoMessage from './BetoMessage.vue';
+import BetoMessage from '../beto-messages/LoginBetoMessage.vue';
 import { useRoute } from 'vue-router'
 import { computed, defineAsyncComponent } from 'vue-demi'
 const route = useRoute()
