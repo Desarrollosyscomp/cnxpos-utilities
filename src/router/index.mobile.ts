@@ -11,8 +11,7 @@ const routes = [
     meta: {},
     component: HomeView,
   },
-  ...DailySalesRouter,
-  ...AuthRoutes
+  ...DailySalesRouter
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",
@@ -44,7 +43,10 @@ const routes = [
 ];
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
+  routes: [
+    ...routes,
+    ...AuthRoutes
+  ],
 });
 
 //   const loadInitialEnpoints = () => {

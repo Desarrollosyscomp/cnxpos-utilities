@@ -28,9 +28,4 @@ export const AuthRoutes = [
         ]
 
     },
-    {
-        path: '/mobile/auth',
-        // @ts-ignore
-        component: () => import('../components/mobile/LoginLayout.vue'),
-    }
 ]
