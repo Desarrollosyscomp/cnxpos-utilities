@@ -1,12 +1,12 @@
 <template>
     <div class="auth-background"></div>
-    <conexion-pos-logo class="logo hide-on-light" />
-    <conexion-pos-color-logo class="logo hide-on-dark" />
+    <conexion-pos-logo class="logo hide-on-light hide-on-landscape" />
+    <conexion-pos-color-logo class="logo hide-on-dark hide-on-landscape" />
     <theme-mode-icon
       @click="toggleTheme"
       class="toggle-theme clickable"
-      width="30px"
-      height="30px"
+      width="25px"
+      height="25px"
     />
     <div class="auth-container">
       <!-- <beto-message>
@@ -52,7 +52,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
     fill: #541811;
-    width: 85vw;
+    width: 57vw;
     height: 85vh;
     [data-theme="dark"] & {
       fill: var(--color-contrast);
