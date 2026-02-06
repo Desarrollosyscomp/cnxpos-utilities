@@ -23,17 +23,17 @@ export const AuthRoutes = [
                 name:'forgot-password',
                 meta: {
                     // @ts-ignore
-                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue')
+                    headerComponent: () => import('../components/beto-messages/ForgotPasswordBetoMessage.vue')
                 },
                 // @ts-ignore
-                component: () => import('../components/forms/ForgotPassword-form.vue')
+                component: () => import('../components/forms/ForgotPasswordForm.vue')
             },
             {
                 path:'check-email',
                 name:'check-email',
                 meta: {
                     // @ts-ignore
-                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    headerComponent: () => import('../components/beto-messages/CheckEmailBetoMessage.vue'),
                     logoStyle: true,
                 },
                 
@@ -45,7 +45,7 @@ export const AuthRoutes = [
                 name:'enter-code',
                 meta: {
                     // @ts-ignore
-                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    headerComponent: () => import('../components/beto-messages/EnterCodeBetoMessage.vue'),
                     logoStyle: true,
                 },
                 
@@ -57,8 +57,8 @@ export const AuthRoutes = [
                 name:'reset-password',
                 meta: {
                     // @ts-ignore
-                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
-                    logoStyle: true,
+                    headerComponent: () => import('../components/beto-messages/ResetPasswordBetoMessage.vue'),
+                    logoStyle: false,
                 },
                 
                 // @ts-ignore
@@ -69,7 +69,7 @@ export const AuthRoutes = [
                 name:'process-finished',
                 meta: {
                     // @ts-ignore
-                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    headerComponent: () => import('../components/beto-messages/ProcessFinishedBetoMessage.vue'),
                     logoStyle: true,
                 },
                 

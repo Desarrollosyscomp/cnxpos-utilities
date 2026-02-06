@@ -15,8 +15,9 @@ import BetoImg from "../../../../assets/avatars/beto.svg"
 .beto-message-container{
     display:flex;
     align-items: center;
-    gap: 10px;
+    gap: 10px;  
     padding: 20px;
+    max-width: 340px;
 }
 .bubble-a.bubble{
     --border: 1px;

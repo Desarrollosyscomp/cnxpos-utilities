@@ -1,11 +1,4 @@
 <template>
-  <div class="login-container">
-    <div class="text-container">      
-      <span class="text-color">
-        Hemos enviado un código a tu correo electrónico registrado
-      </span>
-    </div>
-  </div>
     <div class="button-container">
       <button class="form-button">Continuar</button>
     </div>
@@ -32,8 +25,7 @@ let showPassword = ref(false);
   font-weight: 600;
 }
 .button-container {
-  position: relative;
-  top: -15px;
+  margin-top: 20px;
   width: 40%;
 }
 .form-button {

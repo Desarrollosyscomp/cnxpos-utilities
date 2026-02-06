@@ -1,13 +1,4 @@
 <template>
-  <div class="login-container">
-    <div class="text-container">
-      <h3 class="text-title">¡Listo!</h3>
-      <span class="text-medium"> Ya actualizamos tu contraseña </span>
-    </div>
-    <p class="text-color">
-      Ya puedes acceder de nuevo a tu cuenta Conexion Pos
-    </p>
-  </div>
   <div class="button-container">
     <button class="form-button">Iniciar sesión</button>
   </div>
@@ -25,8 +16,6 @@ let showPassword = ref(false);
   flex-direction: column;
   align-items: center;
   gap: 15px;
-  position: relative;
-  transform: translateY(-10%);
   padding: 20px;
 }
 
@@ -53,8 +42,8 @@ let showPassword = ref(false);
 }
 
 .button-container {
-  position: relative;
-  top: -15px;
+ 
+ margin-top: 20px;
   width: 40%;
 }
 .form-button {

@@ -1,10 +1,5 @@
 <template>
   <div class="login-container">
-    <div class="text-container">
-      <span class="text-title">
-        Ingresa el código que has recibido en tu bandeja de correo
-      </span>
-    </div>
       <input class="form-input" type="text" placeholder="Código" />
 
     <!-- <svg-icon type="mdi" :path="path"></svg-icon> -->

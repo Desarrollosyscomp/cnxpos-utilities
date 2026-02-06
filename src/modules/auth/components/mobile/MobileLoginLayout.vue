@@ -14,18 +14,21 @@
       'hide-on-landscape',
     ]"
   />
+  
   <theme-mode-icon
     @click="toggleTheme"
     class="toggle-theme clickable"
     width="25px"
     height="25px"
   />
-  <div class="auth-container">
-    <!-- <beto-message>
-                  <component v-if="Header" :is="Header" />
-              </beto-message> -->
+  <div class="auth-background">
 
-    <router-view />
+    <div class="auth-container">  
+      <div class="test">
+        <component v-if="Header" :is="Header" />
+      </div>
+      <router-view />
+    </div>
   </div>
 </template>
 <script setup>
@@ -55,15 +58,25 @@ const logoStyle = computed(() => {
 :root {
   --property-one: 15%;
 }
+.message{
+  width: 50%;
+  background-color: red;
+
+}
+.auth-background{
+  display: flex;
+  justify-content: center;
+}
+
 .auth-container {
   position: fixed;
   top: 70px;
-  width: 100vw;
+  width: 60vw;
   height: 100vh;
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 .logo {
   position: fixed;
@@ -106,7 +119,18 @@ const logoStyle = computed(() => {
   right: 10px;
   fill: var(--color-contrast);
 }
+.test{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: var(--color-contrast);
+}
 
+.test > :nth-child(1){
+    font-weight: bold;
+    font-size:16px;
+    margin-bottom: 10px;
+}
 @media (min-width: 375px) {
   @media (min-height: 812px) {
     .logo {

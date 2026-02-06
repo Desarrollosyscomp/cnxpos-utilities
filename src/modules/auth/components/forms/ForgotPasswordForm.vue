@@ -1,12 +1,5 @@
 <template>
   <div class="login-container">
-    <div class="text-container">
-      <h3 class="text-title">¿No puedes entrar?</h3>
-      <span class="text-color">
-        Ingresa el email de tu cuenta para proceder con la recuperación de tu
-        contraseña
-      </span>
-    </div>
     <input class="form-input" type="text" placeholder="Email" />
 
     <!-- <svg-icon type="mdi" :path="path"></svg-icon> -->
@@ -33,8 +26,7 @@ let showPassword = ref(false);
 
 .login-container {
   padding: 30px;
-  display: flex;
-  flex-direction: column;
+
   gap: 15px;
 }
 

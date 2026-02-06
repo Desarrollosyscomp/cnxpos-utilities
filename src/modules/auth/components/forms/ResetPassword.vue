@@ -1,9 +1,5 @@
 <template>
   <div class="login-container">
-    <div class="text-container">
-      <h3 class="text-title">¡Código verificado!</h3>
-      <span class="text-color"> Ahora actualicemos tu contraseña </span>
-    </div>
     <input
       class="form-input"
       :type="showPassword ? 'text' : 'password'"
