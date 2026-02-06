@@ -16,18 +16,66 @@ export const AuthRoutes = [
                     headerComponent: () => import('../components/beto-messages/LoginBetoMessage.vue')
                 },
                 // @ts-ignore
-                component: () => import('../components/desktop/Login.vue')
+                component: () => import('../components/forms/Login.vue')
             },
             {
                 path:'forgot-password',
                 name:'forgot-password',
                 meta: {
                     // @ts-ignore
-                    headerComponent: () => import('../components/beto-messages/LoginBetoMessage.vue')
+                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue')
                 },
                 // @ts-ignore
-                component: () => import('../components/desktop/Login.vue')
-            }
+                component: () => import('../components/forms/ForgotPassword-form.vue')
+            },
+            {
+                path:'check-email',
+                name:'check-email',
+                meta: {
+                    // @ts-ignore
+                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    logoStyle: true,
+                },
+                
+                // @ts-ignore
+                component: () => import('../components/forms/CheckEmail.vue')
+            },
+            {
+                path:'enter-code',
+                name:'enter-code',
+                meta: {
+                    // @ts-ignore
+                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    logoStyle: true,
+                },
+                
+                // @ts-ignore
+                component: () => import('../components/forms/EnterCode.vue')
+            },
+            {
+                path:'reset-password',
+                name:'reset-password',
+                meta: {
+                    // @ts-ignore
+                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    logoStyle: true,
+                },
+                
+                // @ts-ignore
+                component: () => import('../components/forms/ResetPassword.vue')
+            },
+            {
+                path:'process-finished',
+                name:'process-finished',
+                meta: {
+                    // @ts-ignore
+                    headerComponent: () => import('../components/mobile/MobileLoginLayout.vue'),
+                    logoStyle: true,
+                },
+                
+                // @ts-ignore
+                component: () => import('../components/forms/ProcessFinished.vue')
+            },
         ]
 
     },

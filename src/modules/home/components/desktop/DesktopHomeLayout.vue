@@ -16,7 +16,7 @@
 import ConexionPosLogo from '../../../../assets/logos/ConexionPosLogo.vue';
 import { toggleTheme } from '../../../../utils/theme-transitions';
 import ThemeModeIcon from '../../../../assets/general/icons/ThemeModeIcon.vue';
-import BetoMessage from '../beto-messages/LoginBetoMessage.vue';
+import BetoMessage from '../../../auth/components/beto-messages/LoginBetoMessage.vue';
 import { useRoute } from 'vue-router'
 import { computed, defineAsyncComponent } from 'vue-demi'
 const route = useRoute()
@@ -26,6 +26,7 @@ const loader = route.meta.headerComponent
 return loader ? defineAsyncComponent(loader) : null
 })
 console.log(Header.value)
+console.log(route.meta.logoStyle)
 </script>
 <style scoped>
 @import "../../../../styles/backgrounds.css";

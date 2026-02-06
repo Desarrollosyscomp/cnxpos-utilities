@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../components/HelloWorld.vue";
 import { DailySalesRouter } from "../apps/web-reporter/modules/daily-sales/routes/daily-sales.router";
 import { AuthRoutes } from "../modules/auth/router/auth.routes.mobile";
+import { HomeRoutes } from "../modules/home/router/home.routes";
 
 const routes = [
   {
@@ -12,7 +13,8 @@ const routes = [
     component: HomeView,
   },
   ...DailySalesRouter,
-  ...AuthRoutes
+  ...AuthRoutes,
+  ...HomeRoutes
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",

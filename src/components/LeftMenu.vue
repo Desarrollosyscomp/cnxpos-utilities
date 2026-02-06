@@ -70,6 +70,7 @@ const closeMenu = () => {
     inset: 0;
     background-color: rgba(0, 0, 0, 0.344);
 }
+
 .left-menu{
     position: fixed;
     left: 0;
@@ -77,5 +78,11 @@ const closeMenu = () => {
     width: 20%;
     height: 100vh;
     background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
+}
+
+@media (min-width: 320px) {
+    .left-menu{
+        width: 70%;
+    }
 }
 </style>
