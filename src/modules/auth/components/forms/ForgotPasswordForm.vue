@@ -34,6 +34,7 @@ let showPassword = ref(false);
   background-color: transparent;
   height: 15px;
   font-size: 15px;
+  margin-bottom: 4px;
   border-radius: 7px;
   border: 1px solid gray;
   color: var(--color-contrast);
@@ -94,11 +95,11 @@ h3 {
   font-weight: 600;
 }
 
-@media (min-width: 375px) {
-  @media (min-height: 812px) {
-    .login-container {
-      width: 80%;
-      gap: 15px;
+@media (min-width: 1029px) {
+  @media (min-height: 893px) {
+    .form-input {
+      height: 15px;
+      width: 92%;
     }
   }
 }

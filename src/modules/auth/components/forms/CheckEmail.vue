@@ -26,7 +26,7 @@ let showPassword = ref(false);
 }
 .button-container {
   margin-top: 20px;
-  width: 40%;
+  width: 50%;
 }
 .form-button {
   font-family: "Montserrat", sans-serif;
@@ -56,6 +56,13 @@ let showPassword = ref(false);
     .login-container {
       width: 80%;
       gap: 15px;
+    }
+  }
+}
+@media (min-width: 1029px) {
+  @media (min-height: 893px) {
+    .button-container {
+      width: 40%;
     }
   }
 }

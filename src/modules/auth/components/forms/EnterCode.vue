@@ -53,7 +53,7 @@ let showPassword = ref(false);
   font-weight: 600;
 }
 .button-container {
-  width: 40%;
+  width: 50%;
 }
 .form-button {
   position: relative;
@@ -92,6 +92,14 @@ let showPassword = ref(false);
     .login-container {
       width: 80%;
       gap: 15px;
+    }
+  }
+}
+
+@media (min-width: 1029px) {
+  @media (min-height: 893px) {
+    .button-container {
+      width: 40%;
     }
   }
 }

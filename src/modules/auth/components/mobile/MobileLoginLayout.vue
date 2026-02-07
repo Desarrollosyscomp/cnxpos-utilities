@@ -70,7 +70,7 @@ const logoStyle = computed(() => {
 
 .auth-container {
   position: fixed;
-  top: 70px;
+  top: 90px;
   width: 60vw;
   height: 100vh;
   align-items: center;
