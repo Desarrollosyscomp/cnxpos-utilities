@@ -45,7 +45,6 @@
   </div> -->
 </template>
 <script setup>
-import SvgIcon from "@jamescoyle/vue-icon";
 import {
   mdiFileChart,
   mdiChartBar,

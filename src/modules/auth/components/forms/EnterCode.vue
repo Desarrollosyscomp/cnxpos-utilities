@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="enter-code-container">
       <input class="form-input" type="text" placeholder="Código" />
 
     <!-- <svg-icon type="mdi" :path="path"></svg-icon> -->
@@ -19,10 +19,8 @@ let showPassword = ref(false);
 <style scoped>
 @import "../../../../styles/forms.css";
 
-.login-container {
-  padding: 40px;
+.enter-code-container {
   position: relative;
-  transform: translateY(-3%);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -53,27 +51,11 @@ let showPassword = ref(false);
   font-weight: 600;
 }
 .button-container {
-  width: 50%;
-}
-.form-button {
-  position: relative;
-  top: -25px;
-  font-family: "Montserrat", sans-serif;
-  font-weight: 800;
-  background-color: var(--color-contrast);
-  color: var(--color-primary);
-  border-radius: 999px;
-  border: 2px solid white;
-  cursor: pointer;
   width: 100%;
-  font-size: 13px;
-  height: 40px;
-  [data-theme="light"] & {
-    background-color: transparent;
-    color: #541811;
-    border: 2px solid #541811;
-  }
+  padding-top: 25px;
+  text-align: center;
 }
+
 .text-container{
   display: flex;
   flex-direction: column;
@@ -89,7 +71,7 @@ let showPassword = ref(false);
 
 @media (min-width: 375px) {
   @media (min-height: 812px) {
-    .login-container {
+    .enter-code-container {
       width: 80%;
       gap: 15px;
     }

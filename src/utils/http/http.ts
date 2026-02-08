@@ -1,6 +1,6 @@
-import axios, { AxiosRequestConfig } from "axios";
-import { showNotification } from "./http-notifications";
-import { HttpErrors, HttpErrorsAndExceptions } from "./interfaces";
+import axios, { type AxiosRequestConfig } from "axios";
+//import { showNotification } from "./http-notifications";
+import { type HttpErrors, type HttpErrorsAndExceptions } from "./interfaces";
 import { buildQueryString } from "./helpers"; 
 export const Http = {
   async post(
@@ -25,10 +25,10 @@ export const Http = {
       return await axios.post(params.url + queries, params.data, params.config ?? {});
     } catch (e: any) {
       if (params.showHttpError === undefined || params.showHttpError)
-        showNotification({
-          status: e.response.status,
-          httpErrors: params.httpErrors,
-        });
+        // showNotification({
+        //   status: e.response.status,
+        //   httpErrors: params.httpErrors,
+        // });
 
       return {
         status: e.response.status,
@@ -58,10 +58,10 @@ export const Http = {
       return await axios.patch(params.url + queries, params.data, params.config ?? {});
     } catch (e: any) {
       if (params.showHttpError === undefined || params.showHttpError)
-        showNotification({
-          status: e.response.status,
-          httpErrors: params.httpErrors,
-        });
+        // showNotification({
+        //   status: e.response.status,
+        //   httpErrors: params.httpErrors,
+        // });
       return {
         status: e.response.status,
         data: e.response.data,
@@ -90,10 +90,10 @@ export const Http = {
       return await axios.put(params.url + queries, params.data, params.config ?? {});
     } catch (e: any) {
       if (params.showHttpError === undefined || params.showHttpError)
-        showNotification({
-          status: e.response.status,
-          httpErrors: params.httpErrors,
-        });
+        // showNotification({
+        //   status: e.response.status,
+        //   httpErrors: params.httpErrors,
+        // });
       return {
         status: e.response.status,
         data: e.response.data,
@@ -120,10 +120,10 @@ export const Http = {
       return await axios.delete(params.url + queries, params.config ?? {});
     } catch (e: any) {
       if (params.showHttpError === undefined || params.showHttpError)
-        showNotification({
-          status: e.response.status,
-          httpErrors: params.httpErrors,
-        });
+        // showNotification({
+        //   status: e.response.status,
+        //   httpErrors: params.httpErrors,
+        // });
       return {
         status: e.response.status,
         data: e.response.data,
@@ -150,10 +150,10 @@ export const Http = {
       return await axios.get(params.url + queries, params.config);
     } catch (e: any) {
       if (params.showHttpError === undefined || params.showHttpError)
-        showNotification({
-          status: e.response.status,
-          httpErrors: params.httpErrors,
-        });
+        // showNotification({
+        //   status: e.response.status,
+        //   httpErrors: params.httpErrors,
+        // });
       return {
         status: e.response.status,
         data: e.response.data,

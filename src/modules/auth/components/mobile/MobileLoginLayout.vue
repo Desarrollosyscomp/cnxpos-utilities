@@ -1,35 +1,30 @@
 <template>
   <div class="auth-background"></div>
-  <conexion-pos-logo
-    :class="[
-      logoStyle ? 'logo-check-email' : 'logo',
-      'hide-on-light',
-      'hide-on-landscape',
-    ]"
-  />
-  <conexion-pos-color-logo
-    :class="[
-      logoStyle ? 'logo-check-email' : 'logo',
-      'hide-on-dark',
-      'hide-on-landscape',
-    ]"
-  />
-  
-  <theme-mode-icon
-    @click="toggleTheme"
-    class="toggle-theme clickable"
-    width="25px"
-    height="25px"
-  />
-  <div class="auth-background">
-
-    <div class="auth-container">  
-      <div class="test">
+  <theme-mode-icon @click="toggleTheme" class="toggle-theme clickable" width="25px" height="25px" />
+  <div class="auth-container">
+    <div class="auth-content">
+      <div class="logo-container">
+        <conexion-pos-logo :class="[
+          'logo',
+          'hide-on-light',
+          'hide-on-landscape',
+        ]" />
+        <conexion-pos-color-logo :class="[
+          'logo',
+          'hide-on-dark',
+          'hide-on-landscape',
+        ]" />
+      </div>
+      <div class="header-text">
         <component v-if="Header" :is="Header" />
       </div>
-      <router-view />
+      <div class="form-card">
+        <router-view />
+      </div>
     </div>
   </div>
+
+
 </template>
 <script setup>
 import ConexionPosLogo from "../../../../assets/logos/ConexionPosLogo.vue";
@@ -47,7 +42,7 @@ const Header = computed(() => {
 });
 console.log(Header.value);
 const logoStyle = computed(() => {
-  if(route.meta.logoStyle && route.name === 'check-email'){
+  if (route.meta.logoStyle && route.name === 'check-email') {
     return true;
   }
   return false;
@@ -55,84 +50,79 @@ const logoStyle = computed(() => {
 </script>
 <style scoped>
 @import "../../../../styles/backgrounds.css";
+
 :root {
   --property-one: 15%;
 }
-.message{
-  width: 50%;
-  background-color: red;
 
-}
-.auth-background{
+.auth-content{
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  width: 90%;  
+  height: 90%;
+  gap: 4%;
 }
 
 .auth-container {
-  position: fixed;
-  top: 90px;
-  width: 60vw;
+  width: 100vw;
   height: 100vh;
-  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  padding: 10px;
+  box-sizing: border-box;
+  
+}
+
+.logo-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 160px;
+  width: 50vw;
+  max-width: 300px;
 }
 .logo {
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, -17%);
+  
   fill: #541811;
-  width: 57vw;
-  height: 85vh;
+  width: 100%;
+  height: 100%;
   [data-theme="dark"] & {
     fill: var(--color-contrast);
   }
 }
 
-.logo-check-email {
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, -12%);
-  fill: #541811;
-  width: 65vw;
-  height: 85vh;
-  [data-theme="dark"] & {
-    fill: var(--color-contrast);
-  }
-}
-.auth-card {
-  position: relative;
-  padding: 40px;
-  background-color: rgba(0, 0, 0, 0.135);
-  border-radius: 1rem;
-  top: 80px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(8px);
-}
 .toggle-theme {
-  position: absolute;
+  position: fixed;
   top: 10px;
   right: 10px;
   fill: var(--color-contrast);
 }
-.test{
+
+.header-text {
   display: flex;
   flex-direction: column;
   text-align: center;
   color: var(--color-contrast);
 }
 
-.test > :nth-child(1){
-    font-weight: bold;
-    font-size:16px;
-    margin-bottom: 10px;
+.header-text > :nth-child(1) {
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+.form-card{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 @media (min-width: 375px) {
-  @media (min-height: 812px) {
+  /* @media (min-height: 812px) {
     .logo {
       top: calc(50% - 17%);
       left: 50%;
@@ -148,8 +138,6 @@ const logoStyle = computed(() => {
     .auth-container {
       top: 80px;
     }
-  }
+  } */
 }
 </style>
-<!-- test styles errase -->
-<style></style>
