@@ -24,12 +24,6 @@ let showPassword = ref(false);
 <style scoped>
 @import "../../../../styles/forms.css";
 
-.forgot-password-container {
-  
-
-  
-}
-
 .form-input {
   background-color: transparent;
   height: 15px;
