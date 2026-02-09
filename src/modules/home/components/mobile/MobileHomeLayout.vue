@@ -10,11 +10,11 @@
 
     <div class="items-container">
       <div class="item">
-        <svg-icon type="mdi" :path="mdiFileChart" class="icon" />
+        <Icon :path="mdiFileChart" size="35px"/>
         <span>Web Reporter</span>
       </div>
       <div class="item">
-        <svg-icon type="mdi" :path="mdiCurrencyUsd" class="icon" />
+        <Icon :path="mdiCurrencyUsd" size="35px"/>
         <span>Resumen de ventas</span>
       </div>
     </div>
@@ -22,7 +22,9 @@
   <left-menu :is-open="menuOpen">
     <div class="menu-container">
       <img class="beto-avatar-menu" src="../../../../assets/avatars/beto.svg" />
-      <button class="form-button">Cuenta</button>
+      <button class="form-button">Cuenta 
+        <Icon :path="mdiPencil" size="15px" color="black"/>
+      </button>
     </div>
     
   </left-menu>
@@ -32,8 +34,7 @@
     width="25px"
     height="25px"
   />
-  <svg-icon
-    type="mdi"
+  <Icon
     :path="mdiDotsVertical"
     class="clickable menu-icon"
     width="25px"
@@ -52,6 +53,7 @@ import {
   mdiWhiteBalanceSunny,
   mdiMoonWaningCrescent,
   mdiDotsVertical,
+  mdiPencil,
 } from "@mdi/js";
 import ConexionPosLogo from "../../../../assets/logos/ConexionPosLogo.vue";
 import { toggleTheme, visible } from "../../../../utils/theme-transitions";
@@ -61,6 +63,7 @@ import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue-demi";
 import ConexionPosColorLogo from "../../../../assets/logos/ConexionPosColorLogo.vue";
 import LeftMenu from "../../../../components/LeftMenu.vue";
+import Icon from "../../../../components/Icon.vue";
 const route = useRoute();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {
@@ -215,8 +218,8 @@ const toggleMenu = () => {
 .form-button {
   font-family: "Montserrat", sans-serif;
   font-weight: 800;
-  background-color: var(--color-contrast);
-  color: var(--color-primary);
+  background-color: transparent;
+  color: white;
   border-radius: 999px;
   border: 2px solid white;
   cursor: pointer;

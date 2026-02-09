@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import './styles/style.css'
+import { createPinia } from "pinia";
 // import router from "./router";
 import App from './App.vue'
 
@@ -15,5 +16,5 @@ console.log('mode: ' + import.meta.env.VITE_TARGET)
 
 const { default: router } = await import('./router/index')
 app.use(router)
-
+app.use(createPinia())
 app.mount('#app')

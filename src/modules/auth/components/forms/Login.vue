@@ -1,10 +1,11 @@
 <template>
   <div class="login-container">
-    <input class="form-input" type="text" placeholder="Usuario" />
+    <input class="form-input" type="text" placeholder="Usuario" v-model="authForm.username" />
     <input
       class="form-input"
       :type="showPassword ? 'text' : 'password'"
       placeholder="Contraseña"
+      v-model="authForm.password"
     />
     <div class="forgot-password-label-container">
       <router-link to="/auth/forgot-password" class="text-color">
@@ -12,13 +13,25 @@
       </router-link>
     </div>
     <div class="button-container">
-      <button class="form-button">Iniciar Sesión</button>
+      <button class="form-button" @click="onSubmit">Iniciar Sesión</button>
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from "vue-demi";
+import { useAuthStore } from "../../store/auth.store";
 let showPassword = ref(false);
+
+const authStore = useAuthStore();
+const authForm = ref({
+    username: "",
+    password: "",
+})
+
+const onSubmit = async () => {
+  let response = await authStore.login(authForm.value); 
+  console.log(response)
+}
 </script>
 
 <style scoped>
