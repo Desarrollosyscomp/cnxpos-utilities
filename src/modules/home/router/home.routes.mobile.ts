@@ -2,11 +2,11 @@ export const HomeRoutes = [
     {
         path: '/home',
         // @ts-ignore
-        component: () => import('../../pages/MobileHomePage.vue'),
+        component: () => import('../../../layouts/MobileHomeLayout.vue'),
 
         // children: [ 
         //     {
-        //         path:'login',
+        //         path:'login',    
         //         name:'login',
         //         meta: {
         //             // @ts-ignore

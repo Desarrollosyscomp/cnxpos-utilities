@@ -8,16 +8,12 @@ export const HomeRoutes = [
             : import('../../pages/HomePage.vue'),
 
         children: [
-            // {
-            //     path:'login',
-            //     name:'login',
-            //     meta: {
-            //         // @ts-ignore
-            //         headerComponent: () => import('../components/mobile/MobileHomeLayout.vue')
-            //     },
-            //     // @ts-ignore
-            //     component: () => import('../components/forms/Login.vue')
-            // },
+            {
+                path:'welcome',
+                name:'welcome',
+                // @ts-ignore
+                component: () => import('../pages/HomePage.vue')
+            },
             // {
             //     path:'forgot-password',
             //     name:'forgot-password',

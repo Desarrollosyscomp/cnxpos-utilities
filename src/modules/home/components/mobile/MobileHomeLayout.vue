@@ -10,11 +10,11 @@
 
     <div class="items-container">
       <div class="item">
-        <Icon :path="mdiFileChart" size="35px"/>
+        <Icon :path="mdiFileChart" size="35px" />
         <span>Web Reporter</span>
       </div>
       <div class="item">
-        <Icon :path="mdiCurrencyUsd" size="35px"/>
+        <Icon :path="mdiCurrencyUsd" size="35px" />
         <span>Resumen de ventas</span>
       </div>
     </div>
@@ -22,11 +22,22 @@
   <left-menu :is-open="menuOpen">
     <div class="menu-container">
       <img class="beto-avatar-menu" src="../../../../assets/avatars/beto.svg" />
-      <button class="form-button">Cuenta 
-        <Icon :path="mdiPencil" size="15px" color="black"/>
+      <button class="form-button">
+        Cuenta
+        <Icon :path="mdiPencil" size="15px" color="var(--color-contrast)" />
       </button>
+      <hr class="menu-hr" />
+      <div class="menu-items">
+        <div class="menu-item">
+          <Icon :path="mdiFileChart" size="25px" />
+          <span>Inicio</span>
+        </div>
+        <div class="menu-item">
+          <Icon :path="mdiCurrencyUsd" size="25px" />
+          <span>Web Reporter</span>
+        </div>
+      </div>
     </div>
-    
   </left-menu>
   <theme-mode-icon
     @click="toggleTheme"
@@ -73,8 +84,8 @@ const Header = computed(() => {
 console.log(Header.value);
 let menuOpen = ref(false);
 const toggleMenu = () => {
-    menuOpen.value = !menuOpen.value;
-}
+  menuOpen.value = !menuOpen.value;
+};
 </script>
 <style scoped>
 @import "../../../../utils/css/dialog-bubble.css";
@@ -89,19 +100,39 @@ const toggleMenu = () => {
   justify-content: center;
   align-items: center;
 } */
+.menu-hr {
+  width: 70%;
+  margin: 0 auto;
+}
 .beto-avatar-menu {
   width: 30vw;
   height: 30vh;
-  position: relative;
-  left: 25%;
 }
 
-.menu-container{
+.menu-items {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
-  justify-content: center;
-  align-content: center;
+}
+
+.menu-item {
+  cursor: pointer;
+  width: 100%;
+  color: var(--color-contrast);
+}
+
+.menu-item:hover {
+  background-color: var(--color-cnx-orange);
+}
+
+.menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  gap: 10px;
+  top: 20%;
 }
 
 .beto-avatar {
@@ -183,7 +214,6 @@ const toggleMenu = () => {
 } */
 .beto-message-container {
   position: relative;
-  top: -20px;
   display: flex;
   align-items: center;
   justify-content: center;
