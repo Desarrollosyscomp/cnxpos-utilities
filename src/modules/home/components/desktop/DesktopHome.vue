@@ -1,6 +1,5 @@
 <template>
   <div class="auth-background">
-    jdksajdksajd
     <div class="beto-message-container">
       <img class="beto-avatar" src="../../../../assets/avatars/beto.svg" />
       <div class="bubble bubble-a bubble-left">

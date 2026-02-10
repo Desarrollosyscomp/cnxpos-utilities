@@ -1,11 +1,16 @@
+const getComponent = () => {
+    if (import.meta.env.VITE_TARGET === 'mobile') {
+        // @ts-ignore
+        return import('../../../responsive-switcher/MobileHomeSwitcher.vue')
+    } else {
+        // @ts-ignore
+        return import('../../../responsive-switcher/HomeSwitcher.vue')
+    }
+}
 export const HomeRoutes = [
     {
         path: '/home',
-        component: () => import.meta.env.VITE_TARGET === 'mobile'
-            // @ts-ignore
-            ? import('../../pages/MobileHomePage.vue')
-            // @ts-ignore
-            : import('../../pages/HomePage.vue'),
+        component: getComponent(),
 
         children: [
             {

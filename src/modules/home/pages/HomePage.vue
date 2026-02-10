@@ -1,18 +1,12 @@
 <template>
-    <div class="hide-on-desktop">
-        <MobileHomeLayout>
-            <router-view />
-        </MobileHomeLayout>
-    </div>
     <div class="hide-on-mobile">
-        <DesktopHomeLayout>
-            <router-view />
-        </DesktopHomeLayout>
+        <DesktopHome />
+    </div>
+    <div class="hide-on-desktop">
+        <MobileHome />
     </div>
 </template>
 <script setup>
-import DesktopHomeLayout from '../home/components/desktop/DesktopHomeLayout.vue';
-import MobileHomeLayout from '../home/components/mobile/MobileHomeLayout.vue';
-
-
+import DesktopHome from '../components/desktop/DesktopHome.vue';
+import MobileHome from '../components/mobile/MobileHome.vue';
 </script>

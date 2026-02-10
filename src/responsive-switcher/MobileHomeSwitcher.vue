@@ -4,5 +4,5 @@
   </MobileHomeLayout>
 </template>
 <script setup>
-import MobileHomeLayout from "../home/components/mobile/MobileHomeLayout.vue";
+import MobileHomeLayout from "../layouts/MobileLayout.vue";
 </script>
