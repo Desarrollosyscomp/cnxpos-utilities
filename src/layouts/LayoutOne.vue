@@ -11,12 +11,12 @@
         </main>
         <LeftMenu :is-open="showMenu" @close-menu="closeMenu">
                 <div class="">Menu</div>
-                <div class="" @click="toggleTheme">light | dark</div>
+                <!-- <div class="" @click="toggleTheme">light | dark</div> -->
         </LeftMenu>
     </div>
 </template>
 <script setup>
-import { ref } from 'vue-demi';
+import { ref } from 'vue';
 import LeftMenu from '../components/LeftMenu.vue';
 import { toggleTheme } from '../utils/theme-transitions';
 

@@ -18,7 +18,7 @@ import { toggleTheme } from '../../../../utils/theme-transitions';
 import ThemeModeIcon from '../../../../assets/general/icons/ThemeModeIcon.vue';
 import BetoMessage from './BetoMessage.vue';
 import { useRoute } from 'vue-router'
-import { computed, defineAsyncComponent } from 'vue-demi'
+import { computed, defineAsyncComponent } from 'vue'
 const route = useRoute()
 console.log(route.meta.headerComponent)
 const Header = computed(() => {

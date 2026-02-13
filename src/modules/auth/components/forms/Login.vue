@@ -18,7 +18,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue-demi";
+import { ref } from "vue";
 import { useAuthStore } from "../../store/auth.store";
 let showPassword = ref(false);
 

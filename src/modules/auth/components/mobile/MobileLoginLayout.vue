@@ -32,7 +32,7 @@ import { toggleTheme, visible } from "../../../../utils/theme-transitions";
 import ThemeModeIcon from "../../../../assets/general/icons/ThemeModeIcon.vue";
 import BetoMessage from "../beto-messages/LoginBetoMessage.vue";
 import { useRoute } from "vue-router";
-import { computed, defineAsyncComponent, ref } from "vue-demi";
+import { computed, defineAsyncComponent, ref } from "vue";
 import ConexionPosColorLogo from "../../../../assets/logos/ConexionPosColorLogo.vue";
 const route = useRoute();
 console.log(route.meta.headerComponent);

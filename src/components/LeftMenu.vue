@@ -10,7 +10,7 @@
 
 </template>
 <script setup>
-import { defineEmits, watch } from 'vue-demi';
+import { defineEmits, watch } from 'vue';
 const emit = defineEmits(['close-menu'])
 const props = defineProps({
     isOpen:{
@@ -83,6 +83,12 @@ const closeMenu = () => {
 @media (min-width: 320px) {
     .left-menu{
         width: 70%;
+    }
+}
+
+@media (min-width: 768px) {
+    .left-menu{
+        width: 60%;
     }
 }
 </style>

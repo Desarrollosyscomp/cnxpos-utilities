@@ -12,7 +12,7 @@
   </div>
 </template>
 <script setup>
-import { ref } from "vue-demi";
+import { ref } from "vue";
 let showPassword = ref(false);
 </script>
 
