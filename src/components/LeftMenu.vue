@@ -75,15 +75,9 @@ const closeMenu = () => {
     position: fixed;
     left: 0;
     top: 0;
-    width: 20%;
+    width: 70%;
     height: 100vh;
     background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
-}
-
-@media (min-width: 320px) {
-    .left-menu{
-        width: 70%;
-    }
 }
 
 @media (min-width: 768px) {
