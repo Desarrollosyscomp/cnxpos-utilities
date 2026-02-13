@@ -1,5 +1,5 @@
 <template>
-  <left-menu :is-open="menuOpen">
+  <left-menu :is-open="menuOpen" @close-menu="menuOpen = false">
     <div class="menu-container">
       <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
       <button class="form-button-2">
@@ -55,6 +55,7 @@ const Header = computed(() => {
 });
 console.log(Header.value);
 let menuOpen = ref(false);
+
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
@@ -161,7 +162,7 @@ const toggleMenu = () => {
   .web-report-icon {
     --web-report-icon-size: 1.4;
   }
-  .icon{
+  .icon {
     width: 25px;
     height: 25px;
   }
@@ -207,7 +208,7 @@ const toggleMenu = () => {
     width: 30px;
     height: 30px;
   }
-  .web-report-icon{
+  .web-report-icon {
     --web-report-icon-size: 1.7;
   }
 }
