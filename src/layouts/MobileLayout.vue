@@ -1,20 +1,22 @@
 <template>
   <left-menu :is-open="menuOpen" @close-menu="menuOpen = false">
     <div class="menu-container">
-      <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
-      <button class="form-button-2">
-        Cuenta
-        <Icon :path="mdiPencil" class="pencil-icon" />
-      </button>
-      <hr class="menu-hr" />
-      <div class="menu-items">
-        <div class="menu-item">
-          <Icon :path="mdiHome" size="20" class="icon" />
-          <span>Inicio</span>
-        </div>
-        <div class="menu-item">
-          <WebReporterIcon size="18" class="web-report-icon" />
-          <span>Web Reporter</span>
+      <div class="menu-content">
+        <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
+        <button class="form-button-2">
+          Cuenta
+          <Icon :path="mdiPencil" class="pencil-icon" />
+        </button>
+        <hr class="menu-hr" />
+        <div class="menu-items">
+          <div class="menu-item">
+            <Icon :path="mdiHome" size="20" class="icon" />
+            <span>Inicio</span>
+          </div>
+          <div class="menu-item">
+            <WebReporterIcon size="18" class="web-report-icon" />
+            <span>Web Reporter</span>
+          </div>
         </div>
       </div>
     </div>
@@ -73,7 +75,6 @@ const toggleMenu = () => {
 }
 .beto-avatar-menu {
   width: 30vw;
-  height: 30vh;
 }
 
 .menu-items {
@@ -99,17 +100,23 @@ const toggleMenu = () => {
 .menu-item:hover {
   color: white;
   background-color: var(--color-cnx-orange);
-  transition: all 0.4s ease;
+  transition: all 0.25s ease;
   width: 105%;
 }
 
 .menu-container {
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
+  justify-content: center;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
-  top: 20%;
 }
 
 .toggle-theme {

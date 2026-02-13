@@ -1,5 +1,6 @@
 <template>
-  <div class="home-background">
+  <div class="app-background"></div>
+  <div class="container">
     <div class="home-container">
       <div class="beto-message-container">
         <img class="beto-avatar" src="../../../../assets/avatars/beto.svg" />
@@ -8,10 +9,10 @@
           <span>¿Qué quieres hacer hoy?</span>
         </div>
       </div>
- 
+
       <div class="items-container">
         <div class="item">
-          <WebReporterIcon  :class="'icon'" />
+          <WebReporterIcon :class="'icon'" />
           <span>Web Reporter</span>
         </div>
         <div class="item">
@@ -21,41 +22,49 @@
       </div>
     </div>
   </div>
- </template>
- <script setup>
- import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
- import Icon from "../../../../components/Icon.vue";
- import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue";
- import { useRoute } from "vue-router";
- import { computed, defineAsyncComponent, ref } from "vue";
- const route = useRoute();
- console.log(route.meta.headerComponent);
- </script>
- <style scoped>
- @import "../../../../utils/css/dialog-bubble.css";
- @import "../../../../styles/backgrounds.css";
- 
- .beto-avatar {
-  width: 30vw;
-  height: 30vh;
- }
- 
- .items-container {
-  display: flex;
-  justify-content: space-evenly;
- }
- 
- .home-container {
+
+</template>
+<script setup>
+import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
+import Icon from "../../../../components/Icon.vue";
+import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue";
+import { useRoute } from "vue-router";
+import { computed, defineAsyncComponent, ref } from "vue";
+const route = useRoute();
+console.log(route.meta.headerComponent);
+</script>
+<style scoped>
+@import "../../../../utils/css/dialog-bubble.css";
+@import "../../../../styles/backgrounds.css";
+
+.container {
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
- }
- .item {
+  justify-content: center;
+}
+
+.beto-avatar {
+  width: 25vw;
+}
+
+.items-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.item {
   --item-proportion: 1;
   --font-size-proportion: 1;
   color: var(--color-contrast);
   cursor: pointer;
-  position: relative;
-  top: -20px;
   width: calc(30% * var(--item-proportion));
   height: calc(80px * var(--item-proportion));
   border-radius: 10px;
@@ -70,24 +79,25 @@
   font-weight: 600;
   padding: calc(5px * var(--item-proportion));
   transition: all 0.3s ease;
- }
- 
- .item:hover {
+}
+
+.item:hover {
   background-color: #c5c2c2ce;
+
   [data-theme="dark"] & {
     background-color: #ebebeb1e;
   }
- }
- 
- .beto-message-container {
+}
+
+.beto-message-container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 18px;
-  padding: 38px;
- }
- .bubble-a.bubble {
+}
+
+.bubble-a.bubble {
   --line-height-proportion: 1;
   --font-size-proportion: 1;
   --border: 1px;
@@ -95,79 +105,83 @@
   --background: var(--color-primary-light);
   --triangle-size: 1;
   --triangle-y: 30px;
- 
+
   color: var(--color-contrast);
   font-size: calc(12px * var(--font-size-proportion));
-  
+
   line-height: calc(18px * var(--line-height-proportion));
   text-align: center;
 }
-.bubble > :nth-child(1) {
+
+.bubble> :nth-child(1) {
   font-weight: bold;
   font-size: calc(16px * var(--font-size-proportion));
   margin-bottom: 10px;
- }
- 
- .icon {
+}
+
+.icon {
   --icon-proportion: 1;
   --icon-size: 1;
   fill: var(--color-contrast);
   margin-bottom: calc(5px * var(--icon-proportion));
   width: calc(40% * var(--icon-size));
   height: calc(40px * var(--icon-size));
- }
- 
- .home-background {
-  --padding-proportion: 0.8;
-  padding-top: calc(25% * var(--padding-proportion));
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  z-index: -1;
-  background: linear-gradient(
-    to bottom,
-    var(--color-primary),
-    var(--color-primary-dark)
-  );
- }
- 
- @media (min-width: 360px) {
+}
+
+@media (min-width: 360px) {
   .home-background {
     --padding-proportion: 1.1;
   }
- 
+
   .item {
     --item-proportion: 1.2;
   }
- }
- 
- @media (min-width: 768px) {
+
+  @media (min-height: 800px) {
+    .beto-avatar {
+      width: 35vw;
+    }
+  }
+}
+
+@media (min-width: 375px) {
+  .beto-avatar {
+    width: 30vw;
+  }
+}
+
+@media (min-width: 414px) {
+  .beto-avatar {
+    width: 35vw;
+  }
+}
+
+
+
+@media (min-width: 768px) {
   .home-background {
     --padding-proportion: 0.8;
   }
 
-  .beto-message-container{
+  .beto-message-container {
     margin-bottom: 50px;
   }
- 
+
   .item {
     --font-size-proportion: 1.5;
     height: 15vh;
   }
- 
+
   .icon {
     --icon-proportion: 2;
     --icon-size: 2;
   }
 
-  .bubble-a.bubble{
+  .bubble-a.bubble {
     --line-height-proportion: 3;
     --font-size-proportion: 2;
     padding: 28px;
   }
- 
- }
- </style>
 
- 
- 
+}
+</style>

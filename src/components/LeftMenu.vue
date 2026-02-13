@@ -68,6 +68,7 @@ const closeMenu = () => {
     width: 100vw;
     height: 100vh;
     inset: 0;
+    z-index: 2;
     background-color: rgba(0, 0, 0, 0.344);
 }
 
@@ -77,6 +78,7 @@ const closeMenu = () => {
     top: 0;
     width: 70%;
     height: 100vh;
+    z-index: 3;
     background: linear-gradient(to bottom, var(--color-primary), var(--color-primary-dark));
 }
 
