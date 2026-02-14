@@ -83,8 +83,13 @@ const closeMenu = () => {
 }
 
 @media (min-width: 768px) {
-    .left-menu{
-        width: 60%;
-    }
+  .left-menu{
+    width: 60%;
+  }
+}
+@media (min-width: 1024px) {
+  .left-menu{
+    width: 30%;
+  }
 }
 </style>
