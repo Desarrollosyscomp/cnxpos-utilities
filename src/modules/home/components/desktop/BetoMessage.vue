@@ -3,6 +3,7 @@
         <img :src="BetoImg">
         <div class="bubble bubble-a bubble-left">
             <slot></slot>
+            <span class="slot-content"><slot name="content"></slot></span>
         </div>
     </div>
 </template>
@@ -34,5 +35,10 @@ import BetoImg from "../../../../assets/avatars/beto.svg"
     font-weight: bold;
     font-size:16px;
     margin-bottom: 10px;
+}
+.slot-content{
+    font-weight: 400 !important;
+    font-size: 12px !important;
+
 }
 </style>

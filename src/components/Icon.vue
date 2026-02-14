@@ -1,9 +1,7 @@
 <template>
   <svg
-    :width="size"
-    :height="size"
     viewBox="0 0 24 24"
-    fill="currentColor"
+    :class="class"
   >
     <path :d="path" />
   </svg>
@@ -14,7 +12,11 @@ defineProps({
   path: String,
   size: {
     type: [Number, String],
-    default: 24
+    default: "24px"
+  },
+  class: {
+    type: String,
+    default: ""
   }
 })
 </script>

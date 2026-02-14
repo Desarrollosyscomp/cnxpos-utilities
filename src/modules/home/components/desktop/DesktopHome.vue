@@ -1,115 +1,169 @@
-Desktop
-
 <template>
- <div class="auth-background">
-   <div class="beto-message-container">
-     <img class="beto-avatar" src="../../../../assets/avatars/beto.svg" />
-     <div class="bubble bubble-a bubble-left">
-       <span>¡Hola Fernando!</span>
-       <span>¿Qué quieres hacer hoy?</span>
-     </div>
-   </div>
-
-   <div class="items-container">
-     <div class="item">
-       <WebReporterIcon :class="'icon'" />
-       <span>Web Reporter</span>
-     </div>
-     <div class="item">
-       <Icon :path="mdiCurrencyUsd" class="icon"/>
-       <span>Resumen de ventas</span>
-     </div>
-   </div>
- </div>
+  <div class="app-background"></div>
+  <div class="container">
+    <div class="home-content">
+      <div class="beto-message-container">
+        <img :src="BetoImg" class="beto-avatar">
+        <div class="bubble bubble-a bubble-left">
+          <div class="beto-content">
+            <div class="hello">¡Hola <br><b>{{ name }}</b>!</div>
+            <div class="question">¿Qué quieres hacer hoy?</div>
+          </div>
+        </div>
+      </div>
+      <div class="options">
+        <div class="item">
+          <WebReporterIcon :class="'icon'" />
+          <span class="item-label font-montserrat-medium">Web Reporter</span>
+        </div>
+        <div class="item">
+          <Icon :path="mdiCurrencyUsd" class="icon" />
+          <span class="item-label font-montserrat-medium">Resumen de ventas</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 <script setup>
 import {
- mdiFileChart,
- mdiChartBar,
- mdiCurrencyUsd,
+  mdiFileChart,
+  mdiChartBar,
+  mdiCurrencyUsd,
 } from "@mdi/js";
 import Icon from "../../../../components/Icon.vue";
 import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue"
 import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
+import BetoMessage from "./BetoMessage.vue";
+import BetoImg from "../../../../assets/avatars/beto.svg"
 const route = useRoute();
 console.log(route.meta.headerComponent);
+
+let name = ref('Fernando')
+
+
 </script>
 <style scoped>
 @import "../../../../utils/css/dialog-bubble.css";
 @import "../../../../styles/backgrounds.css";
 
-.beto-avatar {
- width: 30vw;
- height: 30vh;
+:global(:root) {
+  --beto-proportion: 1;
 }
 
-.items-container {
- display: flex;
- justify-content: space-evenly;
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.item {
- color: var(--color-contrast);
- cursor: pointer;
- position: relative;
- width: 30%;
- height: 80px;
- border-radius: 10px;
- border: 1px solid var(--color-contrast);
- display: flex;
- flex-direction: column;
- justify-content: center;
- align-items: center;
- font-size: 12px;
- text-align: center;
- font-style: normal;
- font-weight: 600;
- padding: 5px;
- transition: all 0.3s ease;
-}
-
-.item:hover {
- background-color: #c5c2c2ce;
- [data-theme="dark"] & {
-   background-color: #ebebeb1e;
- }
+.home-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
 .beto-message-container {
- position: relative;
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 15px;
- padding: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 20px;
 }
+
+.beto-avatar {
+  width: calc(45% * var(--beto-proportion));
+}
+
 .bubble-a.bubble {
- --border: 1px;
- --border-color: var(--color-contrast);
- --background: var(--color-primary-light);
- --triangle-size: 1;
- --triangle-y: 30px;
-
- color: var(--color-contrast);
- font-size: 12px;
-
- line-height: 18px;
- text-align: center;
+  --border: calc(3px * var(--beto-proportion));
+  --border-color: var(--color-contrast);
+  --background: var(--color-primary-light);
+  --triangle-size: calc(1.3 * var(--beto-proportion));
+  --triangle-y: calc(60px * var(--beto-proportion));
+  color: var(--color-contrast);
+  text-align: center;
+  border-radius: calc(17px * var(--beto-proportion));
+  width: calc(340px * var(--beto-proportion));
+  height: calc(190px * var(--beto-proportion));
+  padding: 0;
 }
-.bubble > :nth-child(1) {
- font-weight: bold;
- font-size: 16px;
- margin-bottom: 10px;
+
+.beto-content {
+  line-height: calc(28px * var(--beto-proportion));
+  text-align: center;
+  padding: calc(10px * var(--beto-proportion));
+  display: flex;
+  flex-direction: column;
+  gap: calc(10px * var(--beto-proportion));
+}
+
+.hello {
+  font-size: calc(28px * var(--beto-proportion)) !important;
+}
+
+.question {
+  font-size: calc(24px * var(--beto-proportion)) !important;
+}
+
+.options {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.item {
+  color: var(--color-contrast);
+  cursor: pointer;
+  width: calc(150px * var(--beto-proportion));
+  height: calc(160px * var(--beto-proportion));
+  border-radius: calc(17px * var(--beto-proportion));
+  border: calc(3px * var(--beto-proportion)) solid var(--color-contrast);
+  background-color: var(--color-primary-light);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  gap: calc(10px * var(--beto-proportion));
+}
+
+.item:hover {
+  background-color: #c5c2c2ce;
+
+  [data-theme="dark"] & {
+    background-color: #ebebeb1e;
+  }
+}
+
+.item-label {
+  font-size: calc(16px * var(--beto-proportion));
 }
 
 .icon {
- --icon-proportion: 1;
- fill: var(--color-contrast);
- margin-bottom: calc(6px * var(--icon-proportion));
+  width: calc(74px * var(--beto-proportion));
+  --icon-proportion: 1;
+  fill: var(--color-contrast);
 }
 
+
+@media (min-width: 1440px) {
+  :global(:root) {
+    --beto-proportion: 1.3;
+  }
+}
+@media (min-width: 1920px) {
+  :global(:root) {
+    --beto-proportion: 1.6;
+  }
+}
+
+@media (min-width: 2560px) {
+  :global(:root) {
+    --beto-proportion: 2;
+  }
+}
 </style>
 <!-- test styles errase -->
 <style></style>
-

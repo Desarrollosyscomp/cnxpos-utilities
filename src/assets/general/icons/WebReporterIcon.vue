@@ -1,9 +1,6 @@
 <template>
   <svg
-    :width="size "
-    :height="size"
     viewBox="0 0 37.417732 37.417732"
-    xmlns="http://www.w3.org/2000/svg"
     :class="class"
   >
     <defs />
@@ -16,15 +13,6 @@
 </template>
 <script setup>
 const props = defineProps({
-  size: {
-    type: [Number, String],
-    default: 24,
-  },
-
-  fill: {
-    type: String,
-    default: "red",
-  },
   class: {
     type: String,
     default: "",
