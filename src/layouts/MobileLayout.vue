@@ -14,7 +14,7 @@
             <span>Inicio</span>
           </div>
           <div class="menu-item">
-            <WebReporterIcon size="18" class="web-report-icon" />
+            <WebReporterIcon class="web-report-icon" />
             <span>Web Reporter</span>
           </div>
         </div>
@@ -69,7 +69,7 @@ const toggleMenu = () => {
 
 .menu-hr {
   --hr-margin-top: 1;
-  width: 75%;
+  width: 100%;
   margin: 0 auto;
   margin-top: calc(10px * var(--hr-margin-top));
 }
@@ -94,6 +94,7 @@ const toggleMenu = () => {
   width: 100%;
   color: var(--color-contrast);
   border-radius: 5px;
+  justify-content: start;
   align-items: start;
 }
 
@@ -102,10 +103,17 @@ const toggleMenu = () => {
   background-color: var(--color-cnx-orange);
   transition: all 0.25s ease;
   width: 105%;
+  .icon {
+    fill: white;
+  }
+  .web-report-icon {
+    fill: white;
+  }
 }
 
 .menu-container {
   height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -113,6 +121,7 @@ const toggleMenu = () => {
 }
 
 .menu-content {
+  width: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -140,6 +149,7 @@ const toggleMenu = () => {
 
 .icon {
   fill: var(--color-contrast);
+  transform: translateX(-2px);
 }
 
 .pencil-icon {
@@ -189,11 +199,11 @@ const toggleMenu = () => {
 
 @media (min-width: 768px) {
   .menu-item {
-    font-size: 25px;
-    width: 150%;
+    font-size: 35px;
+    width: 100%;
   }
   .menu-item:hover {
-    width: 155%;
+    width: 110%;
   }
   .menu-hr {
     --hr-margin-top: 2;
@@ -211,12 +221,16 @@ const toggleMenu = () => {
   .beto-avatar-menu {
     margin-bottom: 20px;
   }
+  .pencil-icon {
+    --pencil-icon-size: 1.6;
+  }
   .icon {
-    width: 30px;
-    height: 30px;
+    width: 48px;
+    height: 44px;
+    /* transform: translateX(-5px); */
   }
   .web-report-icon {
-    --web-report-icon-size: 1.7;
+    --web-report-icon-size: 2.4;
   }
 }
 </style>

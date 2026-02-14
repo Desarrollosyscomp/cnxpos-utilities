@@ -4,6 +4,7 @@ import HomeView from "../components/HelloWorld.vue";
 import { DailySalesRouter } from "../apps/web-reporter/modules/daily-sales/routes/daily-sales.router";
 import { AuthRoutes } from "../modules/auth/router/auth.routes";
 import { HomeRoutes } from "../modules/home/router/home.routes";
+import { DashboardRoutes } from "../modules/dashboard/router/dashboard.routes";
 
 const routes = [
   {
@@ -15,6 +16,7 @@ const routes = [
   ...DailySalesRouter,
   ...AuthRoutes,
   ...HomeRoutes,
+  ...DashboardRoutes,
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",
@@ -49,44 +51,28 @@ const router = createRouter({
   routes,
 });
 
-//   const loadInitialEnpoints = () => {
-//   const authStore = useAuthStore();
-//   authStore.loadPermissions();
-//   const appStore = useAppStore();
-//   appStore.loadSettings();
-//   }
+  // const loadInitialEnpoints = () => {
+  // const authStore = useAuthStore();
+  // authStore.loadPermissions();
+  // const appStore = useAppStore();
+  // appStore.loadSettings();
+  // }
 
-router.beforeEach((to, from, next) => {
-  from;
-  to;
+  router.beforeEach((to, from, next) => {
+    from;
+    // const authStore = useAuthStore();
+    // const toPathSegments = to.path.split("/");
+    // let { redirect } = verifyRouteAccess(authStore, toPathSegments);
 
-//   const localRoute = isLocalRoute(to.path)
-//   const authStore = useAuthStore();
-//   if (!localRoute.exist) {
-//     //En este scope se asume que la ruta requiere que el usuario esté logueado
-//     if (!authStore.user.token) {
-//       next('/login')
-//       return
-//     }
-    
-//     const hasPermissions = verifyRouteInPermissions(to.path, authStore);
-//     if (!hasPermissions) {
-//       next('/unauthorized')
-//       return
-//     }
-//   }
-//   if(to.meta.type == "only-guest" && authStore.user.token){
-//     next('/')
-//     return
-//   }
-//   if(to.meta.type == "private" && !authStore.user.token){
-//     next('/login')
-//     return
-//   }
-//   if(!to.meta.blockInitialEndpoints){
-//     loadInitialEnpoints()
-//   }
-  next();
-});
-
+    //DESCOMENTAR CUANDO SE HAGA LA AUTENTICACION
+    // if (to.path === "/") {
+    //   next('/auth/login')
+    //   return
+    // }
+    if (to.path === "/") {
+      next('/home/welcome')
+      return
+    }
+    next();
+  });
 export default router;
