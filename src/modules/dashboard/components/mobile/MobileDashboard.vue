@@ -11,6 +11,7 @@
         </div>
       </div>
       <div class="items-dashboard">
+        <div class="items-content">
         <div class="item">
           <div class="text">
             <span>Facturado Hoy</span>
@@ -38,6 +39,44 @@
             <span>$25.000.000</span>
           </div>
         </div>
+        <div class="item">
+          <div class="text">
+            <span>Cuentas por cobrar</span>
+            <span class="subtitle">Total</span>
+          </div>
+          <div class="value">
+            <span>$25.000.000</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="text">
+            <span>Cuentas por cobrar</span>
+            <span class="subtitle">Total</span>
+          </div>
+          <div class="value">
+            <span>$25.000.000</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="text">
+            <span>Cuentas por cobrar</span>
+            <span class="subtitle">Total</span>
+          </div>
+          <div class="value">
+            <span>$25.000.000</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="text">
+            <span>Cuentas por cobrar</span>
+            <span class="subtitle">Total</span>
+          </div>
+          <div class="value">
+            <span>$25.000.000</span>
+          </div>
+        </div>
+
+        </div>
       </div>
     </div>
   </div>
@@ -53,12 +92,14 @@ const route = useRoute();
 <style scoped>
 @import "../../../../utils/css/dialog-bubble.css";
 @import "../../../../styles/backgrounds.css";
-:global(:root){
+
+:global(:root) {
   --item-font-size: 1;
   --item-title-font-size: 1;
   --item-subtitle-font-size: 1;
   --item-value-font-size: 1;
 }
+
 .container {
   width: 100vw;
   height: 100vh;
@@ -70,19 +111,30 @@ const route = useRoute();
 .beto-avatar {
   width: 25vw;
 }
+
 .dashboard-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 80%;
+  gap: 20px;
 }
 
 .items-dashboard {
   width: 80%;
+  flex:1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  /* 
+  gap: 15px; */
+}
+.items-content {
+  margin: auto 0; 
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
-
 .item {
   display: flex;
   flex-direction: column;
@@ -96,28 +148,29 @@ const route = useRoute();
   color: var(--color-contrast);
   font-size: calc(13px * var(--item-font-size));
   font-weight: 600;
+
   [data-theme="dark"] & {
     border-color: transparent;
     color: white;
   }
 }
 
-.item:first-child{
+.item:first-child {
   background-color: var(--color-contrast);
   color: var(--color-primary);
 }
 
-.text{
+.text {
   display: flex;
   flex-direction: column;
 }
 
-.subtitle{
+.subtitle {
   font-size: calc(12px * var(--item-subtitle-font-size));
   font-weight: 500;
 }
 
-.value{
+.value {
   display: flex;
   justify-content: end;
   font-size: calc(15px * var(--item-value-font-size));
@@ -127,11 +180,10 @@ const route = useRoute();
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 30px;
   gap: 10px;
 }
 
-.web-reporter-title{
+.web-reporter-title {
   font-size: calc(20px * var(--item-title-font-size));
 }
 
@@ -151,7 +203,7 @@ const route = useRoute();
   text-align: center;
 }
 
-.bubble > :nth-child(1) {
+.bubble> :nth-child(1) {
   font-weight: light;
   font-size: calc(12px * var(--font-size-proportion));
   margin-bottom: 2px;
@@ -175,11 +227,11 @@ const route = useRoute();
     --item-font-size: 1.3;
   }
 
-  .subtitle{
+  .subtitle {
     --item-subtitle-font-size: 1.3;
   }
 
-  .value{
+  .value {
     --item-value-font-size: 1.3;
   }
 
@@ -207,18 +259,22 @@ const route = useRoute();
     --line-height-proportion: 2;
     --font-size-proportion: 2;
   }
-  .item{
+
+  .item {
     --item-font-size: 2;
     padding: 15px;
   }
-  .web-reporter-title{
+
+  .web-reporter-title {
     --item-title-font-size: 2;
   }
-  .subtitle{
+
+  .subtitle {
     --item-subtitle-font-size: 2;
   }
-  .value{
-    --item-value-font-size: 2;    
+
+  .value {
+    --item-value-font-size: 2;
   }
 }
 </style>
