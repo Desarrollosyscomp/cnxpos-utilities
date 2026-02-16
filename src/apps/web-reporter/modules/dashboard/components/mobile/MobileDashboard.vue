@@ -3,101 +3,111 @@
   <div class="container">
     <div class="dashboard-container">
       <div class="beto-message-container">
-        <img class="beto-avatar" src="../../../../assets/avatars/beto.svg" />
+        <img class="beto-avatar" src="../../../../../../assets/avatars/beto.svg" />
         <div class="bubble bubble-a bubble-left">
           <span>Bienvenido al</span>
-          <h3 class="web-reporter-title">Web <br>Reporter</h3>
+          <h3 class="web-reporter-title">Web <br />Reporter</h3>
           <span>Aquí encontraras un resumen de tu negocio</span>
         </div>
       </div>
       <div class="items-dashboard">
         <div class="items-content">
-        <div class="item">
-          <div class="text">
-            <span>Facturado Hoy</span>
-            <span class="subtitle">Total</span>
+          <div class="item">
+            <div class="text">
+              <span>Facturado Hoy</span>
+              <span class="subtitle">Total</span>
+            </div>
+            <div class="value">
+              <span>$25.000.000</span>
+            </div>
           </div>
-          <div class="value">
-            <span>$25.000.000</span>
+          <div class="item">
+            <div class="text">
+              <span>Cuentas por pagar</span>
+              <span class="subtitle">Total</span>
+            </div>
+            <div class="value">
+              <span>$25.000.000</span>
+            </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="text">
-            <span>Cuentas por pagar</span>
-            <span class="subtitle">Total</span>
+          <div class="item">
+            <BarChart />
           </div>
-          <div class="value">
-            <span>$25.000.000</span>
+          <div class="item">
+            <BarChart2 />
           </div>
-        </div>
-        <div class="item">
-          <div class="text">
-            <span>Cuentas por cobrar</span>
-            <span class="subtitle">Total</span>
+          <div class="item">
+            <DonutChart />
           </div>
-          <div class="value">
-            <span>$25.000.000</span>
-          </div>
-        </div>
-        <div class="item">
-          <div class="text">
-            <span>Cuentas por cobrar</span>
-            <span class="subtitle">Total</span>
-          </div>
-          <div class="value">
-            <span>$25.000.000</span>
-          </div>
-        </div>
-        <div class="item">
-          <div class="text">
-            <span>Cuentas por cobrar</span>
-            <span class="subtitle">Total</span>
-          </div>
-          <div class="value">
-            <span>$25.000.000</span>
-          </div>
-        </div>
-        <div class="item">
-          <div class="text">
-            <span>Cuentas por cobrar</span>
-            <span class="subtitle">Total</span>
-          </div>
-          <div class="value">
-            <span>$25.000.000</span>
-          </div>
-        </div>
-        <div class="item">
-          <div class="text">
-            <span>Cuentas por cobrar</span>
-            <span class="subtitle">Total</span>
-          </div>
-          <div class="value">
-            <span>$25.000.000</span>
-          </div>
-        </div>
-
         </div>
       </div>
     </div>
   </div>
 </template>
 <script setup>
+import Chart from "chart.js/auto";
 // import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
-import Icon from "../../../../components/Icon.vue";
-import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue";
+import Icon from "../../../../../../components/Icon.vue";
+import WebReporterIcon from "../../../../../../assets/general/icons/WebReporterIcon.vue";
 import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
+import BarChart from "../utils/BarChart.vue";
+import BarChart2 from "../utils/BarChart2.vue";
+import DonutChart from "../utils/DonutChart.vue";
+
 const route = useRoute();
+
+// const ctx = document.getElementById('bar-chart');
+// const chart = new Chart(ctx, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     indexAxis: 'x',
+//   }
+// });
+// const chart2 = new Chart(ctx2, {
+//   type: 'bar',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       borderWidth: 1
+//     }]
+//   },
+//   options: {
+//     indexAxis: 'y',
+//   }
+// });
+// const chart3 = new Chart(ctx3, {
+//   type: 'doughnut',
+//   data: {
+//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+//     datasets: [{
+//       label: '# of Votes',
+//       data: [12, 19, 3, 5, 2, 3],
+//       borderWidth: 1
+//     }]
+//   },
+// });
 </script>
 <style scoped>
-@import "../../../../utils/css/dialog-bubble.css";
-@import "../../../../styles/backgrounds.css";
+@import "../../../../../../utils/css/dialog-bubble.css";
+@import "../../../../../../styles/backgrounds.css";
 
 :global(:root) {
   --item-font-size: 1;
   --item-title-font-size: 1;
   --item-subtitle-font-size: 1;
   --item-value-font-size: 1;
+  --margin-title-bottom: 1;
 }
 
 .container {
@@ -117,12 +127,11 @@ const route = useRoute();
   flex-direction: column;
   align-items: center;
   height: 80%;
-  gap: 20px;
 }
 
 .items-dashboard {
   width: 80%;
-  flex:1;
+  flex: 1;
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
@@ -130,7 +139,7 @@ const route = useRoute();
   gap: 15px; */
 }
 .items-content {
-  margin: auto 0; 
+  margin: auto 0;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -153,6 +162,20 @@ const route = useRoute();
     border-color: transparent;
     color: white;
   }
+}
+
+.item:nth-child(3) {
+  height: 18vh;
+  padding-bottom: 0px;
+}
+.item:nth-child(4) {
+  height: 18vh;
+  padding-bottom: 0px;
+}
+.item:nth-child(5) {
+  padding-bottom: 5px;
+  display: flex;
+  height: 35vh;
 }
 
 .item:first-child {
@@ -180,11 +203,13 @@ const route = useRoute();
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 25px;
   gap: 10px;
 }
 
 .web-reporter-title {
   font-size: calc(20px * var(--item-title-font-size));
+  margin-bottom: calc(5px * var(--margin-title-bottom));
 }
 
 .bubble-a.bubble {
@@ -203,7 +228,7 @@ const route = useRoute();
   text-align: center;
 }
 
-.bubble> :nth-child(1) {
+.bubble > :nth-child(1) {
   font-weight: light;
   font-size: calc(12px * var(--font-size-proportion));
   margin-bottom: 2px;
@@ -267,6 +292,7 @@ const route = useRoute();
 
   .web-reporter-title {
     --item-title-font-size: 2;
+    --margin-title-bottom: 2.5;
   }
 
   .subtitle {

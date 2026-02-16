@@ -26,16 +26,16 @@ import {
  mdiChartBar,
  mdiCurrencyUsd,
 } from "@mdi/js";
-import Icon from "../../../../components/Icon.vue";
-import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue"
+import Icon from "../../../../../../components/Icon.vue";
+import WebReporterIcon from "../../../../../../assets/general/icons/WebReporterIcon.vue"
 import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 const route = useRoute();
 console.log(route.meta.headerComponent);
 </script>
 <style scoped>
-@import "../../../../utils/css/dialog-bubble.css";
-@import "../../../../styles/backgrounds.css";
+@import "../../../../../../utils/css/dialog-bubble.css";
+@import "../../../../../../styles/backgrounds.css";
 
 .beto-avatar {
  width: 30vw;
