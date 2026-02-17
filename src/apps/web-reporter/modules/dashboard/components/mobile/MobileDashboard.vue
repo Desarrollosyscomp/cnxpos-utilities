@@ -173,9 +173,8 @@ const route = useRoute();
   padding-bottom: 0px;
 }
 .item:nth-child(5) {
-  padding-bottom: 5px;
-  display: flex;
-  height: 35vh;
+  padding-bottom: 0px;
+  height: 30vh;
 }
 
 .item:first-child {
@@ -259,8 +258,12 @@ const route = useRoute();
   .value {
     --item-value-font-size: 1.3;
   }
-
+  
   @media (min-height: 800px) {
+    .item:nth-child(5) {
+      padding-bottom: 0px;
+      height: 25vh;
+    }
     .beto-avatar {
       width: 35vw;
     }

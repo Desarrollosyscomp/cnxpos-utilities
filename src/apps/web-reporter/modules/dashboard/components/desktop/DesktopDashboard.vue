@@ -1,7 +1,7 @@
 <template>
  <div class="auth-background">
    <div class="beto-message-container">
-     <img class="beto-avatar" src="../../../../assets/avatars/beto.svg" />
+     <img class="beto-avatar" src="../../../../../../assets/avatars/beto.svg" />
      <div class="bubble bubble-a bubble-left">
        <span>¡Hola Fernando!</span>
        <span>¿Qué quieres hacer hoy?</span>

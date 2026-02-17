@@ -1,5 +1,5 @@
-import { Http as axios } from "../../../utils/http/http";
-import { getApiUrl } from "../../../utils/http/get-api-url";
+import { Http as axios } from "../../../../../utils/http/http";
+import { getApiUrl } from "../../../../../utils/http/get-api-url";
 const URL_API = getApiUrl();
 
 export const homeService = {

@@ -1,42 +1,70 @@
 <template>
-  <div class="chart">
-    <canvas ref="chartRef" id="donut-chart"></canvas>
+  <div class="card">
+    <canvas ref="chartRef"></canvas>
   </div>
 </template>
-<script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import Chart from 'chart.js/auto'
 
-const chartRef = ref(null)
-let chartInstance = null
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import Chart from "chart.js/auto";
+
+const chartRef = ref(null);
+let chartInstance = null;
 
 onMounted(() => {
-  if (!chartRef.value) return
+  if (!chartRef.value) return;
 
   chartInstance = new Chart(chartRef.value, {
-    type: 'doughnut',
+    type: "doughnut",
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1,
-        hoverOffset: 4
-      }]
-    }
-  })
-})
+      labels: ["1", "una metrica", "metrica 3"],
+      datasets: [
+        {
+          data: [20, 60, 20],
+          backgroundColor: [
+            "#F4B400", // amarillo
+            "#FF5C8D", // rosado
+            "#4285F4", // azul
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom",
+          labels: {
+            usePointStyle: true,
+            pointStyle: "rect",
+          },
+        },
+      },
+    },
+  });
+});
 
 onBeforeUnmount(() => {
   if (chartInstance) {
-    chartInstance.destroy()
+    chartInstance.destroy();
   }
-})
+});
 </script>
+
 <style scoped>
-.chart {
+.card {
+  width: 100%;
+  height: 30vh;
   display: flex;
-  align-items: center;
   justify-content: center;
 }
+@media (min-width: 360px) {
+  @media (min-height: 800px) {
+    .card {
+      height: 25vh;
+    }
+  }
+}
 </style>
-
