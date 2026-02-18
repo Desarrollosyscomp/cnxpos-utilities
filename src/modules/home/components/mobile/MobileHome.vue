@@ -11,7 +11,7 @@
       </div>
 
       <div class="items-container">
-        <div class="item">
+        <div class="item" @click="router.push('/home/dashboard')">
           <WebReporterIcon :class="'icon'" />
           <span>Web Reporter</span>
         </div>
@@ -28,9 +28,10 @@
 import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
 import Icon from "../../../../components/Icon.vue";
 import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 const route = useRoute();
+const router = useRouter();
 console.log(route.meta.headerComponent);
 </script>
 <style scoped>

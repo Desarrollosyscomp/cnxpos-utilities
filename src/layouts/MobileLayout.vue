@@ -10,7 +10,7 @@
         <hr class="menu-hr" />
         <div class="menu-items">
           <div class="menu-item">
-            <Icon :path="mdiHome" size="20" class="icon" />
+            <Icon :path="mdiHome" class="icon" />
             <span>Inicio</span>
           </div>
           <div class="menu-item">
@@ -94,8 +94,10 @@ const toggleMenu = () => {
   width: 100%;
   color: var(--color-contrast);
   border-radius: 5px;
-  justify-content: start;
-  align-items: start;
+}
+.icon{
+  width: 20px;
+  height: 20px;
 }
 
 .menu-item:hover {
@@ -227,7 +229,6 @@ const toggleMenu = () => {
   .icon {
     width: 48px;
     height: 44px;
-    /* transform: translateX(-5px); */
   }
   .web-report-icon {
     --web-report-icon-size: 2.4;
