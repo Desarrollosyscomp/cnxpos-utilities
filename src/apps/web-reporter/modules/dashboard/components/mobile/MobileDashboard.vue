@@ -49,13 +49,11 @@ import Chart from "chart.js/auto";
 // import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
 import WebReporterIcon from "../../../../../../assets/general/icons/WebReporterIcon.vue";
-import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 import BarChart from "../utils/BarChart.vue";
 import BarChart2 from "../utils/BarChart2.vue";
 import DonutChart from "../utils/DonutChart.vue";
 
-const route = useRoute();
 
 // const ctx = document.getElementById('bar-chart');
 // const chart = new Chart(ctx, {
@@ -135,8 +133,6 @@ const route = useRoute();
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  /* 
-  gap: 15px; */
 }
 .items-content {
   margin: auto 0;
@@ -152,16 +148,11 @@ const route = useRoute();
   padding-bottom: 15px;
   height: 10vh;
   border-radius: 10px;
-  border: 1px solid #2f1310;
+  border: 1px solid var(--color-contrast);
   background-color: var(--color-primary-light);
   color: var(--color-contrast);
   font-size: calc(13px * var(--item-font-size));
   font-weight: 600;
-
-  [data-theme="dark"] & {
-    border-color: transparent;
-    color: white;
-  }
 }
 
 .item:nth-child(3) {
