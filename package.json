@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@capacitor/android": "^8.1.0",
+    "@capacitor/core": "^8.1.0",
     "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/font": "^7.4.47",
     "@mdi/js": "^7.4.47",
@@ -26,6 +28,7 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.1.0",
     "@types/node": "^25.0.10",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/tsconfig": "^0.8.1",
