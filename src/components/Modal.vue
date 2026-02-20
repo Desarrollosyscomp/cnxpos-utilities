@@ -1,5 +1,5 @@
 <template>
-  <div class="overlay" v-if="openModal">
+  <div class="overlay" v-if="open_modal" @click="closeModal">
     <div class="modal">
       <slot></slot>
     </div>
@@ -7,12 +7,27 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue-demi';
 const props = defineProps({
   openModal: {
     type: Boolean,
     default: false,
-  },
+  },  
 });
+
+const emit = defineEmits(['closeModal']);
+
+let open_modal = ref(false);
+
+watch(() => props.openModal, (newVal) => {
+  open_modal.value = newVal;
+});
+
+function closeModal() {
+  open_modal.value = false;
+  emit('closeModal');
+}
+
 </script>
 
 <style scoped>
@@ -27,8 +42,7 @@ const props = defineProps({
 }
 
 .modal {
-  width: 80%;
-  height: 50%;
+    
   background: white;
   border-radius: 12px;
   color: var(--color-contrast);

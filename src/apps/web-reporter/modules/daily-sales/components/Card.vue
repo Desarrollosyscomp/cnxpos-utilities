@@ -7,14 +7,13 @@
 <script setup></script>
 
 <style scoped>
+:global(:root) {
+  --proportions:1;
+}
 .card {
-  height: 40vh;
   background-color: var(--color-contrast);
-  border-radius: 10px;
-  border: 1px solid var(--color-contrast);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-weight: bold;
+  border-radius: calc(10px * var(--proportions));
+  border: calc(1px * var(--proportions)) solid var(--color-contrast);
+  box-shadow: calc(8px * var(--proportions)) calc(8px * var(--proportions)) calc(20px * var(--proportions)) 0px var(--color-contrast);
 }
 </style>
