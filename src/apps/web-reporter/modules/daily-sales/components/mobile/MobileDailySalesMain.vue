@@ -45,7 +45,7 @@
       <div v-else class="daily-sales-container">
         <h3>Informes de <br />ventas por día</h3>
         <div class="cards-container">
-          <Card>
+          <!-- <Card>
             <CardContent>
               <div class="text-container">
                 <span>Resumen</span>
@@ -75,8 +75,8 @@
                 </div>
               </div>
             </CardContent>
-          </Card>
-          <Card>
+          </Card> -->
+          <Card class="test-card">
             <CardContent>
               <span>Almacén</span> <br />
               <span>Cap Club 82</span>
@@ -101,13 +101,17 @@
                 <button class="form-button-2" @click="router.push('invoices')">Ver facturas</button>
               </div>
             </CardContent>
-            <Modal :openModal="openModal">
+          </Card>
+          <Modal :openModal="openModal" @closeModal="openModal = false">
               <div class="modal-content">
                 <p class="color-contrast">Cap Club 81</p>
                 <h3 class="color-contrast">Detalle de ventas</h3>
-                <div class="item-3" v-for="(item, index) in items" :key="index">
-                  <span>{{ item.item }}</span>
-                  <span>{{ item.value }}</span>
+                <div v-for="(item, index) in items" :key="index">
+                  <div class="item-3">
+                    <span>{{ item.item }}</span>
+                    <span>{{ item.value }}</span>
+                  </div>
+                  <hr>
                 </div>
                 <div class="container-button">
                   <button
@@ -119,7 +123,6 @@
                 </div>
               </div>
             </Modal>
-          </Card>
         </div>
       </div>
     </div>
@@ -177,6 +180,7 @@ const items = ref([
   flex-direction: column;
   justify-content: center;
   align-items: center;
+;
 }
 .search-container {
   width: 80%;
@@ -229,7 +233,7 @@ const items = ref([
 }
 
 .daily-sales-container {
-  width: 90%;
+  width: 100%;
   height: 80%;
   color: var(--color-contrast);
   display: flex;
@@ -237,6 +241,7 @@ const items = ref([
   text-align: center;
   gap: 10px;
   flex: 1;
+  background-color: red;
 }
 .cards-container {
   color: var(--color-primary);
@@ -248,13 +253,13 @@ const items = ref([
   overflow-y: scroll;
 }
 
-.cards-container > .card:nth-child(1) {
+/* .cards-container > .card:nth-child(1) {
   [data-theme="dark"] & {
     color: var(--color-contrast);
     background-color: white;
   }
-}
-.cards-container > .card:nth-child(2) {
+} */
+.cards-container > .card:nth-child(1) {
   color: var(--color-contrast);
   background-color: var(--color-primary);
   [data-theme="dark"] & {
@@ -350,5 +355,10 @@ h3 {
 .container-button {
   display: flex;
   justify-content: center;
+}
+
+.test-card{
+  color:red;
+  width: 90%;
 }
 </style>

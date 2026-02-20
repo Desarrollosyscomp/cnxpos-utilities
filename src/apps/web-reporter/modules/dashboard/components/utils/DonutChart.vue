@@ -39,6 +39,7 @@ onMounted(() => {
           labels: {
             usePointStyle: true,
             pointStyle: "rect",
+            color: "#ffffff",
           },
         },
       },
