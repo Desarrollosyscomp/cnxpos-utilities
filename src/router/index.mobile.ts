@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../components/HelloWorld.vue";
-import { DailySalesRouter } from "../apps/web-reporter/modules/daily-sales/routes/daily-sales.router";
+import { DailySalesRoutes } from "../apps/web-reporter/modules/daily-sales/routes/daily-sales.router";
 import { AuthRoutes } from "../modules/auth/router/auth.routes.mobile";
 import { HomeRoutes } from "../modules/home/router/home.routes";
 
@@ -12,7 +12,7 @@ const routes = [
     meta: {},
     component: HomeView,
   },
-  ...DailySalesRouter,
+  ...DailySalesRoutes,
   ...AuthRoutes,
   ...HomeRoutes
 //   {

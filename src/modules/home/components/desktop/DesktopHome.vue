@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="options">
-        <div class="item">
+        <div class="item" @click="router.push('/home/dashboard')">
           <WebReporterIcon :class="'icon'" />
           <span class="item-label font-montserrat-medium">Web Reporter</span>
         </div>
@@ -36,6 +36,8 @@ import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 import BetoMessage from "./BetoMessage.vue";
 import BetoImg from "../../../../assets/avatars/beto.svg"
+import { useRouter } from "vue-router";
+const router = useRouter();
 const route = useRoute();
 console.log(route.meta.headerComponent);
 

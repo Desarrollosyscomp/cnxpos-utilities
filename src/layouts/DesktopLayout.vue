@@ -4,16 +4,16 @@
       <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
       <button class="form-button-2">
         Cuenta
-        <Icon :path="mdiPencil" size="15px" :class="'icon'" />
+        <Icon :path="mdiPencil" :class="'pencil-icon'" />
       </button>
       <hr class="menu-hr" />
       <div class="menu-items">
         <div class="menu-item">
-          <Icon :path="mdiHome" size="0px" :class="'icon'" />
+          <Icon :path="mdiHome" :class="'icon'" />
           <span>Inicio</span>
         </div>
         <div class="menu-item">
-          <WebReporterIcon size="18px" :class="'icon'" />
+          <WebReporterIcon :class="'web-report-icon'" />
           <span>Web Reporter</span>
         </div>
       </div>
@@ -80,17 +80,20 @@ const toggleMenu = () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: 3px;
 }
 
 .menu-item {
   display: flex;
   gap: 5px;
-  padding: 5px;
+  padding-left: 10px;
+  padding-top: 8px;
+  padding-bottom: 8px;
   cursor: pointer;
   width: 100%;
   color: var(--color-contrast);
   border-radius: 5px;
+  font-size: 28px;
 }
 
 .menu-item:hover {
@@ -98,6 +101,12 @@ const toggleMenu = () => {
   background-color: var(--color-cnx-orange);
   transition: all 0.4s ease;
   width: 105%;
+  .icon {
+    fill: white;
+  }
+  .web-report-icon {
+    fill: white;
+  }
 }
 
 .menu-container {
@@ -136,6 +145,25 @@ const toggleMenu = () => {
 .menu-icon {
   width: 40px;
   fill: var(--color-contrast);
+}
+.icon{
+  width: 35px;
+  height: 35px;
+  fill: var(--color-contrast);
+}
+
+.pencil-icon {
+  --pencil-icon-size: 1;
+  fill: var(--color-contrast);
+  width: calc(25px * var(--pencil-icon-size));
+  height: calc(25px * var(--pencil-icon-size));
+}
+
+.web-report-icon {
+  --web-report-icon-size: 1;
+  fill: var(--color-contrast);
+  width: calc(30px * var(--web-report-icon-size));
+  height: calc(30px * var(--web-report-icon-size));
 }
 @media (min-width: 2560px){
 
