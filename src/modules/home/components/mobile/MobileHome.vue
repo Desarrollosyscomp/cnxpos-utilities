@@ -11,7 +11,7 @@
       </div>
 
       <div class="items-container">
-        <div class="item" @click="router.push('/home/dashboard')">
+        <div class="item" @click="router.push('/web-report-v2/dashboard')">
           <WebReporterIcon :class="'icon'" />
           <span>Web Reporter</span>
         </div>

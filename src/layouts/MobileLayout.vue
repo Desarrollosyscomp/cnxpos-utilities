@@ -9,11 +9,11 @@
         </button>
         <hr class="menu-hr" />
         <div class="menu-items">
-          <div class="menu-item">
+          <div class="menu-item" @click="router.push('/home/welcome')">
             <Icon :path="mdiHome" class="icon" />
             <span>Inicio</span>
           </div>
-          <div class="menu-item">
+          <div class="menu-item" @click="router.push('/web-report-v2/dashboard')">
             <WebReporterIcon class="web-report-icon" />
             <span>Web Reporter</span>
           </div>
@@ -40,12 +40,10 @@ import {
   mdiPencil,
   mdiHome,
 } from "@mdi/js";
-import ConexionPosLogo from "../assets/logos/ConexionPosLogo.vue";
 import { toggleTheme, visible } from "../utils/theme-transitions";
 import ThemeModeIcon from "../assets/general/icons/ThemeModeIcon.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
-import ConexionPosColorLogo from "../assets/logos/ConexionPosColorLogo.vue";
 import LeftMenu from "../components/LeftMenu.vue";
 import Icon from "../components/Icon.vue";
 import WebReporterIcon from "../assets/general/icons/WebReporterIcon.vue";
@@ -57,7 +55,7 @@ const Header = computed(() => {
 });
 console.log(Header.value);
 let menuOpen = ref(false);
-
+const router = useRouter();
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };

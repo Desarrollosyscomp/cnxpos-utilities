@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="options">
-        <div class="item" @click="router.push('/home/dashboard')">
+        <div class="item" @click="router.push('/web-report-v2/dashboard')">
           <WebReporterIcon :class="'icon'" />
           <span class="item-label font-montserrat-medium">Web Reporter</span>
         </div>

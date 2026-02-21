@@ -42,7 +42,6 @@ function closeModal() {
 }
 
 .modal {
-    
   background: white;
   border-radius: 12px;
   color: var(--color-contrast);

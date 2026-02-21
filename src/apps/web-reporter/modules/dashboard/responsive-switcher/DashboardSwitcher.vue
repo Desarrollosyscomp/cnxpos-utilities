@@ -11,6 +11,6 @@
     </div>
 </template>
 <script setup>
-import MobileHomeLayout from "../layouts/MobileLayout.vue";
-import DesktopHomeLayout from "../layouts/DesktopLayout.vue";
+import MobileHomeLayout from "../../../../../layouts/MobileLayout.vue";
+import DesktopHomeLayout from "../../../../../layouts/DesktopLayout.vue";
 </script>

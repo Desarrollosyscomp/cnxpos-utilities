@@ -45,7 +45,7 @@
       <div v-else class="daily-sales-container">
         <h3>Informes de <br />ventas por día</h3>
         <div class="cards-container">
-          <!-- <Card>
+          <Card class="test-card">
             <CardContent>
               <div class="text-container">
                 <span>Resumen</span>
@@ -75,7 +75,7 @@
                 </div>
               </div>
             </CardContent>
-          </Card> -->
+          </Card>
           <Card class="test-card">
             <CardContent>
               <span>Almacén</span> <br />
@@ -98,31 +98,33 @@
                 <button class="form-button-2" @click="openModal = true">
                   Detalles
                 </button>
-                <button class="form-button-2" @click="router.push('invoices')">Ver facturas</button>
+                <button class="form-button-2" @click="router.push('invoices')">
+                  Ver facturas
+                </button>
               </div>
             </CardContent>
           </Card>
           <Modal :openModal="openModal" @closeModal="openModal = false">
-              <div class="modal-content">
-                <p class="color-contrast">Cap Club 81</p>
-                <h3 class="color-contrast">Detalle de ventas</h3>
-                <div v-for="(item, index) in items" :key="index">
-                  <div class="item-3">
-                    <span>{{ item.item }}</span>
-                    <span>{{ item.value }}</span>
-                  </div>
-                  <hr>
+            <div class="modal-content">
+              <p class="color-contrast">Cap Club 81</p>
+              <h3 class="color-contrast">Detalle de ventas</h3>
+              <div v-for="(item, index) in items" :key="index">
+                <div class="item-3">
+                  <span>{{ item.item }}</span>
+                  <span>{{ item.value }}</span>
                 </div>
-                <div class="container-button">
-                  <button
-                    @click="openModal = false"
-                    class="form-button-2 color-button"
-                  >
-                    Regresar
-                  </button>
-                </div>
+                <hr />
               </div>
-            </Modal>
+              <div class="container-button">
+                <button
+                  @click="openModal = false"
+                  class="form-button-2 color-button"
+                >
+                  Regresar
+                </button>
+              </div>
+            </div>
+          </Modal>
         </div>
       </div>
     </div>
@@ -180,7 +182,6 @@ const items = ref([
   flex-direction: column;
   justify-content: center;
   align-items: center;
-;
 }
 .search-container {
   width: 80%;
@@ -241,25 +242,24 @@ const items = ref([
   text-align: center;
   gap: 10px;
   flex: 1;
-  background-color: red;
 }
 .cards-container {
   color: var(--color-primary);
   width: 100%;
-  height: 90%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 10px;
   overflow-y: scroll;
 }
 
-/* .cards-container > .card:nth-child(1) {
+.cards-container > .card:nth-child(1) {
   [data-theme="dark"] & {
     color: var(--color-contrast);
     background-color: white;
   }
-} */
-.cards-container > .card:nth-child(1) {
+}
+.cards-container > .card:nth-child(2) {
   color: var(--color-contrast);
   background-color: var(--color-primary);
   [data-theme="dark"] & {
@@ -302,7 +302,6 @@ const items = ref([
   font-weight: 500;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
 .text-align {
@@ -357,8 +356,7 @@ h3 {
   justify-content: center;
 }
 
-.test-card{
-  color:red;
+.test-card {
   width: 90%;
 }
 </style>

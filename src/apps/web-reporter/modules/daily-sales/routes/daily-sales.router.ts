@@ -23,8 +23,14 @@ export const DailySalesRoutes = [
         path: "invoices",
         name: "invoices",
         // @ts-ignore
-        component: () => import("../components/mobile/InvoiceDetails.vue"),
+        component: () => import("../components/mobile/InvoicesMain.vue"),
       },
+      {
+        path: "invoice-details",
+        name: "invoice-details",
+        // @ts-ignore
+        component: () => import("../components/mobile/InvoicesDetails.vue"),
+      }
     ],
   },
 ];
