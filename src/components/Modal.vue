@@ -1,6 +1,6 @@
 <template>
   <div class="overlay" v-if="open_modal" @click="closeModal"></div>
-  <div class="modal" v-if="open_modal">
+  <div class="modal" v-if="open_modal" :style="{ width: width }">
     <slot></slot>
   </div>
 </template>
@@ -12,6 +12,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },  
+  width: {
+    type: String,
+    default: '120vw',
+  },
 });
 
 const emit = defineEmits(['closeModal']);
@@ -48,7 +52,7 @@ function closeModal() {
   background: var(--color-primary-light);
   border-radius: 12px;
   color: var(--color-contrast);
-  padding-top: 10px;
+  padding: 10px;
   z-index: 11;
 }
 </style>
