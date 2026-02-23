@@ -302,10 +302,17 @@ const modelValue = ref("");
 }
 
 .item-2 {
-  font-size: 12px;
+  --font-size: 1;
+  font-size: calc(12px * var(--font-size));
   font-weight: 500;
   display: flex;
   flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .item-2 {
+    --font-size: 1.5;
+  }
 }
 
 .text-align {
@@ -323,7 +330,6 @@ const modelValue = ref("");
   justify-content: space-evenly;
 }
 .modal-content {
-  background-color: green;
   padding: 25px;
 }
 
