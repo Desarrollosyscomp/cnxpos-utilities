@@ -7,6 +7,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
+import { useLocalStorage } from "@vueuse/core";
 
 const chartRef = ref(null);
 let chartInstance = null;
@@ -39,13 +40,23 @@ onMounted(() => {
           labels: {
             usePointStyle: true,
             pointStyle: "rect",
-            color: "#ffffff",
+            color: themeValue.value.themeLight ? "#ffffff" : "#000000",
           },
         },
       },
     },
   });
 });
+let themeDark = ref(true);
+let themeLight = ref(false);
+const themeValue = useLocalStorage("theme", { themeLight: false, themeDark: true });
+if (themeValue.value.themeLight == true) {
+  themeLight.value = true;
+  themeDark.value = false;
+} else {
+  themeDark.value = true;
+  themeLight.value = false;
+}
 
 onBeforeUnmount(() => {
   if (chartInstance) {
