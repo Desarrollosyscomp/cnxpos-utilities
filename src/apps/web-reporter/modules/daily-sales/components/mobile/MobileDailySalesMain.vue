@@ -50,7 +50,7 @@
           <Card class="test-card">
             <CardContent>
               <div class="text-container">
-                <span>Resumen</span>
+                <span class="title">Resumen</span>
                 <div class="item">
                   <span>Total ventas</span>
                   <span>$1.964.059.99</span>
@@ -80,8 +80,8 @@
           </Card>
           <Card class="test-card">
             <CardContent>
-              <span>Almacén</span> <br />
-              <span>Cap Club 82</span>
+                <span class="title">Almacén</span> <br />
+                <span class="warehouse">Cap Club 82</span>
               <div class="text-align">
                 <div class="item-2">
                   <span> <b>Subtotal</b></span>
@@ -362,5 +362,15 @@ h3 {
 
 [data-theme="dark"] .date-field input::-webkit-calendar-picker-indicator {
   filter: invert(1);
+}
+
+.title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.warehouse {
+  font-size: 18px;
+  font-weight: 800;
 }
 </style>
