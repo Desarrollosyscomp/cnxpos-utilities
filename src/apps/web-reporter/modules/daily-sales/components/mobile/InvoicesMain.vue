@@ -30,10 +30,10 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card>
+          <Card class="test-card">
             <CardContent>
-              Factura #5367
               <div class="text-container">
+                <span>Factura #5367</span>
                 <div class="item">
                   <span>Fecha</span>
                   <span>2024-01-01</span>
@@ -65,7 +65,7 @@
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card class="test-card">
             <CardContent>
               Factura #5368
               <div class="text-container">
@@ -205,18 +205,12 @@ const router = useRouter();
   overflow-y: scroll;
 }
 
-.cards-container > .card:nth-child(1) {
-  [data-theme="dark"] & {
-    color: var(--color-primary);
-    background-color: white;
-  }
-}
 .cards-container > .card:nth-child(2) {
   color: var(--color-contrast);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-light);
   [data-theme="dark"] & {
     color: var(--color-contrast);
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-light);
   }
 }
 
@@ -257,11 +251,12 @@ const router = useRouter();
   border-color: var(--color-primary) !important;
   color: var(--color-primary) !important;
   margin-top: 10px;
-  [data-theme="dark"] & {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-  }
 }
+.test-card {
+  background-color: var(--color-contrast);
+  color: white;
+}
+
 .color-button-2 {
   border-color: var(--color-contrast) !important;
   color: var(--color-contrast) !important;

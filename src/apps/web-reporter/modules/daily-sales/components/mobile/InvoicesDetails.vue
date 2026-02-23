@@ -10,10 +10,10 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card>
+          <Card class="test-card">
             <CardContent>
-              Detalle de valores
               <div class="text-container">
+                <span>Detalle de valores</span>
                 <div class="item">
                   <span>Subtotal</span>
                   <span>$1.263.932.99</span>
@@ -47,7 +47,7 @@
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <Card class="test-card">
             <CardContent>
               Banda cap cleaner banda ajustable
               <div class="text-container">
@@ -193,26 +193,21 @@ import CardContent from "../CardContent.vue";
   overflow-y: scroll;
 }
 
-.cards-container > .card:nth-child(1) {
-  [data-theme="dark"] & {
-    color: var(--color-primary);
-    background-color: white;
-  }
-}
+
 .cards-container > .card:nth-child(2) {
   color: var(--color-contrast);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-light);
   [data-theme="dark"] & {
     color: var(--color-contrast);
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-light);
   }
 }
 .cards-container > .card:nth-child(3) {
   color: var(--color-contrast);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-light);
   [data-theme="dark"] & {
     color: var(--color-contrast);
-    background-color: var(--color-primary);
+    background-color: var(--color-primary-light);
   }
 }
 
@@ -257,6 +252,10 @@ import CardContent from "../CardContent.vue";
     color: var(--color-primary);
     border-color: var(--color-primary);
   }
+}
+.test-card {
+  background-color: var(--color-contrast);
+  color: white;
 }
 .color-button-2 {
   border-color: var(--color-contrast) !important;

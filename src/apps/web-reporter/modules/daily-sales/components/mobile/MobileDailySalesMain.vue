@@ -4,11 +4,13 @@
   <div class="container">
     <div class="main-container">
       <div class="search-container">
-        <div class="search">
+        <div class="date-field">
+          <label for="fecha">Consultar fecha</label>
           <input
-            class="form-input size-input"
             type="date"
-            placeholder="Consultar fecha"
+            id="fecha"
+            required
+            class="form-input size-input"
           />
         </div>
       </div>
@@ -104,7 +106,7 @@
               </div>
             </CardContent>
           </Card>
-          <Modal :openModal="openModal" @closeModal="openModal = false">
+          <Modal :openModal="openModal" @closeModal="openModal = false" width="70vw">
             <div class="modal-content">
               <p class="color-contrast">Cap Club 81</p>
               <h3 class="color-contrast">Detalle de ventas</h3>
@@ -151,6 +153,9 @@ const items = ref([
   { item: "Productos vendidos", value: "1" },
   { item: "Costo", value: "$1.263.932.99" },
 ]);
+
+const showDate = ref(false);
+const modelValue = ref("");
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -187,14 +192,21 @@ const items = ref([
   width: 80%;
   height: 10vh;
 }
-.search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-}
 .size-input {
   width: 100%;
+}
+.date-field {
+  display: flex;
+  position: relative;
+}
+.date-field label {
+  position: absolute;
+  left: 12px;
+  top: -8px;
+  color: var(--color-contrast);
+  background: var(--color-primary);
+  padding: 0 6px;
+  font-size: 12px;
 }
 
 .beto-message-container {
@@ -236,7 +248,6 @@ const items = ref([
 .daily-sales-container {
   width: 100%;
   height: 80%;
-  color: var(--color-contrast);
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -244,7 +255,6 @@ const items = ref([
   flex: 1;
 }
 .cards-container {
-  color: var(--color-primary);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -253,15 +263,9 @@ const items = ref([
   overflow-y: scroll;
 }
 
-.cards-container > .card:nth-child(1) {
-  [data-theme="dark"] & {
-    color: var(--color-contrast);
-    background-color: white;
-  }
-}
 .cards-container > .card:nth-child(2) {
   color: var(--color-contrast);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-light);
   [data-theme="dark"] & {
     color: var(--color-contrast);
     background-color: var(--color-primary);
@@ -293,7 +297,7 @@ const items = ref([
   display: flex;
   justify-content: space-between;
   [data-theme="dark"] & {
-    color: var(--color-primary);
+    color: var(--color-contrast);
   }
 }
 
@@ -318,8 +322,8 @@ const items = ref([
   display: flex;
   justify-content: space-evenly;
 }
-
 .modal-content {
+  background-color: green;
   padding: 25px;
 }
 
@@ -329,27 +333,10 @@ h3 {
 
 .color-contrast {
   color: var(--color-contrast);
-  [data-theme="dark"] & {
-    color: var(--color-primary);
-  }
 }
-
-/* .search-icon {
-  width: 40px;
-  border-radius: 20%;
-  border: 1px solid;
-}
-.search-icon:hover {
-  background-color: rgba(221, 221, 221, 0.551);
-  transition: all 0.2s;
-} */
 
 .color-button {
   margin-top: 10px;
-  [data-theme="dark"] & {
-    color: var(--color-primary);
-    border-color: var(--color-primary);
-  }
 }
 .container-button {
   display: flex;
@@ -357,6 +344,17 @@ h3 {
 }
 
 .test-card {
+  background-color: var(--color-contrast);
+  color: white;
   width: 90%;
+}
+
+.date-field input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0);
+}
+
+[data-theme="dark"] .date-field input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 </style>
