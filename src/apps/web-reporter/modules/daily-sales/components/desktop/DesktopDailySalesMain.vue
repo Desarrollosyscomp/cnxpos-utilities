@@ -42,7 +42,7 @@
                         <tbody>
                             <tr v-for="sale in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="openModal = true">
                                 <td class="text-center">2024-01-01</td>
-                                <td class="text-center">2</td>
+                                <td class="text-center">{{sale}}</td>
                                 <td class="text-center">$1.263.932.99</td>
                                 <td class="text-center">$1.387.865.98</td>
                                 <td class="text-center">3</td>
@@ -99,9 +99,9 @@
                             <tbody>
                                 <tr v-for="invoice in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="invoice_details_state = InvoiceDetailsState.SELECTED">
                                     <td class="text-center">2024-01-01</td>
-                                    <td class="text-center">$ 1.263.932.99</td>
-                                    <td class="text-center">$ 1.263.932.99</td>
-                                    <td class="text-center">$ 1.263.932.99</td>
+                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
+                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
+                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -126,7 +126,7 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="invoice in [1, 2, 3, 4]">
-                                        <td class="text-center">Producto 1</td>
+                                        <td class="text-center">Producto {{invoice}}</td>
                                         <td class="text-center">$ 1.263.932.99</td>
                                         <td class="text-center">$ 5.000,00</td>
                                         <td class="text-center">12</td>

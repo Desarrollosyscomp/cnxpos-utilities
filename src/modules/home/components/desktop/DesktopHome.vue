@@ -16,9 +16,9 @@
           <WebReporterIcon :class="'icon'" />
           <span class="item-label font-montserrat-medium">Web Reporter</span>
         </div>
-        <div class="item">
+        <div class="item" @click="router.push('/web-report-v2/daily-sales')">
           <Icon :path="mdiCurrencyUsd" class="icon" />
-          <span class="item-label font-montserrat-medium">Resumen de ventas</span>
+          <span class="item-label font-montserrat-medium">Ventas del día</span>
         </div>
       </div>
     </div>
