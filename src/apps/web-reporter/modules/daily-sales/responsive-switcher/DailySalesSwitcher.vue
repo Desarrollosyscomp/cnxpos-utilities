@@ -5,12 +5,12 @@
         </MobileHomeLayout>
     </div>
     <div class="hide-on-mobile">
-        <DesktopHomeLayout>
+        <DesktopLayoutOne>
             <router-view />
-        </DesktopHomeLayout>
+        </DesktopLayoutOne>
     </div>
 </template>
 <script setup>
 import MobileHomeLayout from "../../../../../layouts/MobileLayout.vue";
-import DesktopHomeLayout from "../../../../../layouts/DesktopLayout.vue";
+import DesktopLayoutOne from "../../../../../layouts/DesktopLayout.vue";
 </script>

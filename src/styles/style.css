@@ -17,6 +17,24 @@
   
 }
 
+.text-primary-light{
+  color: var(--color-primary-light)
+}
+.text-primary{
+  color: var(--color-primary)
+}
+.text-primary-dark{
+  color: var(--color-primary-dark)
+}
+.text-primary-dark-2{
+  color: var(--color-primary-dark-2)
+}
+.text-accent{
+  color: var(--color-accent)
+}
+.text-contrast{
+  color: var(--color-contrast)
+}
 
 [data-theme="dark"] {
   --color-primary-light: #80352d;
@@ -290,3 +308,89 @@ input{
   font-style: italic;
 }
 
+.scrollable-y{
+  overflow-y: scroll;
+}
+.scrollable-y::-webkit-scrollbar {
+  display: none;
+}
+.scrollable-x{
+  overflow-x: scroll;
+}
+.scrollable-x::-webkit-scrollbar {
+  display: none;
+}
+
+/* Utilidades de alineación */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Tabla base */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: sans-serif;
+  color: var(--color-contrast);
+  background: var(--color-primary);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Encabezado */
+thead {
+  background: var(--color-primary-dark);
+}
+
+thead th {
+  text-align: left;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid var(--color-primary-dark-2);
+}
+
+/* Filas */
+tbody tr {
+  transition: background 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+  background: var(--color-primary-light);
+}
+
+tbody tr:hover {
+  background: var(--color-primary-dark);
+}
+
+/* Celdas */
+tbody td {
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--color-primary-dark-2);
+  font-size: 0.9rem;
+}
+
+/* Destacar columna Total */
+tbody td:nth-child(4) {
+  font-weight: 600;
+  color: var(--color-accent);
+}
+tbody tr:hover td:first-child {
+  border-left: 4px solid var(--color-accent);
+}
+
+
+
+.w-100{
+  width: 100%;
+}

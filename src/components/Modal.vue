@@ -1,8 +1,7 @@
 <template>
-  <div class="overlay" v-if="open_modal" @click="closeModal">
-    <div class="modal">
-      <slot></slot>
-    </div>
+  <div class="overlay" v-if="open_modal" @click="closeModal"></div>
+  <div class="modal" v-if="open_modal">
+    <slot></slot>
   </div>
 </template>
 
@@ -38,13 +37,18 @@ function closeModal() {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 999;
+  z-index: 10;
 }
 
 .modal {
-  background: white;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--color-primary-light);
   border-radius: 12px;
   color: var(--color-contrast);
   padding-top: 10px;
+  z-index: 11;
 }
 </style>

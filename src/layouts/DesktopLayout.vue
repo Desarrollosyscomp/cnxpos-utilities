@@ -24,7 +24,7 @@
       <Icon :path="mdiWhiteBalanceSunny" class="menu-icon clickable" @click="toggleTheme" />
       <Icon :path="mdiDotsVertical" class="menu-icon clickable" @click="toggleMenu" />
     </div>
-    <div class="app-content">
+    <div class="app-content scrollable-y">
       <router-view />
     </div>
   </div>

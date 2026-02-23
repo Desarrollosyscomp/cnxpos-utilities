@@ -1,16 +1,16 @@
 <template>
     <div class="hide-on-desktop">
-        <MobileHomeLayout>
+        <MobileLayout>
             <router-view />
-        </MobileHomeLayout>
+        </MobileLayout>
     </div>
     <div class="hide-on-mobile">
-        <DesktopHomeLayout>
+        <DesktopLayout>
             <router-view />
-        </DesktopHomeLayout>
+        </DesktopLayout>
     </div>
 </template>
 <script setup>
-import MobileHomeLayout from "../layouts/MobileLayout.vue";
-import DesktopHomeLayout from "../layouts/DesktopLayout.vue";
+import MobileLayout from "../layouts/MobileLayout.vue";
+import DesktopLayout from "../layouts/DesktopLayout.vue";
 </script>

@@ -1,8 +1,9 @@
 <template>
-  <MobileHomeLayout>
+  <MobileLayout>
     <router-view />
-  </MobileHomeLayout>
+  </MobileLayout>
 </template>
 <script setup>
-import MobileHomeLayout from "../layouts/MobileLayout.vue";
+import MobileLayout from '../../../../../layouts/MobileLayout.vue';
+
 </script>

@@ -5,10 +5,11 @@
   --triangle-size: 1;
   --triangle-x: 0px;
   --triangle-y: 0px;
+  --border-radius-proportion: 1;
 
   position: relative;
   background: var(--background);
-  border-radius: 12px;
+  border-radius: calc(12px * var(--border-radius-proportion));
   border: var(--border) solid var(--border-color);
   font-family: sans-serif;
   display: flex;
