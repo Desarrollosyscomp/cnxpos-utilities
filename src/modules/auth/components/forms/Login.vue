@@ -20,10 +20,11 @@
 <script setup>
 import { ref } from "vue";
 import { useAuthStore } from "../../store/auth.store";
+import { TFormLogin } from "../../interfaces/auth.type";
 let showPassword = ref(false);
 
 const authStore = useAuthStore();
-const authForm = ref({
+const authForm = ref<TFormLogin>({
     username: "",
     password: "",
 })

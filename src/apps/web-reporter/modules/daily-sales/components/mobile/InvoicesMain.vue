@@ -15,16 +15,18 @@
           <span
             >Para el dia <b>2024-01-01</b> tuviste un subtotal de ventas de
             <b>$1.263.932.99</b> un total de impuestos de
-            <b>$123.932.99</b> para u total de <b>$1.387.865.98</b>
+            <b>$123.932.99</b> para un total de <b>$1.387.865.98</b>
           </span>
         </div>
       </div>
       <div class="search-container">
-        <div class="search">
+        <div class="date-field">
+          <label for="fecha">Consultar fecha</label>
           <input
-            class="form-input size-input"
             type="date"
-            placeholder="Consultar fecha"
+            id="fecha"
+            required
+            class="form-input size-input"
           />
         </div>
       </div>
@@ -168,7 +170,6 @@ const router = useRouter();
 .bubble > :nth-child(1) {
   font-weight: 300;
   font-size: calc(16px * var(--font-size-proportion));
-  margin-bottom: 10px;
 }
 
 .search-container {

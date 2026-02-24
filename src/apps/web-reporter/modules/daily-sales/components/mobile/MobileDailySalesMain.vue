@@ -141,7 +141,7 @@ import CardContent from "../CardContent.vue";
 import Modal from "../../../../../../components/Modal.vue";
 import { useRouter } from "vue-router";
 const isVisible = ref(false);
-const isVisible2 = ref(true);
+const isVisible2 = ref(false);
 const openModal = ref(false);
 const router = useRouter();
 const items = ref([
@@ -195,7 +195,7 @@ const modelValue = ref("");
 .size-input {
   width: 100%;
 }
-.date-field {
+/* .date-field {
   display: flex;
   position: relative;
 }
@@ -207,7 +207,7 @@ const modelValue = ref("");
   background: var(--color-primary);
   padding: 0 6px;
   font-size: 12px;
-}
+} */
 
 .beto-message-container {
   width: 100%;
@@ -355,14 +355,14 @@ h3 {
   width: 90%;
 }
 
-.date-field input::-webkit-calendar-picker-indicator {
+/* .date-field input::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0);
 }
 
 [data-theme="dark"] .date-field input::-webkit-calendar-picker-indicator {
   filter: invert(1);
-}
+} */
 
 .title {
   font-size: 15px;

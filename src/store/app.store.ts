@@ -4,19 +4,12 @@ import { useStorage } from "@vueuse/core";
 export const useAppStore = defineStore("app", {
   state: () => ({
     theme: useStorage("theme", {
-      themeLight: true,
-      themeDark: false,
+      "dataTheme": "light",
     }),
   }),
   actions: {
-    changeTheme(theme: string) {
-      if (theme === "light") {
-        this.theme.themeLight = true;
-        this.theme.themeDark = false;
-      } else {
-        this.theme.themeLight = false;
-        this.theme.themeDark = true;
-      }
+    async changeTheme(theme: string) {
+      this.theme["dataTheme"] = theme;
     },
   },
 });

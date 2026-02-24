@@ -4,38 +4,46 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import Chart from 'chart.js/auto'
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import Chart from "chart.js/auto";
+import { useAppStore } from "../../../../../../store/app.store";
+import { useChartTheme } from "./useChartTheme";
 
-const chartRef = ref(null)
-let chartInstance = null
+const appStore = useAppStore();
+const chartRef = ref(null);
+let chartInstance = null;
+const isDark = appStore.theme.dataTheme === "dark";
 
 onMounted(() => {
-  if (!chartRef.value) return
+  if (!chartRef.value) return;
 
   chartInstance = new Chart(chartRef.value, {
-    type: 'bar',
+    type: "bar",
     data: {
-      labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-      datasets: [{
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        borderWidth: 1
-      }]
+      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+      datasets: [
+        {
+          label: "# of Votes",
+          data: [12, 19, 3, 5, 2, 3],
+          borderWidth: 1,
+        },
+      ],
     },
     options: {
-      indexAxis: 'x',
       responsive: true,
-      maintainAspectRatio: false
-    }
-  })
-})
+      maintainAspectRatio: false,
+    },
+  });
+
+  useChartTheme(() => chartInstance);
+});
+
 
 onBeforeUnmount(() => {
   if (chartInstance) {
-    chartInstance.destroy()
+    chartInstance.destroy();
   }
-})
+});
 </script>
 <style scoped>
 .chart {
@@ -43,4 +51,3 @@ onBeforeUnmount(() => {
   height: 100%;
 }
 </style>
-
