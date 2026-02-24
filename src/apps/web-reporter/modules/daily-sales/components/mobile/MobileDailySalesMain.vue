@@ -45,7 +45,7 @@
         </div>
       </div>
       <div v-else class="daily-sales-container">
-        <h3>Informes de <br />ventas por día</h3>
+        <h3 class="web-reporter-title">Informes de <br />ventas por día</h3>
         <div class="cards-container">
           <Card class="test-card">
             <CardContent>
@@ -80,8 +80,8 @@
           </Card>
           <Card class="test-card">
             <CardContent>
-                <span class="title">Almacén</span> <br />
-                <span class="warehouse">Cap Club 82</span>
+              <span class="title">Almacén</span> <br />
+              <span class="warehouse">Cap Club 82</span>
               <div class="text-align">
                 <div class="item-2">
                   <span> <b>Subtotal</b></span>
@@ -106,14 +106,20 @@
               </div>
             </CardContent>
           </Card>
-          <Modal :openModal="openModal" @closeModal="openModal = false" width="70vw">
+          <Modal
+            :openModal="openModal"
+            @closeModal="openModal = false"
+            width="80vw"
+          >
             <div class="modal-content">
-              <p class="color-contrast">Cap Club 81</p>
-              <h3 class="color-contrast">Detalle de ventas</h3>
+              <div class="modal-title">
+                <span class="color-contrast font-warehouse">Cap Club 81</span>
+                <h3 class="color-contrast">Detalle de ventas</h3>
+              </div>
               <div v-for="(item, index) in items" :key="index">
                 <div class="item-3">
-                  <span>{{ item.item }}</span>
-                  <span>{{ item.value }}</span>
+                  <span class="item-3-bold">{{ item.item }}</span>
+                  <span class="item3-value">{{ item.value }}</span>
                 </div>
                 <hr />
               </div>
@@ -291,6 +297,7 @@ const modelValue = ref("");
   }
 }
 .item-3 {
+  padding-top: 5px;
   color: var(--color-contrast);
   font-size: 12px;
   font-weight: 500;
@@ -300,7 +307,9 @@ const modelValue = ref("");
     color: var(--color-contrast);
   }
 }
-
+.item-3-bold {
+  font-weight: bold;
+}
 .item-2 {
   --font-size: 1;
   font-size: calc(12px * var(--font-size));
@@ -330,11 +339,7 @@ const modelValue = ref("");
   justify-content: space-evenly;
 }
 .modal-content {
-  padding: 25px;
-}
-
-h3 {
-  color: var(--color-contrast);
+  padding: 12px;
 }
 
 .color-contrast {
@@ -355,6 +360,9 @@ h3 {
   width: 90%;
 }
 
+.web-reporter-title {
+  color: var(--color-contrast);
+}
 /* .date-field input::-webkit-calendar-picker-indicator {
   cursor: pointer;
   filter: invert(0);
@@ -372,5 +380,13 @@ h3 {
 .warehouse {
   font-size: 18px;
   font-weight: 800;
+}
+
+.font-warehouse {
+  font-weight: 500;
+}
+
+.modal-title {
+  padding-bottom: 10px;
 }
 </style>
