@@ -6,7 +6,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
-import { useChartTheme } from "./useChartTheme";
+import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
 
 const chartRef = ref(null);
 let chartInstance = null;

@@ -7,7 +7,7 @@
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import Chart from "chart.js/auto";
 import { useAppStore } from "../../../../../../store/app.store";
-import { useChartTheme } from "./useChartTheme";
+import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
 
 const appStore = useAppStore();
 const chartRef = ref(null);

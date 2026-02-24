@@ -1,5 +1,5 @@
 import { watch } from "vue";
-import { useAppStore } from "../../../../../../store/app.store";
+import { useAppStore } from "../../../../../../../store/app.store";
 import type { Chart } from "chart.js";
 
 export function useChartTheme(chartRef: () => Chart | null) {
