@@ -14,7 +14,7 @@
         <div class="bubble bubble-a bubble-left">
           <p>
             Para el dia
-            <span class="font-montserrat-semibold">2024-01-01</span> tuviste un
+            <span class="font-montserrat-semibold">2024/01/01</span> tuviste un
             subtotal de ventas de
             <span class="font-montserrat-semibold">$1.263.932.99</span> un total
             de <span class="font-montserrat-semibold">impuestos</span> de

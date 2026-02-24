@@ -102,7 +102,7 @@ const toggleMenu = () => {
   color: white;
   background-color: var(--color-cnx-orange);
   transition: all 0.25s ease;
-  width: 105%;
+  width: 100%;
   .icon {
     fill: white;
   }
@@ -132,8 +132,8 @@ const toggleMenu = () => {
   --icon-size: 1;
   position: absolute;
   top: 10px;
-  right: 50px;
-  width: calc(25px * var(--icon-size));
+  right: 45px;
+  width: calc(20px * var(--icon-size));
   height: calc(30px * var(--icon-size));
   fill: var(--color-contrast);
 }
@@ -142,7 +142,7 @@ const toggleMenu = () => {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: calc(30px * var(--icon-size));
+  width: calc(20px * var(--icon-size));
   height: calc(30px * var(--icon-size));
   fill: var(--color-contrast);
 }
@@ -211,7 +211,7 @@ const toggleMenu = () => {
   .toggle-theme {
     --icon-size: 1.5;
     top: 20px;
-    right: 80px;
+    right: 70px;
   }
   .menu-icon {
     --icon-size: 1.5;
