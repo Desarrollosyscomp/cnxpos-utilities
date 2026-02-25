@@ -15,32 +15,32 @@
               <div class="text-container">
                 <span>Detalle de valores</span>
                 <div class="item">
-                  <span>Subtotal</span>
+                  <span class="item-bold">Subtotal</span>
                   <span>$1.263.932.99</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Valor de impuesto</span>
+                  <span class="item-bold">Valor de impuesto</span>
                   <span>$123.932.99</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Total descuento</span>
+                  <span class="item-bold">Total descuento</span>
                   <span>$123.932</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Total venta</span>
+                  <span class="item-bold">Total venta</span>
                   <span>$1.387.865.98</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Cliente</span>
+                  <span class="item-bold">Cliente</span>
                   <span>Cap Club 81</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Utilidad</span>
+                  <span class="item-bold">Utilidad</span>
                   <span>$1.387.865.98</span>
                 </div>
                 <hr />
@@ -49,20 +49,20 @@
           </Card>
           <Card class="test-card">
             <CardContent>
-              Banda cap cleaner banda ajustable
+              <span>Banda cap cleaner banda ajustable</span>
               <div class="text-container">
                 <div class="item-3">
-                  <span>Valor</span>
+                  <span class="item-bold">Valor</span>
                   <span>$1.263.932.99</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Descuento</span>
+                  <span class="item-bold">Descuento</span>
                   <span>$123.932.99</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Cantidad</span>
+                  <span class="item-bold">Cantidad</span>
                   <span>24</span>
                 </div>
                 <hr />
@@ -71,20 +71,20 @@
           </Card>
           <Card>
             <CardContent>
-              Banda cap cleaner banda ajustable
+              <span>Banda cap cleaner banda ajustable</span>
               <div class="text-container">
                 <div class="item-3">
-                  <span>Valor</span>
+                  <span class="item-bold">Valor</span>
                   <span>$1.263.932.99</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Descuento</span>
+                  <span class="item-bold">Descuento</span>
                   <span>$123.932.99</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Cantidad</span>
+                  <span class="item-bold">Cantidad</span>
                   <span>24</span>
                 </div>
                 <hr />
@@ -196,6 +196,8 @@ import CardContent from "../CardContent.vue";
 
 .cards-container > .card:nth-child(2) {
   color: var(--color-contrast);
+  text-align: start;
+  font-weight: bold;
   background-color: var(--color-primary-light);
   [data-theme="dark"] & {
     color: var(--color-contrast);
@@ -204,6 +206,8 @@ import CardContent from "../CardContent.vue";
 }
 .cards-container > .card:nth-child(3) {
   color: var(--color-contrast);
+  text-align: start;
+  font-weight: bold;
   background-color: var(--color-primary-light);
   [data-theme="dark"] & {
     color: var(--color-contrast);
@@ -234,6 +238,8 @@ import CardContent from "../CardContent.vue";
 }
 
 .text-container {
+  text-align: start;
+  font-weight: bold;
   color: var(--color-primary);
   padding-top: 5px;
   display: flex;
@@ -255,11 +261,13 @@ import CardContent from "../CardContent.vue";
 }
 .test-card {
   background-color: var(--color-contrast);
-  color: white;
 }
 .color-button-2 {
   border-color: var(--color-contrast) !important;
   color: var(--color-contrast) !important;
   margin-top: 10px;
+}
+.item-bold {
+  font-weight: bold;
 }
 </style>

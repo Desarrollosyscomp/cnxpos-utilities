@@ -4,7 +4,7 @@
     <div class="invoice-container">
       <div class="invoice-title">
         <h3>Facturas del día</h3>
-        <span>Cap Club 81</span>
+        <span class="font-montserrat-bold">Cap Club 81</span>
       </div>
       <div class="beto-message-container">
         <img
@@ -12,51 +12,51 @@
           src="../../../../../../assets/avatars/beto.svg"
         />
         <div class="bubble bubble-a bubble-left">
-          <span
-            >Para el dia <b>2024-01-01</b> tuviste un subtotal de ventas de
-            <b>$1.263.932.99</b> un total de impuestos de
-            <b>$123.932.99</b> para u total de <b>$1.387.865.98</b>
-          </span>
+          <p>
+            Para el dia
+            <span class="font-montserrat-semibold">2024/01/01</span> tuviste un
+            subtotal de ventas de
+            <span class="font-montserrat-semibold">$1.263.932.99</span> un total
+            de <span class="font-montserrat-semibold">impuestos</span> de
+            <span class="font-montserrat-semibold">$123.932.99</span> para un
+            total de <span class="font-montserrat-semibold">$1.387.865.98</span>
+          </p>
         </div>
       </div>
       <div class="search-container">
-        <div class="search">
-          <input
-            class="form-input size-input"
-            type="date"
-            placeholder="Consultar fecha"
-          />
+        <div class="date-field">
+          <input placeholder="Buscar" class="form-input size-input" />
         </div>
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card class="test-card">
+          <Card>
             <CardContent>
               <div class="text-container">
                 <span>Factura #5367</span>
                 <div class="item">
-                  <span>Fecha</span>
+                  <span class="item-bold">Fecha</span>
                   <span>2024-01-01</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Subtotal</span>
+                  <span class="item-bold">Subtotal</span>
                   <span>$1.263.932.99</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Impuesto</span>
+                  <span class="item-bold">Impuesto</span>
                   <span>$123.932.99</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Valor Total</span>
+                  <span class="item-bold">Valor Total</span>
                   <span>$1.387.865.98</span>
                 </div>
                 <hr />
                 <div class="buttons">
                   <button
-                    class="form-button-2 color-button"
+                    class="form-button-2 color-button-2"
                     @click="router.push('/web-report-v2/invoice-details')"
                   >
                     Ver Detalles
@@ -65,27 +65,27 @@
               </div>
             </CardContent>
           </Card>
-          <Card class="test-card">
+          <Card>
             <CardContent>
-              Factura #5368
               <div class="text-container">
+                <span class="text-align-start">Factura #5368</span>
                 <div class="item-3">
-                  <span>Fecha</span>
+                  <span class="item-3-bold">Fecha</span>
                   <span>2024-01-01</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Subtotal</span>
+                  <span class="item-3-bold">Subtotal</span>
                   <span>$1.263.932.99</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Impuesto</span>
+                  <span class="item-3-bold">Impuesto</span>
                   <span>$123.932.99</span>
                 </div>
                 <hr />
                 <div class="item-3">
-                  <span>Valor Total</span>
+                  <span class="item-3-bold">Valor Total</span>
                   <span>$1.387.865.98</span>
                 </div>
                 <hr />
@@ -115,7 +115,10 @@ const router = useRouter();
 @import "../../../../../../styles/backgrounds.css";
 @import "../../../../../../utils/css/dialog-bubble.css";
 @import "../../../../../../styles/forms.css";
-
+@import "../../../../../../styles/style.css";
+:global(:root) {
+  --width-search-container: 1;
+}
 .container {
   width: 100vw;
   height: 100vh;
@@ -125,10 +128,11 @@ const router = useRouter();
 }
 .invoice-container {
   width: 90%;
-  height: 85%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 12px;
   padding-top: 10px;
 }
 .invoice-title {
@@ -139,7 +143,6 @@ const router = useRouter();
 }
 
 .beto-message-container {
-  padding-top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -167,32 +170,21 @@ const router = useRouter();
 
 .bubble > :nth-child(1) {
   font-weight: 300;
-  font-size: calc(16px * var(--font-size-proportion));
-  margin-bottom: 10px;
+  font-size: calc(14px * var(--font-size-proportion));
 }
 
 .search-container {
-  padding-top: 10px;
-  width: 85%;
-  height: 10vh;
-}
-.search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
+  width: 90%;
 }
 .size-input {
+  /* background-color: var(--color-primary-light); */
   width: 100%;
 }
 .daily-sales-container {
   width: 100%;
   height: 40%;
-  color: var(--color-contrast);
   display: flex;
   flex-direction: column;
-  text-align: center;
-  gap: 10px;
   flex: 1;
 }
 .cards-container {
@@ -206,8 +198,8 @@ const router = useRouter();
 }
 
 .cards-container > .card:nth-child(2) {
-  color: var(--color-contrast);
   background-color: var(--color-primary-light);
+  color: var(--color-primary);
   [data-theme="dark"] & {
     color: var(--color-contrast);
     background-color: var(--color-primary-light);
@@ -215,14 +207,14 @@ const router = useRouter();
 }
 
 .item {
-  color: var(--color-primary);
+  color: var(--color-contrast);
   font-size: 12px;
   font-weight: 500;
   display: flex;
   justify-content: space-between;
-  [data-theme="dark"] & {
-    color: var(--color-primary);
-  }
+}
+.item-bold {
+  font-weight: bold;
 }
 
 .item-3 {
@@ -235,9 +227,14 @@ const router = useRouter();
     color: var(--color-contrast);
   }
 }
+.item-3-bold {
+  font-weight: bold;
+}
 
 .text-container {
-  color: var(--color-primary);
+  text-align: start;
+  font-weight: bold;
+  color: var(--color-contrast);
   padding-top: 5px;
   display: flex;
   flex-direction: column;
@@ -247,19 +244,28 @@ const router = useRouter();
   display: flex;
   justify-content: center;
 }
-.color-button {
-  border-color: var(--color-primary) !important;
-  color: var(--color-primary) !important;
-  margin-top: 10px;
-}
+
 .test-card {
   background-color: var(--color-contrast);
-  color: white;
+}
+
+.text-align-start {
+  text-align: start;
+  color: var(--color-contrast);
+  font-weight: bold;
 }
 
 .color-button-2 {
   border-color: var(--color-contrast) !important;
   color: var(--color-contrast) !important;
   margin-top: 10px;
+}
+
+@media (min-width: 360px) {
+  @media (min-height: 800px) {
+    .search-container {
+      --padding-top: 1;
+    }
+  }
 }
 </style>

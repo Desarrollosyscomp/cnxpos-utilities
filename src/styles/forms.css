@@ -17,11 +17,11 @@
 .form-button {
   --button-size: 1;
 
-  background-color: var(--color-contrast);
+  background-color: transparent;
   border-radius: calc(30px * var(--button-size));
   border: calc(3px * var(--button-size)) solid white;
   border-color: white;
-  color: var(--color-primary);
+  color: var(--color-contrast);
   cursor: pointer;
   font-family: "Montserrat", sans-serif;
   font-size: calc(12px * var(--button-size));
@@ -63,7 +63,30 @@
     color: #541811;
     border-color: #541811;
   }
- }
+}
+
+.date-field {
+  display: flex;
+  position: relative;
+}
+.date-field label {
+  position: absolute;
+  left: 12px;
+  top: -8px;
+  color: var(--color-contrast);
+  background: var(--color-primary);
+  padding: 0 6px;
+  font-size: 12px;
+}
+
+.date-field input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: invert(0);
+}
+
+[data-theme="dark"] .date-field input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
 
 @media (min-width: 375px) {
   @media (min-height: 812px) {
@@ -76,9 +99,9 @@
 }
 
 @media (min-width: 768px) {
-    .form-button-2 {
-      --button-size: 1.5;
-      --button-padding: 2;
-      --button-font-size: 1.2;
-    }
+  .form-button-2 {
+    --button-size: 1.5;
+    --button-padding: 2;
+    --button-font-size: 1.2;
+  }
 }

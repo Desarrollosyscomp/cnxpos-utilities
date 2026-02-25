@@ -5,13 +5,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, computed, watch } from "vue";
 import Chart from "chart.js/auto";
 import { useLocalStorage } from "@vueuse/core";
-
+import { useAppStore } from "../../../../../../store/app.store";
+import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
+const appStore = useAppStore();
 const chartRef = ref(null);
 let chartInstance = null;
 
+const isDark = ref(false);
 onMounted(() => {
   if (!chartRef.value) return;
 
@@ -40,23 +43,15 @@ onMounted(() => {
           labels: {
             usePointStyle: true,
             pointStyle: "rect",
-            color: themeValue.value.themeLight ? "#ffffff" : "#000000",
+            color: appStore.theme.dataTheme === "dark" ? "#ffffff" : "#000000",
           },
         },
       },
     },
   });
+
+  useChartTheme(() => chartInstance);
 });
-let themeDark = ref(true);
-let themeLight = ref(false);
-const themeValue = useLocalStorage("theme", { themeLight: false, themeDark: true });
-if (themeValue.value.themeLight == true) {
-  themeLight.value = true;
-  themeDark.value = false;
-} else {
-  themeDark.value = true;
-  themeLight.value = false;
-}
 
 onBeforeUnmount(() => {
   if (chartInstance) {

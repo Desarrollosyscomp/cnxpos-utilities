@@ -53,48 +53,6 @@ import { computed, defineAsyncComponent, ref } from "vue";
 import BarChart from "../utils/BarChart.vue";
 import BarChart2 from "../utils/BarChart2.vue";
 import DonutChart from "../utils/DonutChart.vue";
-
-
-// const ctx = document.getElementById('bar-chart');
-// const chart = new Chart(ctx, {
-//   type: 'bar',
-//   data: {
-//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//     datasets: [{
-//       label: '# of Votes',
-//       data: [12, 19, 3, 5, 2, 3],
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     indexAxis: 'x',
-//   }
-// });
-// const chart2 = new Chart(ctx2, {
-//   type: 'bar',
-//   data: {
-//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//     datasets: [{
-//       label: '# of Votes',
-//       data: [12, 19, 3, 5, 2, 3],
-//       borderWidth: 1
-//     }]
-//   },
-//   options: {
-//     indexAxis: 'y',
-//   }
-// });
-// const chart3 = new Chart(ctx3, {
-//   type: 'doughnut',
-//   data: {
-//     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//     datasets: [{
-//       label: '# of Votes',
-//       data: [12, 19, 3, 5, 2, 3],
-//       borderWidth: 1
-//     }]
-//   },
-// });
 </script>
 <style scoped>
 @import "../../../../../../utils/css/dialog-bubble.css";
@@ -106,6 +64,7 @@ import DonutChart from "../utils/DonutChart.vue";
   --item-subtitle-font-size: 1;
   --item-value-font-size: 1;
   --margin-title-bottom: 1;
+  --beto-width: 1;
 }
 
 .container {
@@ -117,7 +76,7 @@ import DonutChart from "../utils/DonutChart.vue";
 }
 
 .beto-avatar {
-  width: 25vw;
+  width: calc(25vw * var(--beto-width));
 }
 
 .dashboard-container {
@@ -263,7 +222,7 @@ import DonutChart from "../utils/DonutChart.vue";
 
 @media (min-width: 375px) {
   .beto-avatar {
-    width: 30vw;
+    --beto-width: 1.2;
   }
 }
 
