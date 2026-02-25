@@ -118,6 +118,9 @@ const router = useRouter();
 @import "../../../../../../styles/style.css";
 :global(:root) {
   --width-search-container: 1;
+  --font-size-title: 1;
+  --padding-bottom-search: 1;
+  --gap-size: 1;
 }
 .container {
   width: 100vw;
@@ -174,6 +177,7 @@ const router = useRouter();
 }
 
 .search-container {
+  padding-bottom: calc(5px * var(--padding-bottom-search));
   width: 90%;
 }
 .size-input {
@@ -193,7 +197,7 @@ const router = useRouter();
   height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: calc(10px * var(--gap-size));
   overflow-y: scroll;
 }
 
@@ -260,12 +264,36 @@ const router = useRouter();
   color: var(--color-contrast) !important;
   margin-top: 10px;
 }
-
+@media (min-width: 360px) {
+  .invoice-title h3 {
+    font-size: calc(25px * var(--font-size-title));
+  }
+  .invoice-title span {
+    font-size: calc(18px * var(--font-size-title));
+  }
+  .cards-container {
+    --gap-size: 1.5;
+  }
+}
 @media (min-width: 360px) {
   @media (min-height: 800px) {
     .search-container {
       --padding-top: 1;
     }
+  }
+}
+@media (min-width: 768px) {
+  .invoice-title h3 {
+    --font-size-title: 1.8;
+  }
+  .invoice-title span {
+    --font-size-title: 1.5;
+  }
+  .search-container {
+    --padding-bottom-search: 1.5;
+  }
+  .cards-container {
+    --gap-size: 1.8;
   }
 }
 </style>
