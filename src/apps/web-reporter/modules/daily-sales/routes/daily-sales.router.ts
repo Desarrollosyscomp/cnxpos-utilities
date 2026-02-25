@@ -1,16 +1,15 @@
-const getComponent = () => {
-  if (import.meta.env.VITE_TARGET === "mobile") {
-    // @ts-ignore
-    return import("../responsive-switcher/MobileDailySalesSwitcher.vue");
-  } else {
-    // @ts-ignore
-    return import("../responsive-switcher/DailySalesSwitcher.vue");
-  }
-};
 export const DailySalesRoutes = [
   {
     path: "/web-report-v2/",
-    component: getComponent(),
+    component: ()=>{
+      if (import.meta.env.VITE_TARGET === "mobile") {
+        // @ts-ignore
+        return import("../responsive-switcher/MobileDailySalesSwitcher.vue");
+      } else {
+        // @ts-ignore
+        return import("../responsive-switcher/DailySalesSwitcher.vue");
+      }
+    },
 
     children: [
       {
