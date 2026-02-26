@@ -14,7 +14,7 @@ const props = defineProps({
   },  
   width: {
     type: String,
-    default: '120vw',
+    default: '90vw',
   },
 });
 
@@ -49,7 +49,7 @@ function closeModal() {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: var(--color-primary-light);
+  background: var(--color-primary-dark);
   border-radius: 12px;
   color: var(--color-contrast);
   padding: 10px;

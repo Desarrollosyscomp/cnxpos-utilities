@@ -2,13 +2,23 @@
   --color-cnx-orange: #d95118;
   --color-cnx-brown: #c5351b;
   --color-cnx-grey: #5c5961;
-
+  
   --color-primary-light: white;
   --color-primary: #f3f3f3;
   --color-primary-dark: #e5e5e5;
   --color-primary-dark-2: #d1d1d1;
   --color-accent: #ff4c00;
   --color-contrast: #2f1310;
+  --table-font-size-proportion: 1;
+}
+
+[data-theme="dark"] {
+  --color-primary-light: #80352d;
+  --color-primary: #581c15;
+  --color-primary-dark: #401c17;
+  --color-primary-dark-2: #220e0c;
+  --color-accent: #ff4c00;
+  --color-contrast: #f3f3f3;
 }
 
 * {
@@ -34,15 +44,6 @@
 }
 .text-contrast{
   color: var(--color-contrast)
-}
-
-[data-theme="dark"] {
-  --color-primary-light: #80352d;
-  --color-primary: #581c15;
-  --color-primary-dark: #401c17;
-  --color-primary-dark-2: #220e0c;
-  --color-accent: #ff4c00;
-  --color-contrast: #f3f3f3;
 }
 
 .theme-transition * {
@@ -347,14 +348,14 @@ table {
 
 /* Encabezado */
 thead {
-  background: var(--color-primary-dark);
+  background: var(--color-primary-dark-2);
 }
 
 thead th {
   text-align: left;
   padding: 1rem;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: calc(var(--table-font-size-proportion) * 15px);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-bottom: 2px solid var(--color-primary-dark-2);
@@ -377,7 +378,7 @@ tbody tr:hover {
 tbody td {
   padding: 0.9rem 1rem;
   border-bottom: 1px solid var(--color-primary-dark-2);
-  font-size: 0.9rem;
+  font-size: calc(var(--table-font-size-proportion) * 13px);
 }
 
 /* Destacar columna Total */
@@ -393,4 +394,24 @@ tbody tr:hover td:first-child {
 
 .w-100{
   width: 100%;
+}
+
+
+@media (min-width: 1366px) {
+  .layout-container{
+    padding-left: 8%;
+    padding-right: 8%;
+  }  
+}
+
+@media (min-width: 1920px){
+  :root{
+    --table-font-size-proportion: 1.4;
+  }
+}
+
+@media (min-width: 2560px){
+  :root{
+    --table-font-size-proportion: 2;
+  }
 }

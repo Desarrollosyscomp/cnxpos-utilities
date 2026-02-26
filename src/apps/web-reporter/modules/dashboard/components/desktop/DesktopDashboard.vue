@@ -1,61 +1,60 @@
 <template>
-  <div class="auth-background">
-    <div class="dashboard-container">
-      <div class="items-dashboard">
-        <div class="container">
-          <div class="item">
-            <div class="text">
-              <span>Facturado Hoy</span>
-              <span class="subtitle">Total</span>
-            </div>
-            <div class="value">
-              <span>$25.000.000</span>
-            </div>
+  <div class="app-background"></div>
+  <div class="dashboard-container">
+    <div class="items-dashboard">
+      <div class="container">
+        <div class="beto-message-container">
+          <img
+            class="beto-avatar"
+            src="../../../../../../assets/avatars/beto.svg"
+          />
+          <div class="bubble bubble-a bubble-left">
+            <span>Bienvenido al</span>
+            <h3 class="web-reporter-title">Web <br />Reporter</h3>
+            <span>Aquí encontraras un resumen de tu negocio</span>
           </div>
-          <div class="item">
-            <div class="text">
-              <span>Cuentas por pagar</span>
-              <span class="subtitle">Total</span>
-            </div>
-            <div class="value">
-              <span>$25.000.000</span>
-            </div>
+        </div>
+        <div class="item">
+          <div class="text">
+            <span>Facturado Hoy</span>
+            <span class="subtitle">Total</span>
           </div>
-          <div class="item">
-            <div class="text">
-              <span>Cuentas por cobrar</span>
-              <span class="subtitle">Total</span>
-            </div>
-            <div class="value">
-              <span>$25.000.000</span>
-            </div>
+          <div class="value">
+            <span>$25.000.000</span>
           </div>
-          <div class="beto-message-container">
-            <div class="bubble bubble-a bubble-right">
-              <span>Bienvenido al</span>
-              <h3 class="web-reporter-title">Web <br />Reporter</h3>
-              <span>Aquí encontraras un resumen de tu negocio</span>
-            </div>
-            <img
-              class="beto-avatar"
-              src="../../../../../../assets/avatars/beto.svg"
-            />
+        </div>
+        <div class="item">
+          <div class="text">
+            <span>Cuentas por pagar</span>
+            <span class="subtitle">Total</span>
+          </div>
+          <div class="value">
+            <span>$25.000.000</span>
+          </div>
+        </div>
+        <div class="item">
+          <div class="text">
+            <span>Cuentas por cobrar</span>
+            <span class="subtitle">Total</span>
+          </div>
+          <div class="value">
+            <span>$25.000.000</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="charts-container">
-        <div class="bar-charts">
-          <div class="item-chart">
-            <BarChart />
-          </div>
-          <div class="item-chart">
-            <BarChart2 />
-          </div>
+    <div class="charts-container">
+      <div class="bar-charts">
+        <div class="item-chart">
+          <BarChart />
         </div>
-        <div class="donut-chart">
-          <DonutChart />
+        <div class="item-chart">
+          <BarChart2 />
         </div>
+      </div>
+      <div class="donut-chart">
+        <DonutChart />
       </div>
     </div>
   </div>
@@ -82,7 +81,7 @@ console.log(route.meta.headerComponent);
 
 .dashboard-container {
   width: 100%;
-  height: 80%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -91,7 +90,6 @@ console.log(route.meta.headerComponent);
 
 .container {
   width: 100%;
-  padding: calc(20px * var(--padding-proportion));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -99,7 +97,7 @@ console.log(route.meta.headerComponent);
 }
 .items-dashboard {
   display: flex;
-  align-items: center;
+  justify-content: center;
 }
 
 .item {
@@ -140,7 +138,6 @@ console.log(route.meta.headerComponent);
 }
 
 .beto-message-container {
-  width: 28%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,7 +146,6 @@ console.log(route.meta.headerComponent);
 
 .beto-avatar {
   width: 10vw;
-  transform: scaleX(-1);
 }
 
 .bubble-a.bubble {
@@ -164,7 +160,7 @@ console.log(route.meta.headerComponent);
   color: var(--color-contrast);
   font-size: calc(12px * var(--font-size-proportion));
 
-  line-height: calc(18px * var(--line-height-proportion));
+  line-height: calc(24px * var(--line-height-proportion));
   text-align: center;
 }
 
@@ -272,7 +268,7 @@ console.log(route.meta.headerComponent);
     height: 43.5vh;
   }
   .beto-avatar {
-    width: 14vw;
+    width: 210px;
   }
 
   .bubble-a.bubble {
