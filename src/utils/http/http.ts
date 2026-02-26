@@ -1,5 +1,4 @@
 import axios, { type AxiosRequestConfig } from "axios";
-//import { showNotification } from "./http-notifications";
 import { type HttpErrors, type HttpErrorsAndExceptions } from "./interfaces";
 import { buildQueryString } from "./helpers"; 
 export const Http = {

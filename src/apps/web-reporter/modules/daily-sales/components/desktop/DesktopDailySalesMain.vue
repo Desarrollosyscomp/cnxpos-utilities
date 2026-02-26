@@ -1,6 +1,6 @@
 <template>
     <div class="app-background"></div>
-    <div class="container">
+    <div class="container layout-container">
         <div class="beto-message" v-if="page_state === PageState.BETO_MESSAGE">
             <div class="beto-message-content">
                 <img :src="beto_state === BetoState.WELCOME ? BetoImg : BetoSad" class="beto">
@@ -40,21 +40,21 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- <tr v-for="sale in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="openModal = true">
+                            <tr v-for="sale in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="openModal = true">
                                 <td class="text-center">2024-01-01</td>
-                                <td class="text-center">2</td>
+                                <td class="text-center">{{sale}}</td>
                                 <td class="text-center">$1.263.932.99</td>
                                 <td class="text-center">$1.387.865.98</td>
                                 <td class="text-center">3</td>
                                 <td class="text-center">3</td>
                                 <td class="text-center">$1.263.932.99</td>
-                            </tr> -->
+                            </tr>
                         </tbody>
                     </table>
                 </div>
             </CenterAndScroll>
             <div class="summary">
-                <img :src="BetoImg" alt="">
+                <img :src="BetoImg" class="summary-beto">
                 <Card>
                     <CardContent class="summary-content">
                         <div class="summary-title font-montserrat-bold">Este es un resumen de tu búsqueda:</div>
@@ -97,12 +97,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- <tr v-for="invoice in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="invoice_details_state = InvoiceDetailsState.SELECTED">
+                                <tr v-for="invoice in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="invoice_details_state = InvoiceDetailsState.SELECTED">
                                     <td class="text-center">2024-01-01</td>
-                                    <td class="text-center">$ 1.263.932.99</td>
-                                    <td class="text-center">$ 1.263.932.99</td>
-                                    <td class="text-center">$ 1.263.932.99</td>
-                                </tr> -->
+                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
+                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
+                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
+                                </tr>
+
                             </tbody>
                         </table>
                     </div>
@@ -125,12 +126,14 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- <tr v-for="invoice in [1, 2, 3, 4]">
+
+                                    <tr v-for="invoice in [1, 2, 3, 4]">
                                         <td class="text-center">Producto 1</td>
+
                                         <td class="text-center">$ 1.263.932.99</td>
                                         <td class="text-center">$ 5.000,00</td>
                                         <td class="text-center">12</td>
-                                    </tr> -->
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -154,7 +157,25 @@ import Card from "../Card.vue";
 import CardContent from "../CardContent.vue";
 //@ts-ignore
 import Modal from '../../../../../../components/Modal.vue';
+import { FakerService } from "../../../../../../utils/faker/Faker";
 
+const faker = new FakerService();
+
+const data = faker.generate({
+  limit: 15,
+  columns: {
+    a: "char[2]",
+    b: "word",
+    c: "string[2]",
+    d: "date",
+    e: "int(1,10)",
+    f: "decimal(4,2)",
+    g: "bool",
+    h: "$(1000,5000)"
+  }
+});
+
+console.log(data);
 let date = ref(new Date());
 let openModal = ref(false);
 
@@ -291,10 +312,15 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 .summary-title {
     margin-bottom: 10px;
+    font-size: calc(1rem * var(--message-proportion));
 }
 
-.summary-item> :nth-child(1) {
+.summary-item > :nth-child(1) {
+    font-size: calc(0.9rem * var(--message-proportion));
     font-weight: bold;
+}
+.summary-item > :nth-child(2) {
+    font-size: calc(0.9rem * var(--message-proportion));
 }
 
 .details-card-content {
@@ -314,7 +340,9 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
     align-items: center;
     padding: 10px;
 }
-
+.summary-beto{
+    width: calc(130px * var(--message-proportion));
+}
 @media (min-width: 1920px) {
     :global(:root) {
         --message-proportion: 1.3;
@@ -323,7 +351,7 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 @media (min-width: 2560px) {
     :global(:root) {
-        --message-proportion: 2;
+        --message-proportion: 1.8;
     }
 
     .searcher-input {
