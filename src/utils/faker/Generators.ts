@@ -34,12 +34,9 @@ export class StringGenerator implements FakerGenerator {
     generate(args: number[]): string {
       const count = requireArg(args, 0, "string");
   
-      return Array.from({ length: count }, () =>
-        RandomUtil.randomWord()
-      ).join(" ");
+      return RandomUtil.sequentialWords(count).join(" ");
     }
   }
-  
 export class DateGenerator implements FakerGenerator {
   generate(): string {
     return new Date().toISOString();
