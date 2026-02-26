@@ -1,7 +1,7 @@
 <template>
     <left-menu :is-open="menuOpen" @close-menu="toggleMenu">
       <div class="menu-container">
-        <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
+        <img class="beto-avatar-menu" :src="BetoAvatar" />
         <button class="form-button-2">
           Cuenta
           <Icon :path="mdiPencil" :class="'pencil-icon'" />
@@ -49,6 +49,8 @@
   import Icon from "../../../components/Icon.vue";
   import WebReporterIcon from "../../../assets/general/icons/WebReporterIcon.vue";
   import RightMenu from "../components/RightMenu.vue";
+import BetoAvatar from "../../../assets/avatars/beto.svg";
+
   const route = useRoute();
   const router = useRouter();
   console.log(route.meta.headerComponent);

@@ -68,6 +68,7 @@ import DonutChart from "../utils/DonutChart.vue";
 }
 
 .container {
+  background-color: green;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -80,6 +81,7 @@ import DonutChart from "../utils/DonutChart.vue";
 }
 
 .dashboard-container {
+  background-color: yellow;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -2,7 +2,7 @@
   <left-menu :is-open="menuOpen" @close-menu="menuOpen = false">
     <div class="menu-container">
       <div class="menu-content">
-        <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
+        <img class="beto-avatar-menu" :src="BetoAvatar" />
         <button class="form-button-2">
           Cuenta
           <Icon :path="mdiPencil" class="pencil-icon" />
@@ -47,6 +47,7 @@ import { computed, defineAsyncComponent, ref } from "vue";
 import LeftMenu from "../../../components/LeftMenu.vue";
 import Icon from "../../../components/Icon.vue";
 import WebReporterIcon from "../../../assets/general/icons/WebReporterIcon.vue";
+import BetoAvatar from "../../../assets/avatars/beto.svg";
 const route = useRoute();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {

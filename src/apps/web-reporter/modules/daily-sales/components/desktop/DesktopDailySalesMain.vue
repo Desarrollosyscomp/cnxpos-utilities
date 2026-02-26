@@ -17,11 +17,12 @@
                     </div>
                 </div>
             </div>
-            <div class="search">
+            <div class="search date-field">
+                <label for="fecha">Consultar fecha</label>
                 <input type="date" class="form-input searcher-input" v-model="date">
             </div>
         </div>
-        <div class="data" v-else>
+        <div class="data date-field" v-else>
             <div class="search">
                 <input type="date" class="form-input searcher-input" v-model="date">
             </div>
