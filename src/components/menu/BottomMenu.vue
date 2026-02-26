@@ -9,7 +9,6 @@
   padding: 12px;
   padding-bottom: calc(env(safe-area-inset-bottom) + 6px);
   background-color: var(--color-primary-dark);
-  height: 100%;
   display: flex;
   justify-content: space-around;
 }
