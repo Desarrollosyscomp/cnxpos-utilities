@@ -7,10 +7,10 @@ export const WebReporterRoutes = [
     component: () => {
       if (import.meta.env.VITE_TARGET === "mobile") {
         // @ts-ignore
-        return import("../layouts/WebReporterLayoutMobile.vue");
+        return import("../modules/daily-sales/responsive-switcher/MobileDailySalesSwitcher.vue");
       } else {
         // @ts-ignore
-        return import("../layouts/WebReporterLayout.vue");
+        return import("../modules/daily-sales/responsive-switcher/DailySalesSwitcher.vue");
       }
     },
     children: [

@@ -1,16 +1,16 @@
 <template>
     <div class="hide-on-desktop">
-        <MobileHomeLayout>
+        <WebReporterLayoutMobile>
             <router-view />
-        </MobileHomeLayout>
+        </WebReporterLayoutMobile>
     </div>
     <div class="hide-on-mobile">
-        <DesktopLayoutOne>
+        <WebReporterLayout>
             <router-view />
-        </DesktopLayoutOne>
+        </WebReporterLayout>
     </div>
 </template>
 <script setup>
-import MobileHomeLayout from "../../../../../layouts/MobileLayout.vue";
-import DesktopLayoutOne from "../../../../../layouts/DesktopLayout.vue";
+import WebReporterLayoutMobile from "../../../layouts/WebReporterLayoutMobile.vue";
+import WebReporterLayout from "../../../layouts/WebReporterLayout.vue";
 </script>

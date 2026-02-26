@@ -128,7 +128,7 @@
                                 <tbody>
 
                                     <tr v-for="invoice in [1, 2, 3, 4]">
-                                        <td class="text-center">Producto 1</td>
+                                        <td class="text-center">Producto {{invoice}}</td>
 
                                         <td class="text-center">$ 1.263.932.99</td>
                                         <td class="text-center">$ 5.000,00</td>
