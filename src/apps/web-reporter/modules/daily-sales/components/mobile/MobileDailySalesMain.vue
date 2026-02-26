@@ -52,27 +52,27 @@
               <div class="text-container">
                 <span class="title">Resumen</span>
                 <div class="item">
-                  <span>Total ventas</span>
+                  <span class="item-bold">Total ventas</span>
                   <span>$1.964.059.99</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Total productos</span>
+                  <span class="item-bold">Total productos</span>
                   <span>19</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Total facturas</span>
+                  <span class="item-bold">Total facturas</span>
                   <span>9</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Costo</span>
+                  <span class="item-bold">Costo</span>
                   <span>$975.331</span>
                 </div>
                 <hr />
                 <div class="item">
-                  <span>Utilidad</span>
+                  <span class="item-bold">Utilidad</span>
                   <span>$687.593.37</span>
                 </div>
               </div>
@@ -167,6 +167,13 @@ const modelValue = ref("");
 @import "../../../../../../styles/backgrounds.css";
 @import "../../../../../../styles/forms.css";
 @import "../../../../../../utils/css/dialog-bubble.css";
+:global(:root) {
+  --font-size: 1;
+  --font-size-title: 1;
+  --gap-size: 1;
+  --padding-bottom-buttons: 1;
+}
+
 .logo {
   z-index: -1;
   position: fixed;
@@ -195,25 +202,12 @@ const modelValue = ref("");
   align-items: center;
 }
 .search-container {
+  padding-bottom: 15px;
   width: 80%;
-  height: 10vh;
 }
 .size-input {
   width: 100%;
 }
-/* .date-field {
-  display: flex;
-  position: relative;
-}
-.date-field label {
-  position: absolute;
-  left: 12px;
-  top: -8px;
-  color: var(--color-contrast);
-  background: var(--color-primary);
-  padding: 0 6px;
-  font-size: 12px;
-} */
 
 .beto-message-container {
   width: 100%;
@@ -265,7 +259,7 @@ const modelValue = ref("");
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
+  gap: calc(10px * var(--gap-size));
   overflow-y: scroll;
 }
 
@@ -288,7 +282,7 @@ const modelValue = ref("");
 
 .item {
   color: var(--color-primary);
-  font-size: 12px;
+  font-size: calc(12px * var(--font-size));
   font-weight: 500;
   display: flex;
   justify-content: space-between;
@@ -312,16 +306,12 @@ const modelValue = ref("");
 }
 .item-2 {
   --font-size: 1;
+  --padding-top: 1;
   font-size: calc(12px * var(--font-size));
+  padding-top: calc(5px * var(--padding-top));
   font-weight: 500;
   display: flex;
   flex-direction: column;
-}
-
-@media (min-width: 768px) {
-  .item-2 {
-    --font-size: 1.5;
-  }
 }
 
 .text-align {
@@ -331,10 +321,10 @@ const modelValue = ref("");
   gap: 5px;
   font-size: 12px;
   font-weight: 500;
+  padding-bottom: calc(12px * var(--padding-bottom-buttons));
 }
 
 .buttons {
-  padding-top: 10px;
   display: flex;
   justify-content: space-evenly;
 }
@@ -363,17 +353,9 @@ const modelValue = ref("");
 .web-reporter-title {
   color: var(--color-contrast);
 }
-/* .date-field input::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-  filter: invert(0);
-}
-
-[data-theme="dark"] .date-field input::-webkit-calendar-picker-indicator {
-  filter: invert(1);
-} */
 
 .title {
-  font-size: 15px;
+  font-size: calc(16px * var(--font-size-title));
   font-weight: 600;
 }
 
@@ -388,5 +370,41 @@ const modelValue = ref("");
 
 .modal-title {
   padding-bottom: 10px;
+}
+.item-bold {
+  font-weight: bold;
+}
+@media (min-width: 375px) {
+  .item {
+    --font-size: 1.2;
+  }
+  .item-2 {
+    --font-size: 1.2;
+  }
+  .title {
+    --font-size-title: 1.2;
+  }
+}
+@media (min-width: 768px) {
+  .item-2 {
+    --font-size: 1.5;
+  }
+  .title {
+    font-size: 25px;
+  }
+  .warehouse {
+    font-size: 25px;
+  }
+  .web-reporter-title {
+    font-size: 25px;
+    padding-bottom: 10px;
+  }
+  .cards-container {
+    --gap-size: 1.5;
+  }
+
+  .text-align {
+    --padding-bottom-buttons: 2;
+  }
 }
 </style>
