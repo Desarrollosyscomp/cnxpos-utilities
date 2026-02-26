@@ -68,12 +68,11 @@ import DonutChart from "../utils/DonutChart.vue";
 }
 
 .container {
-  background-color: green;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: end;
 }
 
 .beto-avatar {
@@ -81,11 +80,10 @@ import DonutChart from "../utils/DonutChart.vue";
 }
 
 .dashboard-container {
-  background-color: yellow;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 80%;
+  height: 95%;
 }
 
 .items-dashboard {

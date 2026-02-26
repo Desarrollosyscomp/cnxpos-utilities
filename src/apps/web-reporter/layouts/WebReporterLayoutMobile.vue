@@ -27,7 +27,15 @@
     class="clickable menu-icon"
     @click="toggleMenu"
   />
-  <router-view />
+  <div class="app-container">
+    <div class="app-content">
+       <router-view />
+     </div>
+     <div class="bottom">
+       <WebReporterBottomMenu />
+     </div>
+     
+  </div>
 </template>
 <script setup>
 import {
@@ -48,6 +56,10 @@ import LeftMenu from "../../../components/LeftMenu.vue";
 import Icon from "../../../components/Icon.vue";
 import WebReporterIcon from "../../../assets/general/icons/WebReporterIcon.vue";
 import BetoAvatar from "../../../assets/avatars/beto.svg";
+import DashboardIcon from "../../../assets/general/icons/DashboardIcon.vue";
+import RegisterBoxIcon from "../../../assets/general/icons/RegisterBoxIcon.vue";
+import DateSalesIcon from "../../../assets/general/icons/DateSales.vue";
+import WebReporterBottomMenu from "../components/WebReporterBottomMenu.vue";
 const route = useRoute();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {
@@ -165,6 +177,18 @@ const toggleMenu = () => {
   fill: var(--color-contrast);
   width: calc(15px * var(--web-report-icon-size));
   height: calc(15px * var(--web-report-icon-size));
+}
+
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-content{
+  flex:1;
+  overflow-y: scroll;
+
 }
 
 @media (min-width: 360px) {

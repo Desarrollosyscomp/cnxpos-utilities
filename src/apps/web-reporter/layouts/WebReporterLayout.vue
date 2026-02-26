@@ -26,7 +26,7 @@
       </div>
       <div class="app-content scrollable-y">
           <router-view />
-          <RightMenu></RightMenu>
+          <WebReporterRightMenu></WebReporterRightMenu>
         </div>
     </div>
   </template>
@@ -48,7 +48,7 @@
   import LeftMenu from "../../../components/LeftMenu.vue";
   import Icon from "../../../components/Icon.vue";
   import WebReporterIcon from "../../../assets/general/icons/WebReporterIcon.vue";
-  import RightMenu from "../components/RightMenu.vue";
+  import WebReporterRightMenu from "../components/WebReporterRightMenu.vue";
 import BetoAvatar from "../../../assets/avatars/beto.svg";
 
   const route = useRoute();

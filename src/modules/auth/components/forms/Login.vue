@@ -17,10 +17,10 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "../../store/auth.store";
-import { TFormLogin } from "../../interfaces/auth.type";
+import { type TFormLogin } from "../../interfaces/auth.type";
 let showPassword = ref(false);
 
 const authStore = useAuthStore();
