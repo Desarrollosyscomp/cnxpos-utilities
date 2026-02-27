@@ -47,57 +47,57 @@
       <div v-else class="daily-sales-container">
         <h3 class="web-reporter-title">Informes de <br />ventas por día</h3>
         <div class="cards-container">
-          <Card class="test-card">
+          <Card :dark="true" class="test-card">
             <CardContent>
               <div class="text-container">
                 <span class="title">Resumen</span>
                 <div class="item">
                   <span class="item-bold">Total ventas</span>
-                  <span>$1.964.059.99</span>
+                  <span>{{ calcTotal() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total productos</span>
-                  <span>19</span>
+                  <span>{{ calcProductTotal() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total facturas</span>
-                  <span>9</span>
+                  <span>{{ calcInvoiceTotal() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Costo</span>
-                  <span>$975.331</span>
+                  <span>{{ calcCostTotal() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>$687.593.37</span>
+                  <span>{{ calcUtilidadTotal() }}</span>
                 </div>
               </div>
             </CardContent>
           </Card>
-          <Card class="test-card">
+          <Card class="test-card" v-for="item in array" :key="item.id">
             <CardContent>
               <span class="title">Almacén</span> <br />
-              <span class="warehouse">Cap Club 82</span>
+              <span class="warehouse">{{ item.nomalmacen }}</span>
               <div class="text-align">
                 <div class="item-2">
                   <span> <b>Subtotal</b></span>
-                  <span>$1.263.932.99</span>
+                  <span>{{ numberToCurrency(item.subtot) }}</span>
                 </div>
                 <div class="item-2">
                   <span> <b>Total</b></span>
-                  <span>$1.964.059.99</span>
+                  <span>{{ numberToCurrency(item.total) }}</span>
                 </div>
                 <div class="item-2">
                   <span> <b>Costo</b></span>
-                  <span>$1.964.059.99</span>
+                  <span>{{ numberToCurrency(item.costoacum) }}</span>
                 </div>
               </div>
               <div class="buttons">
-                <button class="form-button-2" @click="openModal = true">
+                <button class="form-button-2" @click="openDetail(item)">
                   Detalles
                 </button>
                 <button class="form-button-2" @click="router.push('invoices')">
@@ -106,26 +106,54 @@
               </div>
             </CardContent>
           </Card>
-          <Modal
-            :openModal="openModal"
-            @closeModal="openModal = false"
-            width="80vw"
-          >
+          <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
             <div class="modal-content">
               <div class="modal-title">
-                <span class="color-contrast font-warehouse">Cap Club 81</span>
+                <span class="color-contrast font-warehouse">{{
+                  selectedItem.nomalmacen
+                }}</span>
                 <h3 class="color-contrast">Detalle de ventas</h3>
               </div>
-              <div v-for="(item, index) in items" :key="index">
+              <div>
                 <div class="item-3">
-                  <span class="item-3-bold">{{ item.item }}</span>
-                  <span class="item3-value">{{ item.value }}</span>
+                  <span class="item-3-bold">Fecha</span>
+                  <span class="item3-value">{{ parseDate(selectedItem.fecha) }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
+                  <span class="item-3-bold">Id del almacen</span>
+                  <span class="item3-value">{{ selectedItem.idalmacen }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
+                  <span class="item-3-bold">Subtotal</span>
+                  <span class="item3-value">{{ numberToCurrency(selectedItem.subtot) }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
+                  <span class="item-3-bold">Costo</span>
+                  <span class="item3-value">{{ numberToCurrency(selectedItem.costoacum) }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
+                  <span class="item-3-bold">Facturas</span>
+                  <span class="item3-value">{{ selectedItem.cantfact }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
+                  <span class="item-3-bold">Productos vendidos</span>
+                  <span class="item3-value">{{ selectedItem.prodvendid }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
+                  <span class="item-3-bold">Total</span>
+                  <span class="item3-value">{{ numberToCurrency(selectedItem.total) }}</span>
                 </div>
                 <hr />
               </div>
               <div class="container-button">
                 <button
-                  @click="openModal = false"
+                  @click="closeModal()"
                   class="form-button-2 color-button"
                 >
                   Regresar
@@ -141,17 +169,21 @@
 <script setup>
 import Icon from "../../../../../../components/Icon.vue";
 import ConexionPosLogo from "../../../../../../assets/logos/ConexionPosLogo.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Card from "../Card.vue";
 import CardContent from "../CardContent.vue";
 import Modal from "../../../../../../components/Modal.vue";
 import { useRouter } from "vue-router";
+import { useDailySalesStore } from "../../store/daily-sales.store";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+import { parseDate } from "../../../../../../utils/parsers/parse-date";
 const isVisible = ref(false);
 const isVisible2 = ref(false);
 const openModal = ref(false);
+const selectedItem = ref(null);
 const router = useRouter();
 const items = ref([
-  { item: "Fecha", value: "2024-01-01" },
+  { item: "Fecha", value: "2025-01-01" },
   { item: "Id del almacen", value: "1" },
   { item: "Subtotal", value: "$1.263.932.99" },
   { item: "Total", value: "$1.263.932.99" },
@@ -162,6 +194,77 @@ const items = ref([
 
 const showDate = ref(false);
 const modelValue = ref("");
+
+const dailySalesStore = useDailySalesStore();
+
+const array = ref([]);
+
+const setArray = async () => {
+  let response = await dailySalesStore.dailySales();
+  array.value = response.data;
+  console.log(array.value);
+};
+
+const calcTotal = () => {
+  let total = 0;
+  for (let i = 0; i < array.value.length; i++) {
+    total += array.value[i].total;
+  }
+  return numberToCurrency(total);
+};
+
+const calcProductTotal = () => {
+  let totalProducts = 0;
+  for (let i = 0; i < array.value.length; i++) {
+    totalProducts += array.value[i].prodvendid;
+  }
+  return totalProducts;
+};
+const calcInvoiceTotal = () => {
+  let totalInvoices = 0;
+  for (let i = 0; i < array.value.length; i++) {
+    totalInvoices += array.value[i].cantfact;
+  }
+  return totalInvoices;
+};
+
+const calcCostTotal = () => {
+  let totalCost = 0;
+  for (let i = 0; i < array.value.length; i++) {
+    totalCost += array.value[i].costoacum;
+  }
+  return numberToCurrency(totalCost);
+};
+
+const calcUtilidadTotal = () => {
+  let totalUtilidad = 0;
+  for (let i = 0; i < array.value.length; i++) {
+    totalUtilidad += array.value[i].total - array.value[i].costoacum;
+  }
+  return numberToCurrency(totalUtilidad);
+};
+
+const extractWarehouseName = () => {
+  let warehouse = "";
+  for (let i = 0; i < array.value.length; i++) {
+    warehouse = array.value[i].nomalmacen;
+  }
+  return warehouse;
+};
+
+const openDetail = (item) => {
+  selectedItem.value = item;
+  openModal.value = true;
+  console.log(selectedItem.value);
+};
+
+const closeModal = () => {
+  openModal.value = false;
+  selectedItem.value = null;
+};
+onMounted(async () => {
+  await setArray();
+});
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -187,10 +290,10 @@ const modelValue = ref("");
 }
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 }
 .main-container {
   padding-top: 5px;
@@ -261,15 +364,6 @@ const modelValue = ref("");
   align-items: center;
   gap: calc(10px * var(--gap-size));
   overflow-y: scroll;
-}
-
-.cards-container > .card:nth-child(2) {
-  color: var(--color-contrast);
-  background-color: var(--color-primary-light);
-  [data-theme="dark"] & {
-    color: var(--color-contrast);
-    background-color: var(--color-primary);
-  }
 }
 
 .text-container {
@@ -345,8 +439,7 @@ const modelValue = ref("");
 }
 
 .test-card {
-  background-color: var(--color-contrast);
-  color: white;
+  color: var(--color-contrast);
   width: 90%;
 }
 

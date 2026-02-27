@@ -176,7 +176,19 @@ const data = faker.generate({
   }
 });
 
+const data2 = faker.generate({
+  limit: 5,
+  columns: {
+    product: "word",
+    cost: "$(1000,5000)",
+    price: "$(1000,5000)",
+    is_active: "bool",
+    created_at: "date",
+  }
+});
+
 console.log(data);
+console.log(data2);
 let date = ref(new Date());
 let openModal = ref(false);
 
