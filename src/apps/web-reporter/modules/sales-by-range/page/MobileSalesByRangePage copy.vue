@@ -1,10 +1,5 @@
 <template>
-    <div class="hide-on-mobile">
-        <DesktopDailySalesMain />
-    </div>
-    <div class="hide-on-desktop">
-        <MobileDailySalesMain />
-    </div>
+    <MobileDailySalesMain />
 </template>
 <script setup>
 import DesktopDailySalesMain from "../components/desktop/DesktopDailySalesMain.vue";

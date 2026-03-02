@@ -4,6 +4,8 @@ import HomeView from "../components/HelloWorld.vue";
 import { AuthRoutes } from "../modules/auth/router/auth.routes";
 import { HomeRoutes } from "../modules/home/router/home.routes";
 import { WebReporterRoutes } from "../apps/web-reporter/routes/web-reporter.router";
+import { RangeSalesRoutesDesktop } from "../apps/web-reporter/modules/sales-by-range/routes/range-sales.routes";
+import { RangeSalesRoutesMobile } from "../apps/web-reporter/modules/sales-by-range/routes/mobile-range-sales.routes";
 
 const routes = [
   {
@@ -15,6 +17,7 @@ const routes = [
   ...AuthRoutes,
   ...HomeRoutes,
   ...WebReporterRoutes,
+  ...(import.meta.env.VITE_TARGET === 'mobile' ? RangeSalesRoutesMobile : RangeSalesRoutesDesktop),
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",

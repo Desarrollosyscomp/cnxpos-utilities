@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(sale, i) in warehousesArray" @click="openModal(sale)">
+                            <tr v-for="(sale) in warehousesArray" @click="openModal(sale)">
                                 <td class="text-center">{{sale.fecha}}</td>
                                 <td class="text-center">{{sale.idalmacen}}</td>
                                 <td class="text-center">$ {{sale.subtot}}</td>
@@ -208,7 +208,7 @@ const loadDailySales = async () => {
   console.log(warehousesArray.value);
 };
 
-const invoicesArray = ref<TWarehouseDayInvoiceDetail[]>([]);
+const invoicesArray = ref<TWarehouseDayInvoice[]>([]);
 const loadInvoices = async (date: string, warehouse_id: string) => {
     let response = await dailySalesStore.dailyInvoices(date, warehouse_id);
     invoicesArray.value = response.data;

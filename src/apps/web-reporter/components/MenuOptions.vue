@@ -2,7 +2,7 @@
   <Icon :path="mdiCurrencyUsd" :class="isActive('daily-sales')" @click="redirect('daily-sales')"/>
   <DashboardIcon :class="isActive('dashboard')" @click="redirect('dashboard')"/>
   <RegisterBoxIcon :class="isActive('registers')" @click="redirect('registers')"/>
-  <DateSalesIcon :class="isActive('date-sales')" @click="redirect('date-sales')"/>
+  <DateSalesIcon :class="isActive('range-sales')" @click="redirect('range-sales')"/>
 </template>
 <script setup lang="ts">
 // @ts-ignore
