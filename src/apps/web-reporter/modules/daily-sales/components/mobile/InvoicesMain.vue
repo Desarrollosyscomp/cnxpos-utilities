@@ -2,6 +2,10 @@
   <div class="app-background"></div>
   <div class="container">
     <div class="invoice-container">
+      <div class="back-button clickable" @click="router.push('/web-report-v2/daily-sales')">
+        <Icon :path="mdiArrowLeftCircle" class="back-icon" />
+        <span>Informe de ventas por día</span>
+      </div> 
       <div class="invoice-title">
         <h3>Facturas del día</h3>
         <span class="font-montserrat-bold">Cap Club 81</span>
@@ -30,63 +34,28 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card>
+          <Card v-for="(invoice, index) in invoices" :key="index">
             <CardContent>
               <div class="text-container">
-                <span>Factura #5367</span>
+                <span>Factura #{{ invoice.numero }}</span>
                 <div class="item">
                   <span class="item-bold">Fecha</span>
-                  <span>2024-01-01</span>
+                  <span>{{ parseDateWhitHour(invoice.fecha) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Subtotal</span>
-                  <span>$1.263.932.99</span>
+                  <span> {{ numberToCurrency(invoice.subtotal) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Impuesto</span>
-                  <span>$123.932.99</span>
+                  <span> {{ numberToCurrency(invoice.valimpuesto) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor Total</span>
-                  <span>$1.387.865.98</span>
-                </div>
-                <hr />
-                <div class="buttons">
-                  <button
-                    class="form-button-2 color-button-2"
-                    @click="router.push('/web-report-v2/invoice-details')"
-                  >
-                    Ver Detalles
-                  </button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <div class="text-container">
-                <span class="text-align-start">Factura #5368</span>
-                <div class="item-3">
-                  <span class="item-3-bold">Fecha</span>
-                  <span>2024-01-01</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Subtotal</span>
-                  <span>$1.263.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Impuesto</span>
-                  <span>$123.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Valor Total</span>
-                  <span>$1.387.865.98</span>
+                  <span> {{ numberToCurrency(invoice.valortotal) }}</span>
                 </div>
                 <hr />
                 <div class="buttons">
@@ -106,10 +75,28 @@
   </div>
 </template>
 <script setup>
+import { onMounted } from "vue";
+import { useDailySalesStore } from "../../store/daily-sales.store";
 import Card from "../Card.vue";
 import CardContent from "../CardContent.vue";
 import { useRouter } from "vue-router";
 const router = useRouter();
+const dailySalesStore = useDailySalesStore();
+import { ref } from "vue";
+import { parseDateWhitHour } from "../../../../../../utils/parsers/parse-date";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+import { mdiArrowLeftCircle, mdiArrowLeftDropCircle } from "@mdi/js";
+import Icon from "../../../../../../components/Icon.vue";
+const invoices = ref([]);
+
+const setdailySalesforWarehouse = async () => {
+  const response = await dailySalesStore.dailySalesforWarehouse();
+  invoices.value = response.data;
+};
+
+onMounted(async () => {
+  await setdailySalesforWarehouse();
+});
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -124,19 +111,18 @@ const router = useRouter();
 }
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 }
 .invoice-container {
   width: 90%;
-  height: 80%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  padding-top: 10px;
 }
 .invoice-title {
   color: var(--color-contrast);
@@ -181,7 +167,6 @@ const router = useRouter();
   width: 90%;
 }
 .size-input {
-  /* background-color: var(--color-primary-light); */
   width: 100%;
 }
 .daily-sales-container {
@@ -263,6 +248,20 @@ const router = useRouter();
   border-color: var(--color-contrast) !important;
   color: var(--color-contrast) !important;
   margin-top: 10px;
+}
+.back-button {
+  color: var(--color-contrast);
+  width: 100%;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+.back-icon {
+  fill: var(--color-contrast);
+  width: 20px;
 }
 @media (min-width: 360px) {
   .invoice-title h3 {

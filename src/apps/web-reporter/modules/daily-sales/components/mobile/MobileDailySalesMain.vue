@@ -298,7 +298,7 @@ onMounted(async () => {
 .main-container {
   padding-top: 5px;
   width: 100%;
-  height: 80vh;
+  height: 88%;
   display: flex;
   flex-direction: column;
   justify-content: center;

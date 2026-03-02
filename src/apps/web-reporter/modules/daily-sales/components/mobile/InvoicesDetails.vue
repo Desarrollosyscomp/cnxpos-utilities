@@ -1,6 +1,13 @@
 <template>
   <div class="app-background"></div>
   <div class="container">
+    <div
+      class="back-button clickable"
+      @click="router.push('/web-report-v2/daily-sales')"
+    >
+      <Icon :path="mdiArrowLeftCircle" class="back-icon" />
+      <span></span>
+    </div>
     <div class="invoice-container">
       <div class="invoice-title">
         <h3>
@@ -10,82 +17,60 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card class="test-card">
+          <Card :dark="true">
             <CardContent>
               <div class="text-container">
                 <span>Detalle de valores</span>
                 <div class="item">
                   <span class="item-bold">Subtotal</span>
-                  <span>$1.263.932.99</span>
+                  <span>{{ calcSubtotal() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor de impuesto</span>
-                  <span>$123.932.99</span>
+                  <span>{{ calcTotalTaxes() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total descuento</span>
-                  <span>$123.932</span>
+                  <span>{{ calcTotalDiscounts() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total venta</span>
-                  <span>$1.387.865.98</span>
+                  <span>{{ calcTotalSale() }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Cliente</span>
-                  <span>Cap Club 81</span>
+                  <span>{{ "Camilo Gracia " }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>$1.387.865.98</span>
+                  <span>{{ "pendiente " }}</span>
                 </div>
                 <hr />
               </div>
             </CardContent>
           </Card>
-          <Card class="test-card">
+          <Card v-for="(item, index) in details" :key="index" class="cards">
             <CardContent>
               <span>Banda cap cleaner banda ajustable</span>
               <div class="text-container">
                 <div class="item-3">
                   <span class="item-bold">Valor</span>
-                  <span>$1.263.932.99</span>
+                  <span>{{ numberToCurrency(item.valorprod) }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Descuento</span>
-                  <span>$123.932.99</span>
+                  <span>{{ numberToCurrency(item.descuento) }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Cantidad</span>
-                  <span>24</span>
-                </div>
-                <hr />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <span>Banda cap cleaner banda ajustable</span>
-              <div class="text-container">
-                <div class="item-3">
-                  <span class="item-bold">Valor</span>
-                  <span>$1.263.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-bold">Descuento</span>
-                  <span>$123.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-bold">Cantidad</span>
-                  <span>24</span>
+                  <span>{{ item.cantidad }}</span>
                 </div>
                 <hr />
               </div>
@@ -97,8 +82,55 @@
   </div>
 </template>
 <script setup>
+import { onMounted, ref } from "vue";
+import { useDailySalesStore } from "../../store/daily-sales.store";
 import Card from "../Card.vue";
 import CardContent from "../CardContent.vue";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+
+const dailySalesStore = useDailySalesStore();
+
+let details = ref([]);
+const setInvoiceDetails = async () => {
+  const response = await dailySalesStore.dailySalesDetailsforInvoice();
+  details.value = response.data;
+};
+
+const calcSubtotal = () => {
+  let subTotal = 0;
+  for (let i = 0; i < details.value.length; i++) {
+    subTotal += details.value[i].subtotal;
+  }
+  return numberToCurrency(subTotal);
+};
+
+const calcTotalTaxes = () => {
+  let totalTaxes = 0;
+  for (let i = 0; i < details.value.length; i++) {
+    totalTaxes += details.value[i].valimpuesto;
+  }
+  return numberToCurrency(totalTaxes);
+};
+
+const calcTotalDiscounts = () => {
+  let totalDiscounts = 0;
+  for (let i = 0; i < details.value.length; i++) {
+    totalDiscounts += details.value[i].valdescuentos;
+  }
+  return numberToCurrency(totalDiscounts);
+};
+
+const calcTotalSale = () => {
+  let totalSale = 0;
+  for (let i = 0; i < details.value.length; i++) {
+    totalSale += details.value[i].valortotal;
+  }
+  return numberToCurrency(totalSale);
+};
+
+onMounted(() => {
+  setInvoiceDetails();
+});
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -107,14 +139,14 @@ import CardContent from "../CardContent.vue";
 
 .container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: end;
 }
 .invoice-container {
   width: 90%;
-  height: 85%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,35 +216,12 @@ import CardContent from "../CardContent.vue";
   flex: 1;
 }
 .cards-container {
-  color: var(--color-primary);
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   overflow-y: scroll;
-}
-
-
-.cards-container > .card:nth-child(2) {
-  color: var(--color-contrast);
-  text-align: start;
-  font-weight: bold;
-  background-color: var(--color-primary-light);
-  [data-theme="dark"] & {
-    color: var(--color-contrast);
-    background-color: var(--color-primary-light);
-  }
-}
-.cards-container > .card:nth-child(3) {
-  color: var(--color-contrast);
-  text-align: start;
-  font-weight: bold;
-  background-color: var(--color-primary-light);
-  [data-theme="dark"] & {
-    color: var(--color-contrast);
-    background-color: var(--color-primary-light);
-  }
 }
 
 .item {
@@ -259,15 +268,16 @@ import CardContent from "../CardContent.vue";
     border-color: var(--color-primary);
   }
 }
-.test-card {
-  background-color: var(--color-contrast);
-}
 .color-button-2 {
   border-color: var(--color-contrast) !important;
   color: var(--color-contrast) !important;
   margin-top: 10px;
 }
 .item-bold {
+  font-weight: bold;
+}
+.cards {
+  text-align: start;
   font-weight: bold;
 }
 </style>

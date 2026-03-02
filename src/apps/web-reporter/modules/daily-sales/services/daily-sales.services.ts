@@ -44,6 +44,64 @@ export const dailySalesService = {
     };
   },
 
+  dailySalesforWarehouse: async (): Promise<IServiceResponse> => {
+    const faker = new FakerService();
+    const data = faker.generate({
+      limit: 5,
+      columns: {
+        idfactura: "int(100,1000)",
+        numero: "int(100,1000)",
+        fecha: "date",
+        subtotal: "int(10000,100000)",
+        valimpuesto: "int(10000,100000)",
+        valortotal: "int(100000,1000000)",
+        valdescuentos: "int(100,1000)",
+        hora: "date",
+        idalmacen: "int(1,10)",
+        nomalmacen: "string[1,5]",
+      },
+    });
+    return {
+      response: {
+        daily_sales: data,
+      },
+      status: 200,
+      message: "Http Response",
+      name: "HttpResponse",
+    };
+  },
+  dailySalesDetailsforInvoice: async (): Promise<IServiceResponse> => {
+    const faker = new FakerService();
+    const data = faker.generate({
+      limit: 5,
+      columns: {
+        numero: "int(100,1000)",
+        valimpuesto: "int(10000,100000)",
+        subtotal: "int(10000,100000)",
+        valdescuentos: "int(100,1000)",
+        valortotal: "int(100000,1000000)",
+        descripcion: "string[1,100]",
+        valorprod: "int(10000,100000)",
+        descuento: "int(100,1000)",
+        porcdesc: "int(1,10)",
+        fecha: "date",
+        nombres: "string[1,30]",
+        apellidos: "string[1,30]",
+        cantidad: "int(1,10)",
+        idalmacen: "int(1,10)",
+        total_costo: "int(10000,100000)",
+      },
+    });
+    return {
+      response: {
+        daily_sales: data,
+      },
+      status: 200,
+      message: "Http Response",
+      name: "HttpResponse",
+    };
+  },
+
   // loadPermissions: async (token: string) => {
   //   return axios.get({
   //     url: `${URL_API}/permissions`,
