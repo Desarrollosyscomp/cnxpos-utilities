@@ -1,4 +1,5 @@
 <template>
+  NOSWITCHHH
   <left-menu :is-open="menuOpen" @close-menu="menuOpen = false">
     <div class="menu-container">
       <div class="menu-content">

@@ -1,4 +1,4 @@
-export const DashboardRoutes = [
+export const DashboardRouter = [
     // path: "/web-report-v2/",
     // component: () => {
     //   if (import.meta.env.VITE_TARGET === "mobile") {

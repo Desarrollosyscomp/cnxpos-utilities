@@ -1,4 +1,4 @@
-export const AuthRoutes = [
+export const AuthRouter = [
     {
         path: '/auth',
         component: ()=>{

@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../components/HelloWorld.vue";
-import { DailySalesRoutes } from "../apps/web-reporter/modules/daily-sales/routes/daily-sales.routes";
-import { AuthRoutes } from "../modules/auth/router/auth.routes.mobile";
-import { HomeRoutes } from "../modules/home/router/home.routes";
+// import { AuthRouter } from "../modules/auth/router/auth.router";
+// import { HomeRouter } from "../modules/home/router/home.router";
+// import { WebReporterRouter } from "../apps/web-reporter/router/web-reporter.router";
+// import { RangeSalesRouterDesktop } from "../apps/web-reporter/modules/sales-by-range/router/range-sales.router";
+import { RangeSalesRouterMobile } from "../apps/web-reporter/modules/sales-by-range/router/mobile-range-sales.router";
 
 const routes = [
   {
@@ -12,9 +14,10 @@ const routes = [
     meta: {},
     component: HomeView,
   },
-  ...DailySalesRoutes,
-  ...AuthRoutes,
-  ...HomeRoutes
+  // ...AuthRouter,
+  // ...HomeRouter,
+  // ...WebReporterRouter,
+  ...RangeSalesRouterMobile,
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",
@@ -49,44 +52,28 @@ const router = createRouter({
   routes,
 });
 
-//   const loadInitialEnpoints = () => {
-//   const authStore = useAuthStore();
-//   authStore.loadPermissions();
-//   const appStore = useAppStore();
-//   appStore.loadSettings();
-//   }
+  // const loadInitialEnpoints = () => {
+  // const authStore = useAuthStore();
+  // authStore.loadPermissions();
+  // const appStore = useAppStore();
+  // appStore.loadSettings();
+  // }
 
-router.beforeEach((to, from, next) => {
-  from;
-  to;
+  router.beforeEach((to, from, next) => {
+    from;
+    // const authStore = useAuthStore();
+    // const toPathSegments = to.path.split("/");
+    // let { redirect } = verifyRouteAccess(authStore, toPathSegments);
 
-//   const localRoute = isLocalRoute(to.path)
-//   const authStore = useAuthStore();
-//   if (!localRoute.exist) {
-//     //En este scope se asume que la ruta requiere que el usuario esté logueado
-//     if (!authStore.user.token) {
-//       next('/login')
-//       return
-//     }
-    
-//     const hasPermissions = verifyRouteInPermissions(to.path, authStore);
-//     if (!hasPermissions) {
-//       next('/unauthorized')
-//       return
-//     }
-//   }
-//   if(to.meta.type == "only-guest" && authStore.user.token){
-//     next('/')
-//     return
-//   }
-//   if(to.meta.type == "private" && !authStore.user.token){
-//     next('/login')
-//     return
-//   }
-//   if(!to.meta.blockInitialEndpoints){
-//     loadInitialEnpoints()
-//   }
-  next();
-});
-
+    //DESCOMENTAR CUANDO SE HAGA LA AUTENTICACION
+    // if (to.path === "/") {
+    //   next('/auth/login')
+    //   return
+    // }
+    if (to.path === "/") {
+      next('/home/welcome')
+      return
+    }
+    next();
+  });
 export default router;

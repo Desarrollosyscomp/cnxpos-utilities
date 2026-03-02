@@ -12,65 +12,70 @@
       <div class="invoice-title">
         <h3>
           Detalles de la factura <br />
-          #5368
+          #{{'[[AQUI VA EL ID DE LA FACTURA]]'}}
         </h3>
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card :dark="true">
+          <Card dark>
             <CardContent>
               <div class="text-container">
                 <span>Detalle de valores</span>
                 <div class="item">
                   <span class="item-bold">Subtotal</span>
-                  <span>{{ calcSubtotal() }}</span>
+                  <span>{{numberToCurrency(sumary.subtotal)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor de impuesto</span>
-                  <span>{{ calcTotalTaxes() }}</span>
+                  <span>{{numberToCurrency(sumary.valimpuesto)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total descuento</span>
-                  <span>{{ calcTotalDiscounts() }}</span>
+                  <span>{{numberToCurrency(sumary.valdescuentos)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total venta</span>
-                  <span>{{ calcTotalSale() }}</span>
+                  <span>{{numberToCurrency(sumary.valortotal)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Cliente</span>
-                  <span>{{ "Camilo Gracia " }}</span>
+                  <span>{{sumary.nombres}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>{{ "pendiente " }}</span>
+                  <span>{{"[[DE DONDE SACO LA UTILIDAD???]]"}}</span>
                 </div>
                 <hr />
               </div>
             </CardContent>
           </Card>
-          <Card v-for="(item, index) in details" :key="index" class="cards">
+          <Card class=""
+            v-for="(invoice, index) in invoices"
+            :key="index"
+          >
             <CardContent>
-              <span>Banda cap cleaner banda ajustable</span>
+              
+                <span class="font-montserrat-bold">{{invoice.descripcion}}</span>
+              
               <div class="text-container">
                 <div class="item-3">
                   <span class="item-bold">Valor</span>
-                  <span>{{ numberToCurrency(item.valorprod) }}</span>
+                  <span>{{numberToCurrency(invoice.valorprod)}}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Descuento</span>
-                  <span>{{ numberToCurrency(item.descuento) }}</span>
+                  <span>{{numberToCurrency(invoice.descuento)}}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Cantidad</span>
-                  <span>{{ item.cantidad }}</span>
+                  <span>{{invoice.cantidad}}</span>
                 </div>
                 <hr />
               </div>
@@ -81,56 +86,59 @@
     </div>
   </div>
 </template>
-<script setup>
-import { onMounted, ref } from "vue";
-import { useDailySalesStore } from "../../store/daily-sales.store";
+<script setup lang="ts">
+//@ts-ignore
 import Card from "../Card.vue";
+//@ts-ignore
 import CardContent from "../CardContent.vue";
+import { useDailySalesStore } from "../../store/daily-sales.store";
+import { onMounted, reactive, ref } from "vue-demi";
+import type { TWarehouseDayInvoiceDetail } from "../../interfaces/warehouse-day-invoice-detail.type";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+import { useRoute, useRouter } from "vue-router";
+import { mdiArrowLeftCircle } from "@mdi/js";
 
 const dailySalesStore = useDailySalesStore();
+const route = useRoute();
+const router = useRouter();
 
-let details = ref([]);
-const setInvoiceDetails = async () => {
-  const response = await dailySalesStore.dailySalesDetailsforInvoice();
-  details.value = response.data;
-};
+let invoices = ref < TWarehouseDayInvoiceDetail[] > ([])
+let sumary = reactive({
+  numero: 0,
+  valimpuesto: 0,
+  subtotal: 0,
+  valdescuentos: 0,
+  valortotal: 0,
+  descripcion: "",
+  valorprod: 0,
+  descuento: 0,
+  porcdesc: 0,
+  fecha: "",
+  nombres: "",
+  apellidos: "",
+  cantidad: 0,
+  idalmacen: 0,
+  total_costo: 0
+})
 
-const calcSubtotal = () => {
-  let subTotal = 0;
-  for (let i = 0; i < details.value.length; i++) {
-    subTotal += details.value[i].subtotal;
+const loadInvoiceDetails = async () => {
+  let { warehouse_id, invoice_id } = route.params;
+  const response = await dailySalesStore.dailyInvoiceDetails(warehouse_id as string, invoice_id as string)
+  if (!response.error) {
+    invoices.value = response.data.daily_invoice_details
+    // sumary = response.data.datos_factura
+    sumary.nombres = response.data.datos_factura.nombres
+    sumary.valimpuesto = response.data.datos_factura.valimpuesto
+    sumary.valdescuentos = response.data.datos_factura.valdescuentos
+    sumary.valortotal = response.data.datos_factura.valortotal
+    sumary.subtotal = response.data.datos_factura.subtotal
   }
-  return numberToCurrency(subTotal);
-};
-
-const calcTotalTaxes = () => {
-  let totalTaxes = 0;
-  for (let i = 0; i < details.value.length; i++) {
-    totalTaxes += details.value[i].valimpuesto;
-  }
-  return numberToCurrency(totalTaxes);
-};
-
-const calcTotalDiscounts = () => {
-  let totalDiscounts = 0;
-  for (let i = 0; i < details.value.length; i++) {
-    totalDiscounts += details.value[i].valdescuentos;
-  }
-  return numberToCurrency(totalDiscounts);
-};
-
-const calcTotalSale = () => {
-  let totalSale = 0;
-  for (let i = 0; i < details.value.length; i++) {
-    totalSale += details.value[i].valortotal;
-  }
-  return numberToCurrency(totalSale);
-};
+}
 
 onMounted(() => {
-  setInvoiceDetails();
-});
+  loadInvoiceDetails()
+})
+
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -144,6 +152,7 @@ onMounted(() => {
   justify-content: center;
   align-items: end;
 }
+
 .invoice-container {
   width: 90%;
   height: 90%;
@@ -152,6 +161,7 @@ onMounted(() => {
   align-items: center;
   padding-top: 10px;
 }
+
 .invoice-title {
   color: var(--color-contrast);
   text-align: center;
@@ -184,7 +194,7 @@ onMounted(() => {
   text-align: center;
 }
 
-.bubble > :nth-child(1) {
+.bubble> :nth-child(1) {
   font-weight: 300;
   font-size: calc(16px * var(--font-size-proportion));
   margin-bottom: 10px;
@@ -195,15 +205,18 @@ onMounted(() => {
   width: 85%;
   height: 10vh;
 }
+
 .search {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
+
 .size-input {
   width: 100%;
 }
+
 .daily-sales-container {
   width: 100%;
   height: 40%;
@@ -215,6 +228,7 @@ onMounted(() => {
   padding-top: 10px;
   flex: 1;
 }
+
 .cards-container {
   width: 100%;
   height: 100%;
@@ -224,12 +238,37 @@ onMounted(() => {
   overflow-y: scroll;
 }
 
+/* .cards-container>.card:nth-child(2) {
+  color: var(--color-contrast);
+  text-align: start;
+  font-weight: bold;
+  background-color: var(--color-primary-light);
+
+  [data-theme="dark"] & {
+    color: var(--color-contrast);
+    background-color: var(--color-primary-light);
+  }
+}
+
+.cards-container>.card:nth-child(3) {
+  color: var(--color-contrast);
+  text-align: start;
+  font-weight: bold;
+  background-color: var(--color-primary-light);
+
+  [data-theme="dark"] & {
+    color: var(--color-contrast);
+    background-color: var(--color-primary-light);
+  }
+} */
+
 .item {
   color: var(--color-primary);
   font-size: 12px;
   font-weight: 500;
   display: flex;
   justify-content: space-between;
+
   [data-theme="dark"] & {
     color: var(--color-primary);
   }
@@ -241,6 +280,7 @@ onMounted(() => {
   font-weight: 500;
   display: flex;
   justify-content: space-between;
+
   [data-theme="dark"] & {
     color: var(--color-contrast);
   }
@@ -249,20 +289,22 @@ onMounted(() => {
 .text-container {
   text-align: start;
   font-weight: bold;
-  color: var(--color-primary);
   padding-top: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
+
 .buttons {
   display: flex;
   justify-content: center;
 }
+
 .color-button {
   border-color: var(--color-primary) !important;
   color: var(--color-primary) !important;
   margin-top: 10px;
+
   [data-theme="dark"] & {
     color: var(--color-primary);
     border-color: var(--color-primary);
@@ -273,6 +315,7 @@ onMounted(() => {
   color: var(--color-contrast) !important;
   margin-top: 10px;
 }
+
 .item-bold {
   font-weight: bold;
 }

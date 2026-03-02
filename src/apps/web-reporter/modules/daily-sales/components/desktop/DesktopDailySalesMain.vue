@@ -24,6 +24,7 @@
         </div>
         <div class="data date-field" v-else>
             <div class="search">
+                <span class="font-montserrat-bold text-contrast page-title">Informe de ventas por día</span>
                 <input type="date" class="form-input searcher-input" v-model="date">
             </div>
             <CenterAndScroll>
@@ -41,14 +42,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="sale in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="openModal = true">
-                                <td class="text-center">2024-01-01</td>
-                                <td class="text-center">{{sale}}</td>
-                                <td class="text-center">$1.263.932.99</td>
-                                <td class="text-center">$1.387.865.98</td>
-                                <td class="text-center">3</td>
-                                <td class="text-center">3</td>
-                                <td class="text-center">$1.263.932.99</td>
+                            <tr v-for="(sale) in warehousesArray" @click="openModal(sale)">
+                                <td class="text-center">{{sale.fecha}}</td>
+                                <td class="text-center">{{sale.idalmacen}}</td>
+                                <td class="text-center">$ {{sale.subtot}}</td>
+                                <td class="text-center">$ {{sale.total}}</td>
+                                <td class="text-center">{{sale.cantfact}}</td>
+                                <td class="text-center">{{sale.prodvendid}}</td>
+                                <td class="text-center">$ {{sale.costoacum}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -82,67 +83,77 @@
                     </CardContent>
                 </Card>
             </div>
-            <Modal :openModal="openModal" @close-modal="openModal = false">
-                <div class="details-card-content">
-                    <div class="invoices-list">
-                        <div class="font-montserrat-bold text-contrast text-center">
-                            Facturas del dia
-                        </div>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th class="text-center">Fecha</th>
-                                    <th class="text-center">Subtotal</th>
-                                    <th class="text-center">Impuesto</th>
-                                    <th class="text-center">Valor total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="invoice in [1, 2, 3, 4, 5, 6, 7, 8, 9]" @click="invoice_details_state = InvoiceDetailsState.SELECTED">
-                                    <td class="text-center">2024-01-01</td>
-                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
-                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
-                                    <td class="text-center">$ {{invoice}}.263.932.99</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="invoices-details">
-                        <div
-                            v-if="invoice_details_state === InvoiceDetailsState.NOT_SELECTED"
-                            class="text-contrast font-montserrat-bold text-center">
-                            Haz click sobre una factura para ver más detalles
-                        </div>
-
-                        <div class="w-100" v-else>
-                            <div class="text-contrast font-montserrat-bold text-center">Detalles de la factura #1</div>
+        </div>
+        <Modal :open-modal="open_modal" @close-modal="closeModal" min-height="60vh">
+            <div class="modal-wrapper">
+                <div class="modal-header">
+                    <span class="font-montserrat-bold text-contrast modal-title">Detalles del almacén {{ warehouse_name }}</span>
+                </div>
+                <div class="modal-content-wrapper">
+                    <div class="modal-content">
+                        <div class="invoices-list">
+                            <div class="font-montserrat-bold text-contrast text-center table-title">
+                                Facturas del dia {{ sale_date }}
+                            </div>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Producto</th>
-                                        <th class="text-center">Valor</th>
-                                        <th class="text-center">Descuento</th>
-                                        <th class="text-center">Cantidad</th>
+                                        <th class="text-center">Fecha</th>
+                                        <th class="text-center">Subtotal</th>
+                                        <th class="text-center">Impuesto</th>
+                                        <th class="text-center">Valor total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
-                                    <tr v-for="invoice in [1, 2, 3, 4]">
-                                        <td class="text-center">Producto {{invoice}}</td>
-
-                                        <td class="text-center">$ 1.263.932.99</td>
-                                        <td class="text-center">$ 5.000,00</td>
-                                        <td class="text-center">12</td>
+                                    <tr v-for="invoice in invoicesArray" @click="loadInvoiceDetails(invoice.idalmacen.toString(), invoice.numero.toString())">
+                                        <td class="text-center">{{invoice.fecha}}</td>
+                                        <td class="text-center">{{numberToCurrency(invoice.subtotal)}}</td>
+                                        <td class="text-center">{{numberToCurrency(invoice.valimpuesto)}}</td>
+                                        <td class="text-center">{{numberToCurrency(invoice.valortotal)}}</td>
                                     </tr>
+    
                                 </tbody>
                             </table>
                         </div>
+                        <div class="invoices-details">
+                            <div
+                                v-if="invoice_details_state === InvoiceDetailsState.NOT_SELECTED"
+                                class="text-contrast font-montserrat-bold text-center">
+                                Haz click sobre una factura para ver más detalles
+                            </div>
+    
+                            <div class="w-100" v-else>
+                                <div class="text-contrast font-montserrat-bold text-center table-title">Detalles de la factura #{{ invoice_id }}</div>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center">Producto</th>
+                                            <th class="text-center">Valor</th>
+                                            <th class="text-center">Descuento</th>
+                                            <th class="text-center">Cantidad</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+    
+                                        <tr v-for="invoice in invoiceDetailsArray">
+                                            <td class="text-center">{{invoice.descripcion}}</td>
+    
+                                            <td class="text-center">{{numberToCurrency(invoice.valorprod)}}</td>
+                                            <td class="text-center">{{numberToCurrency(invoice.descuento)}}</td>
+                                            <td class="text-center">{{invoice.cantidad}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-            </Modal>
-        </div>
+                <div class="modal-footer">
+                    <button class="form-button" @click="closeModal">Cerrar</button>
+                </div>
+            </div>
+            
+        </Modal>
 
     </div>
 </template>
@@ -151,46 +162,24 @@ import CenterAndScroll from '../../../../../../components/CenterAndScroll.vue';
 import BetoImg from "../../../../../../assets/avatars/beto.svg"
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png"
 
-import { ref } from 'vue-demi';
+import { onMounted, ref } from 'vue-demi';
 //@ts-ignore
 import Card from "../Card.vue";
 //@ts-ignore
 import CardContent from "../CardContent.vue";
 //@ts-ignore
 import Modal from '../../../../../../components/Modal.vue';
-import { FakerService } from "../../../../../../utils/faker/Faker";
 
-const faker = new FakerService();
+import { useDailySalesStore } from "../../store/daily-sales.store";
+import type { TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.type";
+import type { TWarehouseDayInvoice } from "../../interfaces/warehouse-day-invoice.type";
+import type { TWarehouseDayInvoiceDetail } from '../../interfaces/warehouse-day-invoice-detail.type';
+import { numberToCurrency } from '../../../../../../utils/parsers/number-currency';
 
-const data = faker.generate({
-  limit: 15,
-  columns: {
-    a: "char[2]",
-    b: "word",
-    c: "string[2]",
-    d: "date",
-    e: "int(1,10)",
-    f: "decimal(4,2)",
-    g: "bool",
-    h: "$(1000,5000)"
-  }
-});
+const dailySalesStore = useDailySalesStore();
 
-const data2 = faker.generate({
-  limit: 5,
-  columns: {
-    product: "word",
-    cost: "$(1000,5000)",
-    price: "$(1000,5000)",
-    is_active: "bool",
-    created_at: "date",
-  }
-});
-
-console.log(data);
-console.log(data2);
 let date = ref(new Date());
-let openModal = ref(false);
+let open_modal = ref(false);
 
 enum PageState {
     BETO_MESSAGE = 0,
@@ -210,6 +199,58 @@ enum InvoiceDetailsState {
 let page_state = ref(PageState.DATA);
 let beto_state = ref(BetoState.NOT_FOUND);
 let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
+
+
+const warehousesArray = ref<TWarehouseDaySale[]>([]);
+const loadDailySales = async () => {
+  let response = await dailySalesStore.dailySales();
+  warehousesArray.value = response.data;
+  console.log(warehousesArray.value);
+};
+
+const invoicesArray = ref<TWarehouseDayInvoice[]>([]);
+const loadInvoices = async (date: string, warehouse_id: string) => {
+    let response = await dailySalesStore.dailyInvoices(date, warehouse_id);
+    invoicesArray.value = response.data;
+    console.log(invoicesArray.value);
+};
+const invoiceDetailsArray = ref<TWarehouseDayInvoiceDetail[]>([]);
+const invoice_id = ref<string>("");
+    const loadInvoiceDetails = async (warehouse_id: string, _invoice_id: string) => {
+        invoice_details_state.value = InvoiceDetailsState.SELECTED;
+        let response = await dailySalesStore.dailyInvoiceDetails(warehouse_id, _invoice_id);
+        invoice_id.value = _invoice_id;
+        invoiceDetailsArray.value = response.data.daily_invoice_details;
+        console.log(invoiceDetailsArray.value);
+    };
+    
+    
+const sale_date = ref<string>("");
+    let warehouse_name = ref<string>("");
+const openModal = (sale: TWarehouseDaySale) => {
+    
+    open_modal.value = true;
+    sale_date.value = sale.fecha;
+    warehouse_name.value = sale.nomalmacen;
+    loadInvoices(sale.fecha, sale.idalmacen.toString());
+
+
+
+}
+
+const closeModal = () => {
+    open_modal.value = false;
+    sale_date.value = "";
+    invoice_id.value = "";
+    invoice_details_state.value = InvoiceDetailsState.NOT_SELECTED;
+    invoicesArray.value = [];
+    invoiceDetailsArray.value = [];
+}
+
+onMounted(() => {
+    loadDailySales();
+});
+
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -228,11 +269,14 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 .search {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    
     gap: 10px;
-    margin-top: 40px;
 }
 
+.page-title{
+    font-size: 2rem;
+}
 .searcher-input {
     width: 25%;
     height: 20px;
@@ -293,10 +337,10 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 }
 
 .data {
-    height: 100%;
+    margin-top: 5%;
+    height: 90%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
 }
 
 .table-container {
@@ -305,11 +349,9 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 .summary {
     display: flex;
-    justify-content: end;
+    justify-content: center;
     align-items: center;
     gap: 2rem;
-    padding-right: 10px;
-    padding-bottom: 10px;
 }
 
 .summary-content {
@@ -336,14 +378,43 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
     font-size: calc(0.9rem * var(--message-proportion));
 }
 
-.details-card-content {
+.modal-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+.modal-content-wrapper{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+.modal-title{
+    padding: 15px;
+    font-size: 1.6rem;
+}
+.modal-content {
     width: 90vw;
     display: flex;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.modal-footer{
+    display: flex;
+    justify-content: end;
 }
 
 .invoices-list {
     flex: 1;
     padding: 10px;
+}
+
+.table-title{
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
 }
 
 .invoices-details {

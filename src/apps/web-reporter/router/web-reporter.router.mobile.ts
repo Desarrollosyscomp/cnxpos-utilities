@@ -1,6 +1,6 @@
-export const HomeRoutes = [
+export const HomeRouter = [
     {
-        path: '/home',
+        path: '/web-report-v2',
         // @ts-ignore
         component: () => import('../../../layouts/MobileHomeLayout.vue'),
 

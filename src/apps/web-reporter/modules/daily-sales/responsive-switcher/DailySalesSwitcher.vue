@@ -12,5 +12,5 @@
 </template>
 <script setup>
 import WebReporterLayoutMobile from "../../../layouts/WebReporterLayoutMobile.vue";
-import WebReporterLayout from "../../../layouts/WebReporterLayout.vue";
+import WebReporterLayout from "../../../layouts/WebReporterLayoutDesktop.vue";
 </script>
