@@ -16,7 +16,7 @@ export const dailySalesService = {
     const data = faker.generate({
       limit: 5,
       columns: {
-        fecha: "date",
+        fecha: "int(100000,1000000)",
         idalmacen: "int(1,10)",
         prodvendid: "int(1,10)",
         subtot: "int(10000,100000)",
@@ -44,14 +44,81 @@ export const dailySalesService = {
     };
   },
 
-  // loadPermissions: async (token: string) => {
-  //   return axios.get({
-  //     url: `${URL_API}/permissions`,
-  //     config: {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     },
-  //   });
-  // },
+  dailyInvoices: async (date: string, warehouse_id: string): Promise<IServiceResponse> => {
+    date; warehouse_id;
+    const faker = new FakerService();
+    const data = faker.generate({
+      limit: 5,
+      columns: {
+        fecha: "date",
+        hora: "date",
+        idalmacen: "int(1,5000)",
+        idfactura: "int(1,5000)",
+        nomalmacen: "string[3]",
+        numero: "int(1,5000)",
+        subtotal: "decimal(10,2)",
+        valdescuentos: "int(1,5000)",
+        valimpuesto: "decimal(10,2)",
+        valortotal: "decimal(10,2)",
+      },
+    });
+    return {
+      response: {
+        daily_invoices: data,
+      },
+      status: 200,
+      message: "Http Response",
+      name: "HttpResponse",
+    };
+  },
+
+  dailyInvoiceDetails: async (warehouse_id: string, invoice_id: string): Promise<IServiceResponse> => {
+    warehouse_id; invoice_id;
+    const faker = new FakerService();
+    const data = faker.generate({
+      limit: 5,
+      columns: {
+        numero: "int(1,5000)",
+        valimpuesto: "decimal(10,2)",
+        subtotal: "decimal(10,2)",
+        valdescuentos: "int(1,5000)",
+        valortotal: "int(1,5000)",
+        descripcion: "string[4]",
+        valorprod: "int(1,5000)",
+        descuento: "int(1,5000)",
+        porcdesc: "int(1,5000)",
+        fecha: "date",
+        nombres: "word",
+        apellidos: "word",
+        cantidad: "int(1,5000)",
+        idalmacen: "int(1,5000)",
+        total_costo: "int(1,5000)",
+      },
+    });
+    return {
+      response: {
+        daily_invoice_details: data,
+        datos_factura: {
+          numero: 5463,
+          valimpuesto: 65458.99,
+          subtotal: 348421.01,
+          valdescuentos: 0,
+          valortotal: 413880,
+          descripcion: "940 NEW YORK YANKEES OS",
+          valorprod: 219990,
+          descuento: 0,
+          porcdesc: 0,
+          fecha: "20260228",
+          nombres: "OPTTIMO A.H SAS",
+          apellidos: "",
+          cantidad: 1,
+          idalmacen: 2,
+          total_costo: 109995,
+        },
+      },
+      status: 200,
+      message: "Http Response",
+      name: "HttpResponse",
+    };
+  },
 };

@@ -5,87 +5,70 @@
       <div class="invoice-title">
         <h3>
           Detalles de la factura <br />
-          #5368
+          #{{'[[AQUI VA EL ID DE LA FACTURA]]'}}
         </h3>
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card class="test-card">
+          <Card dark>
             <CardContent>
               <div class="text-container">
                 <span>Detalle de valores</span>
                 <div class="item">
                   <span class="item-bold">Subtotal</span>
-                  <span>$1.263.932.99</span>
+                  <span>{{numberToCurrency(sumary.subtotal)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor de impuesto</span>
-                  <span>$123.932.99</span>
+                  <span>{{numberToCurrency(sumary.valimpuesto)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total descuento</span>
-                  <span>$123.932</span>
+                  <span>{{numberToCurrency(sumary.valdescuentos)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total venta</span>
-                  <span>$1.387.865.98</span>
+                  <span>{{numberToCurrency(sumary.valortotal)}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Cliente</span>
-                  <span>Cap Club 81</span>
+                  <span>{{sumary.nombres}}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>$1.387.865.98</span>
+                  <span>{{"[[DE DONDE SACO LA UTILIDAD???]]"}}</span>
                 </div>
                 <hr />
               </div>
             </CardContent>
           </Card>
-          <Card class="test-card">
+          <Card class=""
+            v-for="(invoice, index) in invoices"
+            :key="index"
+          >
             <CardContent>
-              <span>Banda cap cleaner banda ajustable</span>
+              
+                <span class="font-montserrat-bold">{{invoice.descripcion}}</span>
+              
               <div class="text-container">
                 <div class="item-3">
                   <span class="item-bold">Valor</span>
-                  <span>$1.263.932.99</span>
+                  <span>{{numberToCurrency(invoice.valorprod)}}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Descuento</span>
-                  <span>$123.932.99</span>
+                  <span>{{numberToCurrency(invoice.descuento)}}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Cantidad</span>
-                  <span>24</span>
-                </div>
-                <hr />
-              </div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <span>Banda cap cleaner banda ajustable</span>
-              <div class="text-container">
-                <div class="item-3">
-                  <span class="item-bold">Valor</span>
-                  <span>$1.263.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-bold">Descuento</span>
-                  <span>$123.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-bold">Cantidad</span>
-                  <span>24</span>
+                  <span>{{invoice.cantidad}}</span>
                 </div>
                 <hr />
               </div>
@@ -96,9 +79,60 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
+//@ts-ignore
 import Card from "../Card.vue";
+//@ts-ignore
 import CardContent from "../CardContent.vue";
+
+import { useDailySalesStore } from "../../store/daily-sales.store";
+import { onMounted, reactive, ref } from "vue-demi";
+import type { TWarehouseDayInvoiceDetail } from "../../interfaces/warehouse-day-invoice-detail.type";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+import { useRoute } from "vue-router";
+
+const dailySalesStore = useDailySalesStore();
+const route = useRoute();
+
+let invoices = ref < TWarehouseDayInvoiceDetail[] > ([])
+let sumary = reactive({
+  numero: 0,
+  valimpuesto: 0,
+  subtotal: 0,
+  valdescuentos: 0,
+  valortotal: 0,
+  descripcion: "",
+  valorprod: 0,
+  descuento: 0,
+  porcdesc: 0,
+  fecha: "",
+  nombres: "",
+  apellidos: "",
+  cantidad: 0,
+  idalmacen: 0,
+  total_costo: 0
+})
+
+const loadInvoiceDetails = async () => {
+  let { warehouse_id, invoice_id } = route.params;
+  console.log(warehouse_id, invoice_id)
+  const response = await dailySalesStore.dailyInvoiceDetails(warehouse_id as string, invoice_id as string)
+  if (!response.error) {
+    invoices.value = response.data.daily_invoice_details
+    // sumary = response.data.datos_factura
+    sumary.nombres = response.data.datos_factura.nombres
+    sumary.valimpuesto = response.data.datos_factura.valimpuesto
+    sumary.valdescuentos = response.data.datos_factura.valdescuentos
+    sumary.valortotal = response.data.datos_factura.valortotal
+    sumary.subtotal = response.data.datos_factura.subtotal
+    console.log(response.data)
+  }
+}
+
+onMounted(() => {
+  loadInvoiceDetails()
+})
+
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -112,6 +146,7 @@ import CardContent from "../CardContent.vue";
   justify-content: center;
   align-items: center;
 }
+
 .invoice-container {
   width: 90%;
   height: 85%;
@@ -120,6 +155,7 @@ import CardContent from "../CardContent.vue";
   align-items: center;
   padding-top: 10px;
 }
+
 .invoice-title {
   color: var(--color-contrast);
   text-align: center;
@@ -152,7 +188,7 @@ import CardContent from "../CardContent.vue";
   text-align: center;
 }
 
-.bubble > :nth-child(1) {
+.bubble> :nth-child(1) {
   font-weight: 300;
   font-size: calc(16px * var(--font-size-proportion));
   margin-bottom: 10px;
@@ -163,15 +199,18 @@ import CardContent from "../CardContent.vue";
   width: 85%;
   height: 10vh;
 }
+
 .search {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 5px;
 }
+
 .size-input {
   width: 100%;
 }
+
 .daily-sales-container {
   width: 100%;
   height: 40%;
@@ -183,6 +222,7 @@ import CardContent from "../CardContent.vue";
   padding-top: 10px;
   flex: 1;
 }
+
 .cards-container {
   color: var(--color-primary);
   width: 100%;
@@ -194,26 +234,29 @@ import CardContent from "../CardContent.vue";
 }
 
 
-.cards-container > .card:nth-child(2) {
+/* .cards-container>.card:nth-child(2) {
   color: var(--color-contrast);
   text-align: start;
   font-weight: bold;
   background-color: var(--color-primary-light);
+
   [data-theme="dark"] & {
     color: var(--color-contrast);
     background-color: var(--color-primary-light);
   }
 }
-.cards-container > .card:nth-child(3) {
+
+.cards-container>.card:nth-child(3) {
   color: var(--color-contrast);
   text-align: start;
   font-weight: bold;
   background-color: var(--color-primary-light);
+
   [data-theme="dark"] & {
     color: var(--color-contrast);
     background-color: var(--color-primary-light);
   }
-}
+} */
 
 .item {
   color: var(--color-primary);
@@ -221,6 +264,7 @@ import CardContent from "../CardContent.vue";
   font-weight: 500;
   display: flex;
   justify-content: space-between;
+
   [data-theme="dark"] & {
     color: var(--color-primary);
   }
@@ -232,6 +276,7 @@ import CardContent from "../CardContent.vue";
   font-weight: 500;
   display: flex;
   justify-content: space-between;
+
   [data-theme="dark"] & {
     color: var(--color-contrast);
   }
@@ -240,33 +285,36 @@ import CardContent from "../CardContent.vue";
 .text-container {
   text-align: start;
   font-weight: bold;
-  color: var(--color-primary);
   padding-top: 5px;
   display: flex;
   flex-direction: column;
   gap: 5px;
 }
+
 .buttons {
   display: flex;
   justify-content: center;
 }
+
 .color-button {
   border-color: var(--color-primary) !important;
   color: var(--color-primary) !important;
   margin-top: 10px;
+
   [data-theme="dark"] & {
     color: var(--color-primary);
     border-color: var(--color-primary);
   }
 }
-.test-card {
-  background-color: var(--color-contrast);
-}
+
+
+
 .color-button-2 {
   border-color: var(--color-contrast) !important;
   color: var(--color-contrast) !important;
   margin-top: 10px;
 }
+
 .item-bold {
   font-weight: bold;
 }

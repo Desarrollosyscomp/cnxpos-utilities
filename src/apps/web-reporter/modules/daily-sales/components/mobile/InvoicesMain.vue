@@ -30,34 +30,34 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card>
+          <Card v-for="invoice in invoices" :key="invoice.idalmacen">
             <CardContent>
               <div class="text-container">
-                <span>Factura #5367</span>
+                <span>Factura #{{ invoice.idalmacen }}</span>
                 <div class="item">
                   <span class="item-bold">Fecha</span>
-                  <span>2024-01-01</span>
+                  <span>{{ invoice.fecha }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Subtotal</span>
-                  <span>$1.263.932.99</span>
+                  <span>{{ numberToCurrency(invoice.subtotal) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Impuesto</span>
-                  <span>$123.932.99</span>
+                  <span>{{ numberToCurrency(invoice.valimpuesto) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor Total</span>
-                  <span>$1.387.865.98</span>
+                  <span>{{ numberToCurrency(invoice.valortotal) }}</span>
                 </div>
                 <hr />
                 <div class="buttons">
                   <button
                     class="form-button-2 color-button-2"
-                    @click="router.push('/web-report-v2/invoice-details')"
+                    @click="router.push(`/web-report-v2/invoice-details/${invoice.idalmacen}/${invoice.idfactura}`)"
                   >
                     Ver Detalles
                   </button>
@@ -65,7 +65,7 @@
               </div>
             </CardContent>
           </Card>
-          <Card>
+          <!-- <Card>
             <CardContent>
               <div class="text-container">
                 <span class="text-align-start">Factura #5368</span>
@@ -99,17 +99,37 @@
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </Card> -->
         </div>
       </div>
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
+import { onMounted, ref } from "vue-demi";
+//@ts-ignore
 import Card from "../Card.vue";
+//@ts-ignore
 import CardContent from "../CardContent.vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import type { TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.type";
+import { useDailySalesStore } from "../../store/daily-sales.store";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 const router = useRouter();
+const route = useRoute();
+let invoices = ref<TWarehouseDaySale[]>([]);
+const dailySalesStore = useDailySalesStore();
+
+const setInvoices = async () => {
+  let { date, warehouse_id } = route.params;  
+  let response = await dailySalesStore.dailyInvoices(date as string, warehouse_id as string);
+  invoices.value = response.data;
+  console.log(invoices.value);
+};
+
+onMounted(() => {
+  setInvoices();
+});
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";

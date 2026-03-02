@@ -37,7 +37,7 @@ function closeModal() {
 .overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.623);
+  background: rgba(0, 0, 0, 0.799);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -54,5 +54,6 @@ function closeModal() {
   color: var(--color-contrast);
   padding: 10px;
   z-index: 11;
+  border: 1px solid var(--color-contrast);
 }
 </style>

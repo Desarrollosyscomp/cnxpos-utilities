@@ -78,7 +78,7 @@
               </div>
             </CardContent>
           </Card>
-          <Card class="test-card" v-for="item in array" :key="item.id">
+          <Card class="test-card" v-for="item in warehousesArray" :key="item.id">
             <CardContent>
               <span class="title">Almacén</span> <br />
               <span class="warehouse">{{ item.nomalmacen }}</span>
@@ -100,7 +100,7 @@
                 <button class="form-button-2" @click="openDetail(item)">
                   Detalles
                 </button>
-                <button class="form-button-2" @click="router.push('invoices')">
+                <button class="form-button-2" @click="router.push(`invoices/${item.fecha}/${item.idalmacen}`)">
                   Ver facturas
                 </button>
               </div>
@@ -182,72 +182,63 @@ const isVisible2 = ref(false);
 const openModal = ref(false);
 const selectedItem = ref(null);
 const router = useRouter();
-const items = ref([
-  { item: "Fecha", value: "2025-01-01" },
-  { item: "Id del almacen", value: "1" },
-  { item: "Subtotal", value: "$1.263.932.99" },
-  { item: "Total", value: "$1.263.932.99" },
-  { item: "Facturas", value: "1" },
-  { item: "Productos vendidos", value: "1" },
-  { item: "Costo", value: "$1.263.932.99" },
-]);
 
 const showDate = ref(false);
 const modelValue = ref("");
 
 const dailySalesStore = useDailySalesStore();
 
-const array = ref([]);
+const warehousesArray = ref([]);
 
 const setArray = async () => {
   let response = await dailySalesStore.dailySales();
-  array.value = response.data;
-  console.log(array.value);
+  warehousesArray.value = response.data;
+  console.log(warehousesArray.value);
 };
 
 const calcTotal = () => {
   let total = 0;
-  for (let i = 0; i < array.value.length; i++) {
-    total += array.value[i].total;
+  for (let i = 0; i < warehousesArray.value.length; i++) {
+    total += warehousesArray.value[i].total;
   }
   return numberToCurrency(total);
 };
 
 const calcProductTotal = () => {
   let totalProducts = 0;
-  for (let i = 0; i < array.value.length; i++) {
-    totalProducts += array.value[i].prodvendid;
+  for (let i = 0; i < warehousesArray.value.length; i++) {
+    totalProducts += warehousesArray.value[i].prodvendid;
   }
   return totalProducts;
 };
 const calcInvoiceTotal = () => {
   let totalInvoices = 0;
-  for (let i = 0; i < array.value.length; i++) {
-    totalInvoices += array.value[i].cantfact;
+  for (let i = 0; i < warehousesArray.value.length; i++) {
+    totalInvoices += warehousesArray.value[i].cantfact;
   }
   return totalInvoices;
 };
 
 const calcCostTotal = () => {
   let totalCost = 0;
-  for (let i = 0; i < array.value.length; i++) {
-    totalCost += array.value[i].costoacum;
+  for (let i = 0; i < warehousesArray.value.length; i++) {
+    totalCost += warehousesArray.value[i].costoacum;
   }
   return numberToCurrency(totalCost);
 };
 
 const calcUtilidadTotal = () => {
   let totalUtilidad = 0;
-  for (let i = 0; i < array.value.length; i++) {
-    totalUtilidad += array.value[i].total - array.value[i].costoacum;
+  for (let i = 0; i < warehousesArray.value.length; i++) {
+    totalUtilidad += warehousesArray.value[i].total - warehousesArray.value[i].costoacum;
   }
   return numberToCurrency(totalUtilidad);
 };
 
 const extractWarehouseName = () => {
   let warehouse = "";
-  for (let i = 0; i < array.value.length; i++) {
-    warehouse = array.value[i].nomalmacen;
+  for (let i = 0; i < warehousesArray.value.length; i++) {
+    warehouse = warehousesArray.value[i].nomalmacen;
   }
   return warehouse;
 };

@@ -6,13 +6,13 @@ export const DailySalesRoutes = [
     component: () => import("../pages/DailySalesPage.vue"),
   },
   {
-    path: "invoices",
+    path: "invoices/:date/:warehouse_id",
     name: "invoices",
     // @ts-ignore
     component: () => import("../components/mobile/InvoicesMain.vue"),
   },
   {
-    path: "invoice-details",
+    path: "invoice-details/:warehouse_id/:invoice_id",
     name: "invoice-details",
     // @ts-ignore
     component: () => import("../components/mobile/InvoicesDetails.vue"),
