@@ -1,4 +1,4 @@
-export const DailySalesRoutes = [
+export const DailySalesRouter = [
   {
     path: "daily-sales",
     name: "daily-sales",

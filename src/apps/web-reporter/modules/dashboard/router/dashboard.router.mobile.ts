@@ -1,4 +1,4 @@
-export const HomeRoutes = [
+export const HomeRouter = [
     {
         path: '/home',
         // @ts-ignore

@@ -1,7 +1,7 @@
-import { DashboardRoutes } from "../modules/dashboard/router/dashboard.routes";
-import { DailySalesRoutes } from "../modules/daily-sales/routes/daily-sales.routes";
+import { DashboardRouter } from "../modules/dashboard/router/dashboard.router";
+import { DailySalesRouter } from "../modules/daily-sales/router/daily-sales.router";
 
-export const WebReporterRoutes = [
+export const WebReporterRouter = [
   {
     path: "/web-report-v2/",
     component: () => {
@@ -14,8 +14,8 @@ export const WebReporterRoutes = [
       }
     },
     children: [
-      ...DashboardRoutes,
-      ...DailySalesRoutes
+      ...DashboardRouter,
+      ...DailySalesRouter
     ]
   },
 ];

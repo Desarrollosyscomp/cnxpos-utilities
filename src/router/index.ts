@@ -1,11 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../components/HelloWorld.vue";
-import { AuthRoutes } from "../modules/auth/router/auth.routes";
-import { HomeRoutes } from "../modules/home/router/home.routes";
-import { WebReporterRoutes } from "../apps/web-reporter/routes/web-reporter.router";
-import { RangeSalesRoutesDesktop } from "../apps/web-reporter/modules/sales-by-range/routes/range-sales.routes";
-import { RangeSalesRoutesMobile } from "../apps/web-reporter/modules/sales-by-range/routes/mobile-range-sales.routes";
+import { AuthRouter } from "../modules/auth/router/auth.router";
+import { HomeRouter } from "../modules/home/router/home.router";
+import { RangeSalesRouterDesktop } from "../apps/web-reporter/modules/sales-by-range/router/range-sales.router";
+import { WebReporterRouter } from "../apps/web-reporter/router/web-reporter.router";
 
 const routes = [
   {
@@ -14,10 +13,10 @@ const routes = [
     meta: {},
     component: HomeView,
   },
-  ...AuthRoutes,
-  ...HomeRoutes,
-  ...WebReporterRoutes,
-  ...(import.meta.env.VITE_TARGET === 'mobile' ? RangeSalesRoutesMobile : RangeSalesRoutesDesktop),
+  ...AuthRouter,
+  ...HomeRouter,
+  ...WebReporterRouter,
+  ...RangeSalesRouterDesktop,
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",

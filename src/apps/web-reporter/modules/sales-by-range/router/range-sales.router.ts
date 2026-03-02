@@ -1,8 +1,8 @@
-export const RangeSalesRoutesMobile = [
+export const RangeSalesRouterDesktop = [
   {
     path: "/web-report-v2",
     // @ts-ignore
-    component: () => import("../../../layouts/WebReporterLayoutMobile.vue"),
+    component: () => import("../../../layouts/WebReporterLayout.vue"),
     children: [
       {
         path: "range-sales",
