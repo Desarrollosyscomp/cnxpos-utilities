@@ -4,10 +4,10 @@ export const AuthRouter = [
         component: ()=>{
             if (import.meta.env.VITE_TARGET === 'mobile') {
                 // @ts-ignore
-              authComponent = () => import('../../pages/MobileAuthPage.vue')
+              return () => import('../../pages/MobileAuthPage.vue')
             } else {
                 // @ts-ignore
-              authComponent = () => import('../../pages/AuthPage.vue')
+              return () => import('../../pages/AuthPage.vue')
             }
         },
 
