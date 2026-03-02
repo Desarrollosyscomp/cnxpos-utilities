@@ -1,7 +1,9 @@
 <template>
   <div class="overlay" v-if="open_modal" @click="closeModal"></div>
-  <div class="modal" v-if="open_modal" :style="{ width: width }">
-    <slot></slot>
+  <div class="modal" v-if="open_modal" :style="{ width, minHeight, display: 'flex' }">
+    <div style="flex: 1">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -15,6 +17,10 @@ const props = defineProps({
   width: {
     type: String,
     default: '90vw',
+  },
+  minHeight: {
+    type: String,
+    default: null,
   },
 });
 

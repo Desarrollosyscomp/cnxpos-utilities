@@ -50,8 +50,8 @@ export const dailySalesService = {
     const data = faker.generate({
       limit: 5,
       columns: {
-        fecha: "date",
-        hora: "date",
+        fecha: "int(100000,1000000)",
+        hora: "int(100000,1000000)",
         idalmacen: "int(1,5000)",
         idfactura: "int(1,5000)",
         nomalmacen: "string[3]",
@@ -87,7 +87,7 @@ export const dailySalesService = {
         valorprod: "int(1,5000)",
         descuento: "int(1,5000)",
         porcdesc: "int(1,5000)",
-        fecha: "date",
+        fecha: "int(100000,1000000)",
         nombres: "word",
         apellidos: "word",
         cantidad: "int(1,5000)",

@@ -115,7 +115,6 @@ let sumary = reactive({
 
 const loadInvoiceDetails = async () => {
   let { warehouse_id, invoice_id } = route.params;
-  console.log(warehouse_id, invoice_id)
   const response = await dailySalesStore.dailyInvoiceDetails(warehouse_id as string, invoice_id as string)
   if (!response.error) {
     invoices.value = response.data.daily_invoice_details
@@ -125,7 +124,6 @@ const loadInvoiceDetails = async () => {
     sumary.valdescuentos = response.data.datos_factura.valdescuentos
     sumary.valortotal = response.data.datos_factura.valortotal
     sumary.subtotal = response.data.datos_factura.subtotal
-    console.log(response.data)
   }
 }
 

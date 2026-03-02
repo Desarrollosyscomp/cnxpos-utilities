@@ -1,12 +1,19 @@
+
 export type TWarehouseDaySale = {
   fecha: string;
-  hora: string;
   idalmacen: number;
-  idfactura: number;
+  prodvendid: number;
+  subtot: number;
+  ivaimp: number;
+  costoacum: number;
+  sumdesc: number;
+  total: number;
+  retencion: number;
+  cantfact: number;
+  valordev: number;
+  valpropina: number;
+  totalconprop: number;
   nomalmacen: string;
-  numero: number;
-  subtotal: number;
-  valdescuentos: number;
-  valimpuesto: number;
-  valortotal: number;
+  otrosimpuestos: number;
+  impuestoinc: number;
 };

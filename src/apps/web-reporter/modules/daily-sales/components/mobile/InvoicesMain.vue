@@ -112,12 +112,12 @@ import Card from "../Card.vue";
 //@ts-ignore
 import CardContent from "../CardContent.vue";
 import { useRouter, useRoute } from "vue-router";
-import type { TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.type";
+import type { TWarehouseDayInvoice } from "../../interfaces/warehouse-day-invoice.type";
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 const router = useRouter();
 const route = useRoute();
-let invoices = ref<TWarehouseDaySale[]>([]);
+let invoices = ref<TWarehouseDayInvoice[]>([]);
 const dailySalesStore = useDailySalesStore();
 
 const setInvoices = async () => {
