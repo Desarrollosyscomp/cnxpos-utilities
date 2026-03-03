@@ -8,7 +8,6 @@ import WebReporterLayoutMobile from './WebReporterLayoutMobile.vue';
 
 <template>
   <span class="hide-on-desktop">
-    SWITCHHHHH
     <WebReporterLayoutMobile></WebReporterLayoutMobile>
   </span>
   <span class="hide-on-mobile">

@@ -1,14 +1,14 @@
 <template>
     <div class="hide-on-mobile">
-        <DesktopDailySalesMain />
+        <DesktopRangeSalesMain />
     </div>
     <div class="hide-on-desktop">
-        <MobileDailySalesMain />
+        <MobileRangeSalesMain />
     </div>
 </template>
 <script setup>
-import DesktopDailySalesMain from "../components/desktop/DesktopDailySalesMain.vue";
-import MobileDailySalesMain from "../components/mobile/MobileDailySalesMain.vue";
+import DesktopRangeSalesMain from "../components/desktop/DesktopRangeSalesMain.vue";
+import MobileRangeSalesMain from "../components/mobile/MobileRangeSalesMain.vue";
 
 </script>
 <style scoped>

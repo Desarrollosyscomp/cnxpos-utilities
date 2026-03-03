@@ -1,7 +1,12 @@
 <template>
     <div class="right-menu">
-        <div class="right-menu-box">
-            <slot></slot>
+        <div class="right-menu-box-wrapper">
+            <div class="hover-bar-wrapper">
+                <div class="hover-bar"></div>
+            </div>
+            <div class="right-menu-box">
+                <slot></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -19,19 +24,48 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    transform: translateX(70%);
+    transition: 0.4s ease;
+}
+.right-menu:hover{
+    transform: translateX(0);
+    transition: 0.4s ease;
+}
+.right-menu-box-wrapper{
+    display: flex;
+}
+.hover-bar-wrapper{
+    border-radius:
+        calc(var(--right-menu-box-proportion) * 15px)
+        0
+        0
+        calc(var(--right-menu-box-proportion) * 15px);
+    bottom: 0;
+    left: 0;
+    background-color: var(--color-primary-dark-2);
+    display: flex;
+    align-items: center;
+    padding-left: calc(var(--right-menu-box-proportion) * 10px);
+}
+.hover-bar{
+    width: 7px;
+    height: 50px;   
+    border-radius: 10px;
+    background: var(--color-contrast);
 }
 
 .right-menu-box{
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: var(--color-primary-dark-2);
     padding: calc(var(--right-menu-box-proportion) * 3px);
-    padding-left: calc(var(--right-menu-box-proportion) * 7px);
+    padding-left: calc(var(--right-menu-box-proportion) * 9px);
     padding-top: calc(var(--right-menu-box-proportion) * 40px);
     padding-bottom: calc(var(--right-menu-box-proportion) * 40px);
-    border-radius: calc(var(--right-menu-box-proportion) * 15px) 0 0 calc(var(--right-menu-box-proportion) * 15px);
+    
     gap: calc(var(--right-menu-box-proportion) * 15px);
 
 }
@@ -61,4 +95,6 @@
         --right-menu-box-proportion: 1.7;
     }
 }
+
+
 </style>
