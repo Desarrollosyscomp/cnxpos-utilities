@@ -6,7 +6,7 @@ const URL_API = getApiUrl();
 export const loginService = {
   logIn: async (data: TFormLogin) => {
     return axios.post({
-      url: `${URL_API}/auth/login`,
+      url: `${URL_API}/login/auth`,
       data,
     });
   },

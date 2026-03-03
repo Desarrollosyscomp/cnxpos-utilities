@@ -13,9 +13,19 @@
             <Icon :path="mdiHome" class="icon" />
             <span>Inicio</span>
           </div>
-          <div class="menu-item" @click="router.push('/web-report-v2/dashboard')">
+          <div
+            class="menu-item"
+            @click="router.push('/web-report-v2/dashboard')"
+          >
             <WebReporterIcon class="web-report-icon" />
             <span>Web Reporter</span>
+          </div>
+          <div @click="logout">
+            <Icon
+              :path="mdiExitToApp"
+              class="clickable menu-icon"
+              @click="logout"
+            />
           </div>
         </div>
       </div>
@@ -39,6 +49,8 @@ import {
   mdiDotsVertical,
   mdiPencil,
   mdiHome,
+  mdiDotsCircle,
+  mdiExitToApp,
 } from "@mdi/js";
 import { toggleTheme, visible } from "../utils/theme-transitions";
 import ThemeModeIcon from "../assets/general/icons/ThemeModeIcon.vue";
@@ -47,7 +59,9 @@ import { computed, defineAsyncComponent, ref } from "vue";
 import LeftMenu from "../components/LeftMenu.vue";
 import Icon from "../components/Icon.vue";
 import WebReporterIcon from "../assets/general/icons/WebReporterIcon.vue";
+import { useAuthStore } from "../modules/auth/store/auth.store";
 const route = useRoute();
+const authStore = useAuthStore();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
@@ -58,6 +72,14 @@ let menuOpen = ref(false);
 const router = useRouter();
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
+};
+
+const logout = () => {
+  authStore.auth = {
+    isLogged: false,
+    token: "",
+  };
+  router.push("/auth/login")
 };
 </script>
 <style scoped>
@@ -93,7 +115,7 @@ const toggleMenu = () => {
   color: var(--color-contrast);
   border-radius: 5px;
 }
-.icon{
+.icon {
   width: 20px;
   height: 20px;
 }

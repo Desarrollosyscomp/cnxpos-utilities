@@ -44,6 +44,7 @@
           </div>
         </div>
       </div>
+
       <div v-else class="daily-sales-container">
         <h3 class="web-reporter-title">Informes de <br />ventas por día</h3>
         <div class="cards-container">
@@ -78,7 +79,11 @@
               </div>
             </CardContent>
           </Card>
-          <Card class="test-card" v-for="item in warehousesArray" :key="item.id">
+          <Card
+            class="test-card"
+            v-for="item in warehousesArray"
+            :key="item.id"
+          >
             <CardContent>
               <span class="title">Almacén</span> <br />
               <span class="warehouse">{{ item.nomalmacen }}</span>
@@ -100,12 +105,27 @@
                 <button class="form-button-2" @click="openDetail(item)">
                   Detalles
                 </button>
-                <button class="form-button-2" @click="router.push(`invoices/${item.fecha}/${item.idalmacen}`)">
+                <button
+                  class="form-button-2"
+                  @click="
+                    router.push(`invoices/${item.fecha}/${item.idalmacen}`)
+                  "
+                >
                   Ver facturas
                 </button>
               </div>
             </CardContent>
           </Card>
+          <div align="center">
+            <Paginator
+              class="mt-4"
+              v-if="5 <= 10"
+              :items-per-page="4"
+              :max-buttons="4"
+              :total-pages="8"
+              :current-page="2"
+            />
+          </div>
           <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
             <div class="modal-content">
               <div class="modal-title">
@@ -117,7 +137,9 @@
               <div>
                 <div class="item-3">
                   <span class="item-3-bold">Fecha</span>
-                  <span class="item3-value">{{ parseDate(selectedItem.fecha) }}</span>
+                  <span class="item3-value">{{
+                    parseDate(selectedItem.fecha)
+                  }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
@@ -127,12 +149,16 @@
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Subtotal</span>
-                  <span class="item3-value">{{ numberToCurrency(selectedItem.subtot) }}</span>
+                  <span class="item3-value">{{
+                    numberToCurrency(selectedItem.subtot)
+                  }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Costo</span>
-                  <span class="item3-value">{{ numberToCurrency(selectedItem.costoacum) }}</span>
+                  <span class="item3-value">{{
+                    numberToCurrency(selectedItem.costoacum)
+                  }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
@@ -147,7 +173,9 @@
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Total</span>
-                  <span class="item3-value">{{ numberToCurrency(selectedItem.total) }}</span>
+                  <span class="item3-value">{{
+                    numberToCurrency(selectedItem.total)
+                  }}</span>
                 </div>
                 <hr />
               </div>
@@ -177,6 +205,7 @@ import { useRouter } from "vue-router";
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { parseDate } from "../../../../../../utils/parsers/parse-date";
+import Paginator from "../../../../../../components/Paginator.vue";
 const isVisible = ref(false);
 const isVisible2 = ref(false);
 const openModal = ref(false);
@@ -230,7 +259,8 @@ const calcCostTotal = () => {
 const calcUtilidadTotal = () => {
   let totalUtilidad = 0;
   for (let i = 0; i < warehousesArray.value.length; i++) {
-    totalUtilidad += warehousesArray.value[i].total - warehousesArray.value[i].costoacum;
+    totalUtilidad +=
+      warehousesArray.value[i].total - warehousesArray.value[i].costoacum;
   }
   return numberToCurrency(totalUtilidad);
 };

@@ -16,7 +16,10 @@ export const HomeRouter = [
                 path:'welcome',
                 name:'welcome',
                 // @ts-ignore
-                component: () => import('../pages/HomePage.vue')
+                component: () => import('../pages/HomePage.vue'),
+                meta: {
+                    requiresAuth: true
+                }
             },
             // {
             //     path:'forgot-password',

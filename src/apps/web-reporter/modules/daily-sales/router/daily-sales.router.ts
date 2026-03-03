@@ -4,18 +4,27 @@ export const DailySalesRouter = [
     name: "daily-sales",
     // @ts-ignore
     component: () => import("../pages/DailySalesPage.vue"),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "invoices/:date/:warehouse_id",
     name: "invoices",
     // @ts-ignore
     component: () => import("../components/mobile/InvoicesMain.vue"),
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "invoice-details/:warehouse_id/:invoice_id",
     name: "invoice-details",
     // @ts-ignore
     component: () => import("../components/mobile/InvoicesDetails.vue"),
+    meta: {
+      requiresAuth: true
+    }
   }
   // {
   //   path: "/web-report-v2/",

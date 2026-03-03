@@ -6,6 +6,7 @@
       :type="showPassword ? 'text' : 'password'"
       placeholder="Contraseña"
       v-model="authForm.password"
+      @keyup.enter="onSubmit"
     />
     <div class="forgot-password-label-container">
       <router-link to="/auth/forgot-password" class="text-color">
@@ -21,17 +22,22 @@
 import { ref } from "vue";
 import { useAuthStore } from "../../store/auth.store";
 import { type TFormLogin } from "../../interfaces/auth.type";
+import { useRouter } from "vue-router";
 let showPassword = ref(false);
 
 const authStore = useAuthStore();
+const router = useRouter();
 const authForm = ref<TFormLogin>({
     username: "",
     password: "",
 })
 
 const onSubmit = async () => {
-  let response = await authStore.login(authForm.value); 
+  let response = await authStore.login(authForm.value);
   console.log(response)
+  if (response.data.isLogged){
+    router.push("/home/welcome")
+  }
 }
 </script>
 

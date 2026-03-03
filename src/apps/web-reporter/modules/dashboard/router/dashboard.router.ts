@@ -15,5 +15,8 @@ export const DashboardRouter = [
       name: "dashboard",
       // @ts-ignore
       component: () => import("../pages/DashboardPage.vue"),
+      meta: {
+        requiresAuth: true
+      }     
     },
 ];

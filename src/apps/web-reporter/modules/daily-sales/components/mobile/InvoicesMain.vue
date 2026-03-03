@@ -69,41 +69,15 @@
               </div>
             </CardContent>
           </Card>
-          <!-- <Card>
-            <CardContent>
-              <div class="text-container">
-                <span class="text-align-start">Factura #5368</span>
-                <div class="item-3">
-                  <span class="item-3-bold">Fecha</span>
-                  <span>2024-01-01</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Subtotal</span>
-                  <span>$1.263.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Impuesto</span>
-                  <span>$123.932.99</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Valor Total</span>
-                  <span>$1.387.865.98</span>
-                </div>
-                <hr />
-                <div class="buttons">
-                  <button
-                    class="form-button-2 color-button-2"
-                    @click="router.push('/web-report-v2/invoice-details')"
-                  >
-                    Ver Detalles
-                  </button>
-                </div>
-              </div>
-            </CardContent>
-          </Card> -->
+          <div align="center">
+            <Paginator
+              v-if="5 <= 10"
+              :items-per-page="4"
+              :max-buttons="4"
+              :total-pages="8"
+              :current-page="2"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -120,6 +94,8 @@ import type { TWarehouseDayInvoice } from "../../interfaces/warehouse-day-invoic
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { mdiArrowLeftCircle } from "@mdi/js";
+import Paginator from "../../../../../../components/Paginator.vue";
+import Icon from "../../../../../../components/Icon.vue";
 const router = useRouter();
 const route = useRoute();
 let invoices = ref<TWarehouseDayInvoice[]>([]);
