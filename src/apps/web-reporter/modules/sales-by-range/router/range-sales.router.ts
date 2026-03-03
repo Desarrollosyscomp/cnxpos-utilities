@@ -8,7 +8,7 @@ export const RangeSalesRouterDesktop = [
         path: "range-sales",
         name: "range-sales",
         // @ts-ignore
-        component: () => import("../../sales-by-range/components/desktop/DesktopRangeSalesMain.vue"),
+        component: () => import("../../sales-by-range/page/DesktopSalesByRangePage.vue"),
       },
       
     ]
