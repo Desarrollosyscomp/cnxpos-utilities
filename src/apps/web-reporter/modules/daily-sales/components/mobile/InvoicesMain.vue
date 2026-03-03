@@ -34,13 +34,13 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
-          <Card v-for="invoice in invoices" :key="invoice.idalmacen">
+          <Card v-for="(invoice, index) in invoices" :key="index">
             <CardContent>
               <div class="text-container">
-                <span>Factura #{{ invoice.idalmacen }}</span>
+                <span>Factura #{{ invoice.idfactura }}</span>
                 <div class="item">
                   <span class="item-bold">Fecha</span>
-                  <span>{{ invoice.fecha }}</span>
+                  <span>{{ formatDateWithHyphen(invoice.fecha) }}</span>
                 </div>
                 <hr />
                 <div class="item">
@@ -96,6 +96,7 @@ import { numberToCurrency } from "../../../../../../utils/parsers/number-currenc
 import { mdiArrowLeftCircle } from "@mdi/js";
 import Paginator from "../../../../../../components/Paginator.vue";
 import Icon from "../../../../../../components/Icon.vue";
+import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
 const router = useRouter();
 const route = useRoute();
 let invoices = ref<TWarehouseDayInvoice[]>([]);
@@ -104,7 +105,7 @@ const dailySalesStore = useDailySalesStore();
 const setInvoices = async () => {
   let { date, warehouse_id } = route.params;  
   let response = await dailySalesStore.dailyInvoices(date as string, warehouse_id as string);
-  invoices.value = response.data;
+  invoices.value = response.data.list;
   console.log(invoices.value);
 };
 

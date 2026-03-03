@@ -21,3 +21,9 @@ export const parseDateWhitHour = (date: string) => {
   });
   return fechaFormateada;
 };
+
+export const formatDateWithHyphen = (date: string) => {
+  if (!date || date.length !== 8) return date;
+
+  return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
+};

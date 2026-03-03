@@ -7,6 +7,7 @@
         <div class="date-field">
           <label for="fecha">Consultar fecha</label>
           <input
+            v-model="date"
             type="date"
             id="fecha"
             required
@@ -14,19 +15,19 @@
           />
         </div>
       </div>
-      <div class="beto-message-container" v-if="isVisible">
+      <div class="beto-message-container" v-if="warehousesArray.length == 0">
         <img
+          v-if="initBettoMessage"
           class="beto-avatar"
           src="../../../../../../assets/avatars/beto.svg"
-          v-if="isVisible === true"
         />
         <img
+          v-if="BettoMessageNotFound"
           class="beto-avatar"
           src="../../../../../../assets/avatars/beto-sad.png"
-          v-else
         />
         <div class="bubble bubble-a bubble-up">
-          <div v-if="isVisible">
+          <div v-if="initBettoMessage">
             <span>Aquí encontraras</span>
             <h3 class="web-reporter-title">
               Informes de <br />
@@ -34,7 +35,7 @@
             </h3>
             <span>Ingresa una fecha para continuar</span>
           </div>
-          <div v-else>
+          <div v-if="BettoMessageNotFound">
             <h3 class="web-reporter-title">UPS!</h3>
             <span
               >No se encontraron <br />
@@ -44,8 +45,7 @@
           </div>
         </div>
       </div>
-
-      <div v-else class="daily-sales-container">
+      <div v-if="warehousesArray.length > 0" class="daily-sales-container">
         <h3 class="web-reporter-title">Informes de <br />ventas por día</h3>
         <div class="cards-container">
           <Card :dark="true" class="test-card">
@@ -54,27 +54,27 @@
                 <span class="title">Resumen</span>
                 <div class="item">
                   <span class="item-bold">Total ventas</span>
-                  <span>{{ calcTotal() }}</span>
+                  <span>{{ numberToCurrency(summary.totalSales) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total productos</span>
-                  <span>{{ calcProductTotal() }}</span>
+                  <span>{{ summary.totalProducts }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total facturas</span>
-                  <span>{{ calcInvoiceTotal() }}</span>
+                  <span>{{ summary.totalInvoices }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Costo</span>
-                  <span>{{ calcCostTotal() }}</span>
+                  <span>{{ numberToCurrency(summary.totalCost) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>{{ calcUtilidadTotal() }}</span>
+                  <span>{{ numberToCurrency(summary.totalProfit) }}</span>
                 </div>
               </div>
             </CardContent>
@@ -92,14 +92,17 @@
                   <span> <b>Subtotal</b></span>
                   <span>{{ numberToCurrency(item.subtot) }}</span>
                 </div>
+                <hr />
                 <div class="item-2">
                   <span> <b>Total</b></span>
                   <span>{{ numberToCurrency(item.total) }}</span>
                 </div>
+                <hr />
                 <div class="item-2">
                   <span> <b>Costo</b></span>
                   <span>{{ numberToCurrency(item.costoacum) }}</span>
                 </div>
+                <hr />
               </div>
               <div class="buttons">
                 <button class="form-button-2" @click="openDetail(item)">
@@ -138,7 +141,7 @@
                 <div class="item-3">
                   <span class="item-3-bold">Fecha</span>
                   <span class="item3-value">{{
-                    parseDate(selectedItem.fecha)
+                    formatDateWithHyphen(selectedItem.fecha)
                   }}</span>
                 </div>
                 <hr />
@@ -197,34 +200,48 @@
 <script setup>
 import Icon from "../../../../../../components/Icon.vue";
 import ConexionPosLogo from "../../../../../../assets/logos/ConexionPosLogo.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import Card from "../Card.vue";
 import CardContent from "../CardContent.vue";
 import Modal from "../../../../../../components/Modal.vue";
 import { useRouter } from "vue-router";
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
-import { parseDate } from "../../../../../../utils/parsers/parse-date";
+import { formatDateWithHyphen, parseDate } from "../../../../../../utils/parsers/parse-date";
 import Paginator from "../../../../../../components/Paginator.vue";
-const isVisible = ref(false);
-const isVisible2 = ref(false);
+const initBettoMessage = ref(true);
+const BettoMessageNotFound = ref(false);
 const openModal = ref(false);
 const selectedItem = ref(null);
 const router = useRouter();
 
 const showDate = ref(false);
-const modelValue = ref("");
+const date = ref("");
 
 const dailySalesStore = useDailySalesStore();
-
 const warehousesArray = ref([]);
+const summary = ref({});
 
 const setArray = async () => {
-  let response = await dailySalesStore.dailySales();
-  warehousesArray.value = response.data;
-  console.log(warehousesArray.value);
+  BettoMessageNotFound.value = false;
+  initBettoMessage.value = false;
+  warehousesArray.value = [];
+
+  const sendDateParsed = date.value.replaceAll("-", "");
+  let response = await dailySalesStore.dailySales(sendDateParsed);
+
+  if (response.error || !response.data.sales.length) {
+    BettoMessageNotFound.value = true;
+    return;
+  }
+
+  summary.value = response.data.summary;
+  warehousesArray.value = response.data.sales;
 };
 
+watch(date, () => {
+  setArray();
+});
 const calcTotal = () => {
   let total = 0;
   for (let i = 0; i < warehousesArray.value.length; i++) {
@@ -284,7 +301,7 @@ const closeModal = () => {
   selectedItem.value = null;
 };
 onMounted(async () => {
-  await setArray();
+  // setArray();
 });
 </script>
 <style scoped>
@@ -419,6 +436,15 @@ onMounted(async () => {
 .item-3-bold {
   font-weight: bold;
 }
+.text-align {
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  padding-bottom: calc(12px * var(--padding-bottom-buttons));
+}
 .item-2 {
   --font-size: 1;
   --padding-top: 1;
@@ -426,17 +452,7 @@ onMounted(async () => {
   padding-top: calc(5px * var(--padding-top));
   font-weight: 500;
   display: flex;
-  flex-direction: column;
-}
-
-.text-align {
-  padding-top: 5px;
-  display: flex;
   justify-content: space-between;
-  gap: 5px;
-  font-size: 12px;
-  font-weight: 500;
-  padding-bottom: calc(12px * var(--padding-bottom-buttons));
 }
 
 .buttons {
@@ -488,6 +504,7 @@ onMounted(async () => {
 .item-bold {
   font-weight: bold;
 }
+
 @media (min-width: 375px) {
   .item {
     --font-size: 1.2;

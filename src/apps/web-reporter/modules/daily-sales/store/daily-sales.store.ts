@@ -7,18 +7,24 @@ export const useDailySalesStore = defineStore("daily-sales", {
         
     }),
     actions: {
-        async dailySales(): Promise<IStoreResponse>{
-            const response = await dailySalesService.dailySales();
+        async dailySales(date: string): Promise<IStoreResponse>{
+            const response = await dailySalesService.dailySales(date);
+            if(response?.status !== 200){
+                return {
+                    error: true,
+                    data: response?.data?.response,
+                };
+            }
             return {
                 error: false,
-                data: response.response.daily_sales,
+                data: response?.data?.response,
             };
         },
         async dailyInvoices(date: string, warehouse_id: string): Promise<IStoreResponse>{
             const response = await dailySalesService.dailyInvoices(date, warehouse_id);
             return {
                 error: false,
-                data: response.response.daily_invoices,
+                data: response?.data.response,
             };
         },
         async dailyInvoiceDetails(warehouse_id: string, invoice_id: string): Promise<IStoreResponse>{
