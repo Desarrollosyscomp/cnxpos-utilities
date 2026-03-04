@@ -11,7 +11,7 @@
       </div>
       <div class="invoice-title">
         <h3>Facturas del día</h3>
-        <span class="font-montserrat-bold">Cap Club 81</span>
+        <span class="font-montserrat-bold">{{ warehouseName }}</span>
       </div>
       <div class="beto-message-container">
         <img
@@ -21,12 +21,12 @@
         <div class="bubble bubble-a bubble-left">
           <p>
             Para el dia
-            <span class="font-montserrat-semibold">2024/01/01</span> tuviste un
+            <span class="font-montserrat-semibold">{{ formatDateWithHyphen(route.params.date as string) }}</span> tuviste un
             subtotal de ventas de
-            <span class="font-montserrat-semibold">$1.263.932.99</span> un total
+            <span class="font-montserrat-semibold">{{ numberToCurrency(summary.subtotal) }}</span> un total
             de <span class="font-montserrat-semibold">impuestos</span> de
-            <span class="font-montserrat-semibold">$123.932.99</span> para un
-            total de <span class="font-montserrat-semibold">$1.387.865.98</span>
+            <span class="font-montserrat-semibold">{{ numberToCurrency(summary.totalTaxes) }}</span> para un
+            total de <span class="font-montserrat-semibold">{{ numberToCurrency(summary.totalSales) }}</span>
           </p>
         </div>
       </div>
@@ -106,9 +106,16 @@ import { mdiArrowLeftCircle } from "@mdi/js";
 import Paginator from "../../../../../../components/Paginator.vue";
 import Icon from "../../../../../../components/Icon.vue";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
+import type { TSummaryInvoices } from "../../interfaces/summary-daily-sales.type";
 const router = useRouter();
 const route = useRoute();
 let invoices = ref<TWarehouseDayInvoice[]>([]);
+let summary = ref<TSummaryInvoices>({
+  subtotal: 0,
+  totalTaxes: 0,
+  totalSales: 0,
+});
+const warehouseName = ref<string | undefined>("");
 const dailySalesStore = useDailySalesStore();
 
 const setInvoices = async () => {
@@ -118,8 +125,11 @@ const setInvoices = async () => {
     warehouse_id as string
   );
   invoices.value = response.data.list;
+  summary.value = response.data.summary;
+  warehouseName.value = invoices.value[0]?.nomalmacen;
   console.log(invoices.value);
 };
+
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;

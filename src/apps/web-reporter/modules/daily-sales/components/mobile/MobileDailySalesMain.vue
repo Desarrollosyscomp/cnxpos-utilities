@@ -133,7 +133,7 @@
             <div class="modal-content">
               <div class="modal-title">
                 <span class="color-contrast font-warehouse">{{
-                  selectedItem.nomalmacen
+                  selectedItem?.nomalmacen
                 }}</span>
                 <h3 class="color-contrast">Detalle de ventas</h3>
               </div>
@@ -141,43 +141,43 @@
                 <div class="item-3">
                   <span class="item-3-bold">Fecha</span>
                   <span class="item3-value">{{
-                    formatDateWithHyphen(selectedItem.fecha)
+                    formatDateWithHyphen(selectedItem?.fecha || "")
                   }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Id del almacen</span>
-                  <span class="item3-value">{{ selectedItem.idalmacen }}</span>
+                  <span class="item3-value">{{ selectedItem?.idalmacen }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Subtotal</span>
                   <span class="item3-value">{{
-                    numberToCurrency(selectedItem.subtot)
+                    numberToCurrency(selectedItem?.subtot || 0)
                   }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Costo</span>
                   <span class="item3-value">{{
-                    numberToCurrency(selectedItem.costoacum)
+                    numberToCurrency(selectedItem?.costoacum || 0)
                   }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Facturas</span>
-                  <span class="item3-value">{{ selectedItem.cantfact }}</span>
+                  <span class="item3-value">{{ selectedItem?.cantfact }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Productos vendidos</span>
-                  <span class="item3-value">{{ selectedItem.prodvendid }}</span>
+                  <span class="item3-value">{{ selectedItem?.prodvendid }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-3-bold">Total</span>
                   <span class="item3-value">{{
-                    numberToCurrency(selectedItem.total)
+                    numberToCurrency(selectedItem?.total || 0)
                   }}</span>
                 </div>
                 <hr />
@@ -197,8 +197,7 @@
     </div>
   </div>
 </template>
-<script setup>
-import Icon from "../../../../../../components/Icon.vue";
+<script setup lang="ts">
 import ConexionPosLogo from "../../../../../../assets/logos/ConexionPosLogo.vue";
 import { onMounted, ref, watch } from "vue";
 import Card from "../Card.vue";
@@ -207,27 +206,34 @@ import Modal from "../../../../../../components/Modal.vue";
 import { useRouter } from "vue-router";
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
-import { formatDateWithHyphen, parseDate } from "../../../../../../utils/parsers/parse-date";
+import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
 import Paginator from "../../../../../../components/Paginator.vue";
+import type { TDetailModal, TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.type";
+import type { TSummary } from "../../interfaces/summary-daily-sales.type";
 const initBettoMessage = ref(true);
 const BettoMessageNotFound = ref(false);
 const openModal = ref(false);
-const selectedItem = ref(null);
+const selectedItem = ref<TDetailModal | null>(null);
 const router = useRouter();
 
-const showDate = ref(false);
 const date = ref("");
 
 const dailySalesStore = useDailySalesStore();
-const warehousesArray = ref([]);
-const summary = ref({});
+const warehousesArray = ref<TWarehouseDaySale[]>([]);
+const summary = ref<TSummary>({
+    totalSales: 0,
+    totalProducts: 0,
+    totalInvoices: 0,
+    totalCost: 0,
+    totalProfit: 0,
+});
 
 const setArray = async () => {
   BettoMessageNotFound.value = false;
   initBettoMessage.value = false;
   warehousesArray.value = [];
 
-  const sendDateParsed = date.value.replaceAll("-", "");
+  const sendDateParsed = date.value.replace(/-/g, "");
   let response = await dailySalesStore.dailySales(sendDateParsed);
 
   if (response.error || !response.data.sales.length) {
@@ -243,7 +249,7 @@ watch(date, () => {
   setArray();
 });
  
-const openDetail = (item) => {
+const openDetail = (item: any) => {
   selectedItem.value = item;
   openModal.value = true;
   console.log(selectedItem.value);
