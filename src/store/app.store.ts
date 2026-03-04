@@ -15,8 +15,9 @@ export const useAppStore = defineStore("app", {
     },
     async getWarehouses(): Promise<IStoreResponse> {
       const res = await AppService.getWarehouses()
+      console.log(res)
       return {
-        data: res.response,
+        data: res?.data.response.warehouses,
         error: false
       }
     },

@@ -75,11 +75,9 @@ let all_warehouses = ref<boolean>(false)
 const appStore = useAppStore()
 const loadWarehouses = async () => {
     const warehouses = await appStore.getWarehouses()
-    console.log(warehouses)
-    //warehouses_array.value = warehouses.data
-    warehouses_array.value = warehouses.data.warehouses.map((warehouse: any) => {
+    warehouses_array.value = warehouses.data.map((warehouse: any) => {
         return {
-            title: warehouse.name,
+            title: warehouse.nomalmacen,
             meta: warehouse
         }
     })

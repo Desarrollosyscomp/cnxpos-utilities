@@ -119,15 +119,6 @@
               </div>
             </CardContent>
           </Card>
-          <div align="center">
-            <Paginator
-              class="mt-4"
-              v-if="5 <= 10"
-              :items-per-page="4"
-              :max-buttons="4"
-              :total-pages="8"
-              :current-page="2"
-            />
           </div>
           <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
             <div class="modal-content">
@@ -195,7 +186,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 <script setup lang="ts">
 import ConexionPosLogo from "../../../../../../assets/logos/ConexionPosLogo.vue";
@@ -207,7 +197,6 @@ import { useRouter } from "vue-router";
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
-import Paginator from "../../../../../../components/Paginator.vue";
 import type { TDetailModal, TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.type";
 import type { TSummary } from "../../interfaces/summary-daily-sales.type";
 const initBettoMessage = ref(true);

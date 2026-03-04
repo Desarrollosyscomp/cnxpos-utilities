@@ -56,9 +56,11 @@
                 <th class="text-center">Costo</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody class="clickable">
               <tr v-for="sale in warehousesArray" @click="openModal(sale)">
-                <td class="text-center">{{ sale.fecha }}</td>
+                <td class="text-center">
+                  {{ formatDateWithHyphen(sale.fecha) }}
+                </td>
                 <td class="text-center">{{ sale.idalmacen }}</td>
                 <td class="text-center">{{ numberToCurrency(sale.subtot) }}</td>
                 <td class="text-center">{{ numberToCurrency(sale.total) }}</td>
@@ -127,7 +129,7 @@
                     <th class="text-center">Valor total</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody class="clickable">
                   <tr
                     v-for="invoice in invoicesArray"
                     @click="
@@ -137,7 +139,9 @@
                       )
                     "
                   >
-                    <td class="text-center">{{ formatDateWithHyphen(invoice.fecha) }}</td>
+                    <td class="text-center">
+                      {{ formatDateWithHyphen(invoice.fecha) }}
+                    </td>
                     <td class="text-center">
                       {{ numberToCurrency(invoice.subtotal) }}
                     </td>
@@ -150,6 +154,17 @@
                   </tr>
                 </tbody>
               </table>
+              <div align="center" class="pagination">
+                  <Paginator
+                    v-if="dailySalesStore.itemsCount > dailySalesStore.limit"
+                    :key="dailySalesStore.page"
+                    :items-per-page="dailySalesStore.limit"
+                    :max-buttons="4"
+                    :total-pages="dailySalesStore.totalPages"
+                    :current-page="dailySalesStore.page"
+                    @on-change-page="onChangePage"
+                  />
+                </div>
             </div>
             <div class="invoices-details">
               <div
@@ -221,6 +236,7 @@ import type { TWarehouseDayInvoiceDetail } from "../../interfaces/warehouse-day-
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import type { TSummary } from "../../interfaces/summary-daily-sales.type";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
+import Paginator from "../../../../../../components/Paginator.vue";
 
 const dailySalesStore = useDailySalesStore();
 
@@ -305,6 +321,13 @@ const closeModal = () => {
   invoice_details_state.value = InvoiceDetailsState.NOT_SELECTED;
   invoicesArray.value = [];
   invoiceDetailsArray.value = [];
+};
+
+const onChangePage = (emmited: any) => {
+  if (dailySalesStore.page !== emmited.data.page) {
+    dailySalesStore.page = emmited.data.page;
+    loadInvoices(sale_date.value, warehousesArray?.value[0]?.idalmacen?.toString() || "");
+  }
 };
 
 onMounted(() => {
@@ -482,6 +505,9 @@ onMounted(() => {
 }
 .summary-beto {
   width: calc(130px * var(--message-proportion));
+}
+.pagination{
+    margin-top: 1rem;
 }
 @media (min-width: 1920px) {
   :global(:root) {
