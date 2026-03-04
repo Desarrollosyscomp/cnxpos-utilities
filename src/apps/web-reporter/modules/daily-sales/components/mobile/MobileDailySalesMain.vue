@@ -242,54 +242,7 @@ const setArray = async () => {
 watch(date, () => {
   setArray();
 });
-const calcTotal = () => {
-  let total = 0;
-  for (let i = 0; i < warehousesArray.value.length; i++) {
-    total += warehousesArray.value[i].total;
-  }
-  return numberToCurrency(total);
-};
-
-const calcProductTotal = () => {
-  let totalProducts = 0;
-  for (let i = 0; i < warehousesArray.value.length; i++) {
-    totalProducts += warehousesArray.value[i].prodvendid;
-  }
-  return totalProducts;
-};
-const calcInvoiceTotal = () => {
-  let totalInvoices = 0;
-  for (let i = 0; i < warehousesArray.value.length; i++) {
-    totalInvoices += warehousesArray.value[i].cantfact;
-  }
-  return totalInvoices;
-};
-
-const calcCostTotal = () => {
-  let totalCost = 0;
-  for (let i = 0; i < warehousesArray.value.length; i++) {
-    totalCost += warehousesArray.value[i].costoacum;
-  }
-  return numberToCurrency(totalCost);
-};
-
-const calcUtilidadTotal = () => {
-  let totalUtilidad = 0;
-  for (let i = 0; i < warehousesArray.value.length; i++) {
-    totalUtilidad +=
-      warehousesArray.value[i].total - warehousesArray.value[i].costoacum;
-  }
-  return numberToCurrency(totalUtilidad);
-};
-
-const extractWarehouseName = () => {
-  let warehouse = "";
-  for (let i = 0; i < warehousesArray.value.length; i++) {
-    warehouse = warehousesArray.value[i].nomalmacen;
-  }
-  return warehouse;
-};
-
+ 
 const openDetail = (item) => {
   selectedItem.value = item;
   openModal.value = true;

@@ -192,7 +192,9 @@ onMounted(() => {
       @click="onChangePage(currentPage + 1)"
     >
       <a class="page-link">
-        <Icon :path="mdiChevronRight" class="icon-size" />
+        <div class="icon-container">
+          <Icon :path="mdiChevronRight" class="icon-size" />
+        </div>
       </a>
     </li>
     <!-- <li class="paginate_button" v-if="showRightArrows">
@@ -206,9 +208,14 @@ onMounted(() => {
 .pagination {
   list-style: none;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .paginate_button {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 2px 8px;
   margin: 0 2px;
   border: 1px solid rgb(206, 206, 206);
@@ -216,11 +223,9 @@ onMounted(() => {
   transition: 0.1s;
   font-size: 11px;
   color: var(--color-contrast);
-  background-color: red;
 }
 .paginate_button:hover {
   transition: 0.1s;
-  background: rgb(233, 233, 233);
 }
 .active {
   /* box-shadow: 0px 0px 6px 0 var(--color-accent); */
@@ -232,12 +237,10 @@ onMounted(() => {
 }
 
 .icon-size {
-  background-color: green;
-  width: 10px;
-  height: 10px;
+  width: 13px;
+  height: 13px;
   fill: var(--color-contrast);
 }
-
 
 @media (min-width: 360px) {
   .paginate_button {

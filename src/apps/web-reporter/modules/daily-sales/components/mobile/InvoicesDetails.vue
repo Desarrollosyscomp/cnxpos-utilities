@@ -1,18 +1,18 @@
 <template>
   <div class="app-background"></div>
   <div class="container">
-    <div
-      class="back-button clickable"
-      @click="router.push('/web-report-v2/daily-sales')"
-    >
-      <Icon :path="mdiArrowLeftCircle" class="back-icon" />
-      <span></span>
-    </div>
     <div class="invoice-container">
+      <div
+        class="back-button clickable"
+        @click="router.back()"
+      >
+        <Icon :path="mdiArrowLeftCircle" class="back-icon" />
+        <span>Facturas del día</span>
+      </div>
       <div class="invoice-title">
         <h3>
           Detalles de la factura <br />
-          #{{'[[AQUI VA EL ID DE LA FACTURA]]'}}
+          #{{ route.params.invoice_id }}
         </h3>
       </div>
       <div class="daily-sales-container">
@@ -23,59 +23,54 @@
                 <span>Detalle de valores</span>
                 <div class="item">
                   <span class="item-bold">Subtotal</span>
-                  <span>{{numberToCurrency(sumary.subtotal)}}</span>
+                  <span>{{ numberToCurrency(sumary.subtotal) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor de impuesto</span>
-                  <span>{{numberToCurrency(sumary.valimpuesto)}}</span>
+                  <span>{{ numberToCurrency(sumary.valimpuesto) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total descuento</span>
-                  <span>{{numberToCurrency(sumary.valdescuentos)}}</span>
+                  <span>{{ numberToCurrency(sumary.valdescuentos) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total venta</span>
-                  <span>{{numberToCurrency(sumary.valortotal)}}</span>
+                  <span>{{ numberToCurrency(sumary.valortotal) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Cliente</span>
-                  <span>{{sumary.nombres}}</span>
+                  <span>{{ sumary.nombres }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>{{"[[DE DONDE SACO LA UTILIDAD???]]"}}</span>
+                  <span>{{ "[[DE DONDE SACO LA UTILIDAD???]]" }}</span>
                 </div>
                 <hr />
               </div>
             </CardContent>
           </Card>
-          <Card class=""
-            v-for="(invoice, index) in invoices"
-            :key="index"
-          >
+          <Card class="" v-for="(invoice, index) in invoices" :key="index">
             <CardContent>
-              
-                <span class="font-montserrat-bold">{{invoice.descripcion}}</span>
-              
+              <span class="font-montserrat-bold">{{ invoice.descripcion }}</span>
               <div class="text-container">
                 <div class="item-3">
                   <span class="item-bold">Valor</span>
-                  <span>{{numberToCurrency(invoice.valorprod)}}</span>
+                  <span>{{ numberToCurrency(invoice.valorprod) }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Descuento</span>
-                  <span>{{numberToCurrency(invoice.descuento)}}</span>
+                  <span>{{ numberToCurrency(invoice.descuento) }}</span>
                 </div>
                 <hr />
                 <div class="item-3">
                   <span class="item-bold">Cantidad</span>
-                  <span>{{invoice.cantidad}}</span>
+                  <span>{{ invoice.cantidad }}</span>
                 </div>
                 <hr />
               </div>
@@ -97,12 +92,13 @@ import type { TWarehouseDayInvoiceDetail } from "../../interfaces/warehouse-day-
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { useRoute, useRouter } from "vue-router";
 import { mdiArrowLeftCircle } from "@mdi/js";
+import Icon from "../../../../../../components/Icon.vue";
 
 const dailySalesStore = useDailySalesStore();
 const route = useRoute();
 const router = useRouter();
 
-let invoices = ref < TWarehouseDayInvoiceDetail[] > ([])
+let invoices = ref<TWarehouseDayInvoiceDetail[]>([]);
 let sumary = reactive({
   numero: 0,
   valimpuesto: 0,
@@ -118,27 +114,30 @@ let sumary = reactive({
   apellidos: "",
   cantidad: 0,
   idalmacen: 0,
-  total_costo: 0
-})
+  total_costo: 0,
+});
 
 const loadInvoiceDetails = async () => {
   let { warehouse_id, invoice_id } = route.params;
-  const response = await dailySalesStore.dailyInvoiceDetails(warehouse_id as string, invoice_id as string)
+  const response = await dailySalesStore.dailyInvoiceDetails(
+    warehouse_id as string,
+    invoice_id as string
+  );
   if (!response.error) {
-    invoices.value = response.data.daily_invoice_details
+    invoices.value = response.data.daily_invoice_details;
     // sumary = response.data.datos_factura
-    sumary.nombres = response.data.datos_factura.nombres
-    sumary.valimpuesto = response.data.datos_factura.valimpuesto
-    sumary.valdescuentos = response.data.datos_factura.valdescuentos
-    sumary.valortotal = response.data.datos_factura.valortotal
-    sumary.subtotal = response.data.datos_factura.subtotal
+    console.log(response.data)
+    sumary.nombres = response.data.datos_factura[0].nombres;
+    sumary.valimpuesto = response.data.datos_factura[0].valimpuesto;
+    sumary.valdescuentos = response.data.datos_factura[0].valdescuentos;
+    sumary.valortotal = response.data.datos_factura[0].valortotal;
+    sumary.subtotal = response.data.datos_factura[0].subtotal;
   }
-}
+};
 
 onMounted(() => {
-  loadInvoiceDetails()
-})
-
+  loadInvoiceDetails();
+});
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -194,7 +193,7 @@ onMounted(() => {
   text-align: center;
 }
 
-.bubble> :nth-child(1) {
+.bubble > :nth-child(1) {
   font-weight: 300;
   font-size: calc(16px * var(--font-size-proportion));
   margin-bottom: 10px;
@@ -322,5 +321,21 @@ onMounted(() => {
 .cards {
   text-align: start;
   font-weight: bold;
+}
+
+.back-button {
+  color: var(--color-contrast);
+  width: 100%;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+  padding-bottom: 5px;
+}
+.back-icon {
+  fill: var(--color-contrast);
+  width: 20px;
 }
 </style>

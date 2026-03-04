@@ -203,8 +203,8 @@ let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 const warehousesArray = ref<TWarehouseDaySale[]>([]);
 const loadDailySales = async () => {
-  let response = await dailySalesStore.dailySales();
-  warehousesArray.value = response.data;
+//   let response = await dailySalesStore.dailySales();
+//   warehousesArray.value = response.data;
   console.log(warehousesArray.value);
 };
 

@@ -2,10 +2,13 @@
   <div class="app-background"></div>
   <div class="container">
     <div class="invoice-container">
-      <div class="back-button clickable" @click="router.push('/web-report-v2/daily-sales')">
+      <div
+        class="back-button clickable"
+        @click="router.push('/web-report-v2/daily-sales')"
+      >
         <Icon :path="mdiArrowLeftCircle" class="back-icon" />
         <span>Informe de ventas por día</span>
-      </div> 
+      </div>
       <div class="invoice-title">
         <h3>Facturas del día</h3>
         <span class="font-montserrat-bold">Cap Club 81</span>
@@ -61,7 +64,11 @@
                 <div class="buttons">
                   <button
                     class="form-button-2 color-button-2"
-                    @click="router.push(`/web-report-v2/invoice-details/${invoice.idalmacen}/${invoice.idfactura}`)"
+                    @click="
+                      router.push(
+                        `/web-report-v2/invoice-details/${invoice.idalmacen}/${invoice.numero}`
+                      )
+                    "
                   >
                     Ver Detalles
                   </button>
@@ -71,11 +78,13 @@
           </Card>
           <div align="center">
             <Paginator
-              v-if="5 <= 10"
-              :items-per-page="4"
+              v-if="dailySalesStore.itemsCount > dailySalesStore.limit"
+              :key="dailySalesStore.page"
+              :items-per-page="dailySalesStore.limit"
               :max-buttons="4"
-              :total-pages="8"
-              :current-page="2"
+              :total-pages="dailySalesStore.totalPages"
+              :current-page="dailySalesStore.page"
+              @on-change-page="onChangePage"
             />
           </div>
         </div>
@@ -103,10 +112,19 @@ let invoices = ref<TWarehouseDayInvoice[]>([]);
 const dailySalesStore = useDailySalesStore();
 
 const setInvoices = async () => {
-  let { date, warehouse_id } = route.params;  
-  let response = await dailySalesStore.dailyInvoices(date as string, warehouse_id as string);
+  let { date, warehouse_id } = route.params;
+  let response = await dailySalesStore.dailyInvoices(
+    date as string,
+    warehouse_id as string
+  );
   invoices.value = response.data.list;
   console.log(invoices.value);
+};
+const onChangePage = (emmited: any) => {
+  if (dailySalesStore.page !== emmited.data.page) {
+    dailySalesStore.page = emmited.data.page;
+    setInvoices();
+  }
 };
 
 onMounted(() => {

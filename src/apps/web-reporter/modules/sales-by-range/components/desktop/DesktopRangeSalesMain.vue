@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CenterAndScroll from '../../../../../../components/CenterAndScroll.vue';
+// import CenterAndScroll from '../../../../../../components/CenterAndScroll.vue';
 
 </script>
 
