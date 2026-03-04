@@ -47,6 +47,9 @@
 .text-contrast{
   color: var(--color-contrast)
 }
+.text-white{
+  color: white
+}
 
 .theme-transition * {
   transition: background-color 0.3s ease, color 0.3s ease,
@@ -416,4 +419,17 @@ tbody tr:hover td:first-child {
   :root{
     --table-font-size-proportion: 2;
   }
+}
+
+
+.w-100{
+  width: 100%;
+}
+
+
+.unordered-list{
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
