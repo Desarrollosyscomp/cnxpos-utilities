@@ -69,7 +69,7 @@ const emit = defineEmits(['on-select'])
 .title{
     color: var(--color-contrast);
     font-weight: 800;
-    font-size: 16px;
+    font-size: 14px;
 }
 .subtitle{
     color: var(--color-contrast);
