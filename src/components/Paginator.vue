@@ -218,7 +218,7 @@ onMounted(() => {
   justify-content: center;
   padding: 2px 8px;
   margin: 0 2px;
-  border: 1px solid rgb(206, 206, 206);
+  border: 1px solid var(--color-contrast);
   border-radius: 3px;
   transition: 0.1s;
   font-size: 11px;

@@ -28,27 +28,27 @@
                 <hr />
                 <div class="item">
                   <span class="item-bold">Valor de impuesto</span>
-                  <span>{{ numberToCurrency(sumary.valimpuesto) }}</span>
+                  <span>{{ numberToCurrency(sumary.valueAddedTax) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total descuento</span>
-                  <span>{{ numberToCurrency(sumary.valdescuentos) }}</span>
+                  <span>{{ numberToCurrency(sumary.totalDiscounts) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Total venta</span>
-                  <span>{{ numberToCurrency(sumary.valortotal) }}</span>
+                  <span>{{ numberToCurrency(sumary.totalSale) }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Cliente</span>
-                  <span>{{ sumary.nombres }}</span>
+                  <span>{{ sumary.customer }}</span>
                 </div>
                 <hr />
                 <div class="item">
                   <span class="item-bold">Utilidad</span>
-                  <span>{{ "[[DE DONDE SACO LA UTILIDAD???]]" }}</span>
+                  <span>{{ numberToCurrency(sumary.profit) }}</span>
                 </div>
                 <hr />
               </div>
@@ -87,34 +87,27 @@ import Card from "../Card.vue";
 //@ts-ignore
 import CardContent from "../CardContent.vue";
 import { useDailySalesStore } from "../../store/daily-sales.store";
-import { onMounted, reactive, ref } from "vue-demi";
+import { onMounted, ref } from "vue-demi";
 import type { TWarehouseDayInvoiceDetail } from "../../interfaces/warehouse-day-invoice-detail.type";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { useRoute, useRouter } from "vue-router";
 import { mdiArrowLeftCircle } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
+import type { TSummaryInvoiceDetails } from "../../interfaces/summary-daily-sales.type";
 
 const dailySalesStore = useDailySalesStore();
 const route = useRoute();
 const router = useRouter();
 
 let invoices = ref<TWarehouseDayInvoiceDetail[]>([]);
-let sumary = reactive({
-  numero: 0,
-  valimpuesto: 0,
-  subtotal: 0,
-  valdescuentos: 0,
-  valortotal: 0,
-  descripcion: "",
-  valorprod: 0,
-  descuento: 0,
-  porcdesc: 0,
-  fecha: "",
-  nombres: "",
-  apellidos: "",
-  cantidad: 0,
-  idalmacen: 0,
-  total_costo: 0,
+let sumary = ref<TSummaryInvoiceDetails>({
+    subtotal: 0,
+    valueAddedTax: 0,
+    totalDiscounts: 0,
+    totalSale: 0,
+    customer: "",
+    profit: 0,
+    totalItems: 0,
 });
 
 const loadInvoiceDetails = async () => {
@@ -125,18 +118,13 @@ const loadInvoiceDetails = async () => {
   );
   if (!response.error) {
     invoices.value = response.data.daily_invoice_details;
-    // sumary = response.data.datos_factura
+    sumary.value = response.data.summary_invoice;
     console.log(response.data)
-    sumary.nombres = response.data.datos_factura[0].nombres;
-    sumary.valimpuesto = response.data.datos_factura[0].valimpuesto;
-    sumary.valdescuentos = response.data.datos_factura[0].valdescuentos;
-    sumary.valortotal = response.data.datos_factura[0].valortotal;
-    sumary.subtotal = response.data.datos_factura[0].subtotal;
   }
 };
 
-onMounted(() => {
-  loadInvoiceDetails();
+onMounted(async () => {
+  await loadInvoiceDetails();
 });
 </script>
 <style scoped>

@@ -53,7 +53,7 @@ export const useDailySalesStore = defineStore("daily-sales", {
         error: false,
         data: {
           daily_invoice_details: response?.data.response.invoice,
-          datos_factura: response?.data.response.invoice,
+          summary_invoice: response?.data.response.summary,
         },
       };
     },

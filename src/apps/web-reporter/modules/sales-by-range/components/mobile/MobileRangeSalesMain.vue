@@ -103,11 +103,6 @@
               </div>
               <hr />
               <div class="item">
-                <span class="font-montserrat-bold">Utilidad</span>
-                <span>como saco la utilidad</span>
-              </div>
-              <hr />
-              <div class="item">
                 <span class="font-montserrat-bold">Productos vendidos</span>
                 <span>{{ summary.totalProducts }}</span>
               </div>
@@ -273,11 +268,6 @@
           <span>{{ numberToCurrency(selectedItem.totalconprop) }}</span>
         </div>
         <hr />
-        <div class="item">
-          <span class="font-montserrat-bold">Utilidad</span>
-          <span>donde esta la utilidad</span>
-        </div>
-        <hr />
         <div class="button-leave">
           <button class="form-button-2" @click="closeModalDetails()">
             Salir
@@ -293,15 +283,18 @@
   >
     <div class="modal-container">
       <div class="text-container">
-        <span class="font-montserrat-bold">Almacenes</span>
-        <div>
-          <ul class="text-contrast unordered-list">
-            <li v-for="warehouse in warehouses_array" :key="warehouse.title">
-              <span>{{ warehouse.title }}</span>
-            </li>
-          </ul>
+        <div class="warehouse-container">
+          <span class="font-montserrat-bold">Almacenes</span>
+          <div class="warehouse-list">
+            <span
+              v-for="(warehouse, index) in warehouses_array"
+              :key="index"
+              class="form-input"
+              :disabled="true"
+              >{{ warehouse.title }}</span
+            >
+          </div>
         </div>
-
         <div class="button-leave">
           <button class="form-button-2" @click="closeModalWarehouses()">
             Salir
@@ -381,12 +374,9 @@ const searchSales = async () => {
     parseEndDate,
     selectedWarehouse.value?.idalmacen ?? 0
   );
-  console.log(selectedWarehouse.value);
-  console.log(response);
   sales.value = response.data.list;
   summary.value = response.data.summary;
   params.value = false;
-  console.log(summary.value);
 };
 
 const onChangePage = (emmited: any) => {
@@ -423,6 +413,23 @@ const openModalWarehouses = () => {
 const closeModalWarehouses = () => {
   return (modalWarehouses.value = false);
 };
+
+// watch(rangeDates.value , () => {
+//   params.value = true;
+//   selectedWarehouse.value = null;
+//   sales.value = [];
+//   summary.value = {
+//     subtotal: 0,
+//     totalSales: 0,
+//     totalProducts: 0,
+//     invoiceQuantity: 0,
+//     totalTaxes: 0,
+//     totalCosts: 0,
+//     returns: 0,
+//     salesMinusReturns: 0,
+//   };
+//   loadWarehouses();
+// });
 onMounted(async () => {
   loadWarehouses();
 });
@@ -627,7 +634,6 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
-
 }
 
 .item-2 {
@@ -659,6 +665,20 @@ li {
 .color-link {
   color: var(--color-accent);
   text-decoration: underline;
+}
+
+.warehouse-container {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.warehouse-list {
+  display: flex;
+  flex-direction: column;
+  text-align: start;
+  gap: 10px;
 }
 @media (min-width: 360px) {
   .help-beto {

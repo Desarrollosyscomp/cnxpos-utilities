@@ -90,11 +90,21 @@ const emit = defineEmits(['on-select'])
 
 .radio.checked{
     background-color: var(--color-contrast);
-    color: var(--color-primary-dark-2)
+    color: var(--color-primary-dark-2);
 }
 
 .radio-label.disabled{
     opacity: 0.5;
     cursor: not-allowed;
+}
+
+@media (max-width: 320px) {
+    .radio{
+        width: 12px;
+        aspect-ratio: 1/1;
+    }
+    .radio-label {
+        padding: 8px;
+    }
 }
 </style>
