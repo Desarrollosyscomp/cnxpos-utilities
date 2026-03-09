@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    {{ env.VITE_NEST_API_URL  }}
+    {{ env }}
     <input
       class="form-input"
       type="text"
@@ -30,24 +30,21 @@ import { useAuthStore } from "../../store/auth.store";
 import { type TFormLogin } from "../../interfaces/auth.type";
 import { useRouter } from "vue-router";
 let showPassword = ref(false);
-
-const env = import.meta.env;
+let env = ref()
 const authStore = useAuthStore();
 const router = useRouter();
 const authForm = ref<TFormLogin>({
-  username: "",
-  password: "",
-});
-
-const message = ref<object>({});
+    username: "",
+    password: "",
+})
 const onSubmit = async () => {
   let response = await authStore.login(authForm.value);
-  console.log(response);
-  message.value = response;
-  if (response.data.isLogged) {
-    router.push("/home/welcome");
+  env.value = import.meta.env;
+  console.log(response)
+  if (response.data.isLogged){
+    router.push("/home/welcome")
   }
-};
+}
 </script>
 
 <style scoped>
@@ -67,6 +64,7 @@ const onSubmit = async () => {
   width: 100%;
   gap: 10px;
 }
+
 
 .text-color {
   color: var(--color-contrast);
