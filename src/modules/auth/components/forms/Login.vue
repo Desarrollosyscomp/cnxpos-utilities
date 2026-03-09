@@ -1,6 +1,12 @@
 <template>
   <div class="login-container">
-    <input class="form-input" type="text" placeholder="Usuario" v-model="authForm.username" />
+    {{ message }}
+    <input
+      class="form-input"
+      type="text"
+      placeholder="Usuario"
+      v-model="authForm.username"
+    />
     <input
       class="form-input"
       :type="showPassword ? 'text' : 'password'"
@@ -28,17 +34,19 @@ let showPassword = ref(false);
 const authStore = useAuthStore();
 const router = useRouter();
 const authForm = ref<TFormLogin>({
-    username: "",
-    password: "",
-})
+  username: "",
+  password: "",
+});
 
+const message = ref<object>({});
 const onSubmit = async () => {
   let response = await authStore.login(authForm.value);
-  console.log(response)
-  if (response.data.isLogged){
-    router.push("/home/welcome")
+  console.log(response);
+  message.value = response;
+  if (response.data.isLogged) {
+    router.push("/home/welcome");
   }
-}
+};
 </script>
 
 <style scoped>
@@ -58,7 +66,6 @@ const onSubmit = async () => {
   width: 100%;
   gap: 10px;
 }
-
 
 .text-color {
   color: var(--color-contrast);
