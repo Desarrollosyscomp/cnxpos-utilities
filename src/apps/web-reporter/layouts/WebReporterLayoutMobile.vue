@@ -3,17 +3,26 @@
     <div class="menu-container">
       <div class="menu-content">
         <img class="beto-avatar-menu" :src="BetoAvatar" />
-        <button class="form-button-2">
-          Cuenta
-          <Icon :path="mdiPencil" class="pencil-icon" />
-        </button>
+        <div class="menu-buttons">
+          <button class="form-button-2">
+            Cuenta
+            <Icon :path="mdiPencil" class="pencil-icon" />
+          </button>
+          <button class="form-button-2" @click="logout">
+            Salir
+            <Icon :path="mdiExitToApp" class="pencil-icon" />
+          </button>
+        </div>
         <hr class="menu-hr" />
         <div class="menu-items">
           <div class="menu-item" @click="router.push('/home/welcome')">
             <Icon :path="mdiHome" class="icon" />
             <span>Inicio</span>
           </div>
-          <div class="menu-item" @click="router.push('/web-report-v2/dashboard')">
+          <div
+            class="menu-item"
+            @click="router.push('/web-report-v2/dashboard')"
+          >
             <WebReporterIcon class="web-report-icon" />
             <span>Web Reporter</span>
           </div>
@@ -29,26 +38,16 @@
   />
   <div class="app-container">
     <div class="app-content">
-       <router-view />
-     </div>
-     <div class="bottom">
-       <WebReporterBottomMenu />
-     </div>
-     
+      <router-view />
+    </div>
+    <div class="bottom">
+      <WebReporterBottomMenu />
+    </div>
   </div>
 </template>
-<script setup>
-import {
-  mdiFileChart,
-  mdiChartBar,
-  mdiCurrencyUsd,
-  mdiWhiteBalanceSunny,
-  mdiMoonWaningCrescent,
-  mdiDotsVertical,
-  mdiPencil,
-  mdiHome,
-} from "@mdi/js";
-import { toggleTheme, visible } from "../../../utils/theme-transitions";
+<script setup lang="ts">
+import { mdiDotsVertical, mdiPencil, mdiHome, mdiExitToApp } from "@mdi/js";
+import { toggleTheme } from "../../../utils/theme-transitions";
 import ThemeModeIcon from "../../../assets/general/icons/ThemeModeIcon.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
@@ -56,21 +55,27 @@ import LeftMenu from "../../../components/LeftMenu.vue";
 import Icon from "../../../components/Icon.vue";
 import WebReporterIcon from "../../../assets/general/icons/WebReporterIcon.vue";
 import BetoAvatar from "../../../assets/avatars/beto.svg";
-import DashboardIcon from "../../../assets/general/icons/DashboardIcon.vue";
-import RegisterBoxIcon from "../../../assets/general/icons/RegisterBoxIcon.vue";
-import DateSalesIcon from "../../../assets/general/icons/DateSales.vue";
 import WebReporterBottomMenu from "../components/WebReporterBottomMenu.vue";
+import { useAuthStore } from "../../../modules/auth/store/auth.store";
+const authStore = useAuthStore();
 const route = useRoute();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
-  return loader ? defineAsyncComponent(loader) : null;
+  return loader ? defineAsyncComponent(loader as any) : null;
 });
 console.log(Header.value);
 let menuOpen = ref(false);
 const router = useRouter();
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
+};
+const logout = () => {
+  authStore.auth = {
+    isLogged: false,
+    token: "",
+  };
+  router.push("/auth/login");
 };
 </script>
 <style scoped>
@@ -106,7 +111,7 @@ const toggleMenu = () => {
   color: var(--color-contrast);
   border-radius: 5px;
 }
-.icon{
+.icon {
   width: 20px;
   height: 20px;
 }
@@ -178,17 +183,27 @@ const toggleMenu = () => {
   width: calc(15px * var(--web-report-icon-size));
   height: calc(15px * var(--web-report-icon-size));
 }
-
+.icon-logout {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 24px;
+  height: 25px;
+  fill: var(--color-contrast);
+}
 .app-container {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.app-content{
-  flex:1;
+.app-content {
+  flex: 1;
   overflow-y: scroll;
-
+}
+.menu-buttons {
+  display: flex;
+  gap: 10px;
 }
 
 @media (min-width: 360px) {

@@ -2,11 +2,19 @@
   <div class="app-background"></div>
   <div class="container">
     <div class="sales-by-range-container">
+      <div
+        v-if="!params && sales.length != 0"
+        class="back-button clickable"
+        @click="onBack()"
+      >
+        <Icon :path="mdiArrowLeftCircle" class="back-icon" />
+        <span>Regresar</span>
+      </div>
       <div class="sales-by-range-title">
         <h3>Informe de <br />ventas acumulado</h3>
       </div>
 
-      <div class="search-container">
+      <div class="search-container" v-if="params">
         <div class="date-field">
           <label for="fecha">Fecha de inicio</label>
           <input
@@ -140,7 +148,6 @@
               <button class="form-button-2" @click="openModalDetails(item)">
                 Detalles
               </button>
-              <button class="form-button-2" @click="">Ver facturas</button>
             </div>
           </CardContent>
         </Card>
@@ -321,6 +328,8 @@ import type { TSummaryRangeSales } from "../../interfaces/summary-range-sales.ty
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import Paginator from "../../../../../../components/Paginator.vue";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
+import Icon from "../../../../../../components/Icon.vue";
+import { mdiArrowLeftCircle } from "@mdi/js";
 // import { useRouter } from "vue-router";
 let warehouses_array = ref<TOptionsType[]>([]);
 let all_warehouses = ref<boolean>(false);
@@ -393,6 +402,7 @@ const onBack = () => {
     end_date: "",
   };
   selectedWarehouse.value = null;
+  sales.value = [];
 };
 
 const selectedItem = ref<TRangeSales>({} as TRangeSales);
@@ -414,22 +424,6 @@ const closeModalWarehouses = () => {
   return (modalWarehouses.value = false);
 };
 
-// watch(rangeDates.value , () => {
-//   params.value = true;
-//   selectedWarehouse.value = null;
-//   sales.value = [];
-//   summary.value = {
-//     subtotal: 0,
-//     totalSales: 0,
-//     totalProducts: 0,
-//     invoiceQuantity: 0,
-//     totalTaxes: 0,
-//     totalCosts: 0,
-//     returns: 0,
-//     salesMinusReturns: 0,
-//   };
-//   loadWarehouses();
-// });
 onMounted(async () => {
   loadWarehouses();
 });
@@ -443,6 +437,12 @@ onMounted(async () => {
 :global(:root) {
   --avatar-size: 1;
   --font-size: 1;
+  --width-img: 1;
+  --width-circle: 1;
+  --width-circle-2: 1;
+  --padding-top: 1;
+  --padding-left: 1;
+  --font-size-title: 1;
 }
 .container {
   width: 100vw;
@@ -457,10 +457,12 @@ onMounted(async () => {
   height: 92%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 15px;
 }
 
 .sales-by-range-title {
+  font-size: calc(16px * var(--font-size-title));
   text-align: center;
   color: var(--color-contrast);
 }
@@ -476,6 +478,7 @@ onMounted(async () => {
 }
 
 .warehouses-container {
+  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -486,10 +489,11 @@ onMounted(async () => {
   justify-content: center;
   position: absolute;
   background-color: var(--color-contrast);
-  width: 18%;
+  padding-top: 5px;
+  width: calc(14% * var(--width-circle));
   border-radius: 100%;
-  right: 10px;
-  bottom: 45px;
+  top: calc(5px * var(--padding-top));
+  left: calc(12px * var(--padding-left));
 }
 
 .help-beto::after {
@@ -497,19 +501,18 @@ onMounted(async () => {
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: -9px;
+  right: -9px;
   content: "?";
-  font-size: 17px;
+  font-size: 15px;
   font-weight: bold;
   color: var(--color-accent);
-  width: 38%;
+  width: calc(40% * var(--width-circle-2));
   border-radius: 100%;
   background-color: var(--color-contrast);
 }
 
 .size-img {
-  width: 41px;
-  transform: scaleX(-1);
+  width: calc(30px * var(--width-img));
 }
 
 .modal-container {
@@ -680,62 +683,55 @@ li {
   text-align: start;
   gap: 10px;
 }
-@media (min-width: 360px) {
+.back-button {
+  color: var(--color-contrast);
+  width: 100%;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 5px;
+}
+.back-icon {
+  fill: var(--color-contrast);
+  width: 20px;
+}
+ @media (min-width: 360px) {
   .help-beto {
-    width: 22%;
-    bottom: 60px;
-  }
-  .help-beto::after {
-    width: 35%;
-    font-size: 25px;
-    left: -12px;
+    --width-circle: 0.9;
+    --padding-top: 8;
+    --padding-left: 2;    
   }
   .size-img {
-    width: 60px;
+    --width-img: 1.05;
   }
 }
-@media (min-width: 414px) {
+
+@media (min-width: 390px) {
   .help-beto {
-    width: 20%;
-    right: 15px;
-  }
-  .help-beto::after {
-    width: 35%;
-    font-size: 25px;
-    left: -12px;
+    --width-circle: 0.82;
+    --padding-top: 8;
+    --padding-left: 2;
   }
   .size-img {
-    width: 60px;
+    --width-img: 1.1;
   }
 }
+
 
 @media (min-width: 768px) {
   .help-beto {
-    width: 14%;
-  }
-  .help-beto::after {
-    width: 35%;
-    font-size: 30px;
-    left: -12px;
+    --width-circle: 0.47;
+    --padding-top: 10;
+    --padding-left: 4;
   }
   .size-img {
-    width: 80px;
+    --width-img: 1.2;
   }
-
-  .beto-avatar {
-    --avatar-size: 0.7;
-  }
-  .steps {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-  }
-  .title {
-    font-size: 20px;
-  }
-  li {
-    font-size: 16px;
+  .sales-by-range-title {
+  --font-size-title: 1.2;
   }
 }
+
 </style>

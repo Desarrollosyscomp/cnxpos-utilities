@@ -20,13 +20,6 @@
             <WebReporterIcon class="web-report-icon" />
             <span>Web Reporter</span>
           </div>
-          <div @click="logout">
-            <Icon
-              :path="mdiExitToApp"
-              class="clickable menu-icon"
-              @click="logout"
-            />
-          </div>
         </div>
       </div>
     </div>
@@ -39,33 +32,24 @@
   />
   <router-view />
 </template>
-<script setup>
+<script setup lang="ts">
 import {
-  mdiFileChart,
-  mdiChartBar,
-  mdiCurrencyUsd,
-  mdiWhiteBalanceSunny,
-  mdiMoonWaningCrescent,
   mdiDotsVertical,
   mdiPencil,
   mdiHome,
-  mdiDotsCircle,
-  mdiExitToApp,
 } from "@mdi/js";
-import { toggleTheme, visible } from "../utils/theme-transitions";
+import { toggleTheme} from "../utils/theme-transitions";
 import ThemeModeIcon from "../assets/general/icons/ThemeModeIcon.vue";
 import { useRoute, useRouter } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 import LeftMenu from "../components/LeftMenu.vue";
-import Icon from "../components/Icon.vue";
 import WebReporterIcon from "../assets/general/icons/WebReporterIcon.vue";
-import { useAuthStore } from "../modules/auth/store/auth.store";
+
 const route = useRoute();
-const authStore = useAuthStore();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
-  return loader ? defineAsyncComponent(loader) : null;
+  return loader ? defineAsyncComponent(loader as any) : null;
 });
 console.log(Header.value);
 let menuOpen = ref(false);
@@ -74,13 +58,6 @@ const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
-const logout = () => {
-  authStore.auth = {
-    isLogged: false,
-    token: "",
-  };
-  router.push("/auth/login")
-};
 </script>
 <style scoped>
 @import "../utils/css/dialog-bubble.css";
@@ -119,7 +96,6 @@ const logout = () => {
   width: 20px;
   height: 20px;
 }
-
 .menu-item:hover {
   color: white;
   background-color: var(--color-cnx-orange);
