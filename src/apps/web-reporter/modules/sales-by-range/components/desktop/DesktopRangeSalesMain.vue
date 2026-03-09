@@ -21,13 +21,13 @@
         <div class="font-montserrat-bold text-contrast">
           Generar nuevo reporte
         </div>
-        <fieldset class="input-field">
+        <fieldset class="input-field date-field">
           <legend>Fecha inicial</legend>
-          <input type="date" v-model="rangeDates.init_date" />
+          <input type="date" v-model="rangeDates.init_date" class="text-contrast"/>
         </fieldset>
-        <fieldset class="input-field">
+        <fieldset class="input-field date-field">
           <legend>Fecha final</legend>
-          <input type="date" v-model="rangeDates.end_date" />
+          <input type="date" v-model="rangeDates.end_date" class="text-contrast"/>
         </fieldset>
         <div class="checkbox-container">
           <input
