@@ -2,10 +2,16 @@
   <left-menu :is-open="menuOpen" @close-menu="toggleMenu">
     <div class="menu-container">
       <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
-      <button class="form-button-2">
-        Cuenta
-        <Icon :path="mdiPencil" :class="'pencil-icon'" />
-      </button>
+      <div class="menu-buttons">
+        <button class="form-button-2">
+          Cuenta
+          <Icon :path="mdiPencil" :class="'pencil-icon'" />
+        </button>
+        <button class="form-button-2" @click="logout">
+          Salir
+          <Icon :path="mdiExitToApp" :class="'pencil-icon'" />
+        </button>
+      </div>
       <hr class="menu-hr" />
       <div class="menu-items">
         <div class="menu-item" @click="router.push('/home/welcome')" >
@@ -29,35 +35,41 @@
     </div>
   </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import {
-  mdiFileChart,
-  mdiChartBar,
-  mdiCurrencyUsd,
   mdiWhiteBalanceSunny,
-  mdiMoonWaningCrescent,
   mdiDotsVertical,
   mdiPencil,
-  mdiHome
+  mdiHome,
+  mdiExitToApp
 } from "@mdi/js";
-import { toggleTheme, visible } from "../utils/theme-transitions";
-import ThemeModeIcon from "../assets/general/icons/ThemeModeIcon.vue";
+import { toggleTheme } from "../utils/theme-transitions";
 import { useRoute, useRouter } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue-demi";
 import LeftMenu from "../components/LeftMenu.vue";
 import Icon from "../components/Icon.vue";
 import WebReporterIcon from "../assets/general/icons/WebReporterIcon.vue";
+import { useAuthStore } from "../modules/auth/store/auth.store";
+const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
 console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
-  return loader ? defineAsyncComponent(loader) : null;
+  return loader ? defineAsyncComponent(loader as any) : null;
 });
 console.log(Header.value);
 let menuOpen = ref(false);
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
+};
+
+const logout = () => {
+  authStore.auth = {
+    isLogged: false,
+    token: "",
+  };
+  router.push("/auth/login");
 };
 </script>
 <style scoped>
@@ -142,7 +154,7 @@ const toggleMenu = () => {
 }
 
 .menu-icon {
-  width: 40px;
+  width: 30px;
   fill: var(--color-contrast);
 }
 .icon{
@@ -163,6 +175,10 @@ const toggleMenu = () => {
   fill: var(--color-contrast);
   width: calc(30px * var(--web-report-icon-size));
   height: calc(30px * var(--web-report-icon-size));
+}
+.menu-buttons {
+  display: flex;
+  gap: 10px;
 }
 @media (min-width: 2560px){
 
