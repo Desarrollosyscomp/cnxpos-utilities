@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    {{ message }}
+    {{ env.VITE_NEST_API_URL  }}
     <input
       class="form-input"
       type="text"
@@ -31,6 +31,7 @@ import { type TFormLogin } from "../../interfaces/auth.type";
 import { useRouter } from "vue-router";
 let showPassword = ref(false);
 
+const env = import.meta.env;
 const authStore = useAuthStore();
 const router = useRouter();
 const authForm = ref<TFormLogin>({
