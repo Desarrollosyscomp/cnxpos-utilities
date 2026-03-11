@@ -6,6 +6,10 @@ import { HomeRouter } from "../modules/home/router/home.router";
 import { RangeSalesRouterDesktop } from "../apps/web-reporter/modules/sales-by-range/router/range-sales.router";
 import { WebReporterRouter } from "../apps/web-reporter/router/web-reporter.router";
 import { useAuthStore } from "../modules/auth/store/auth.store";
+import { ProfileRouterDesktop } from "../modules/profile/router/profile.router";
+import { ReportInventoryRouterDesktop } from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
+// import { ReportInventoryRouterDesktop } from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
+// import { ReportInventoryRouterDesktop} from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
 
 const routes = [
   {
@@ -20,6 +24,8 @@ const routes = [
   ...HomeRouter,
   ...WebReporterRouter,
   ...RangeSalesRouterDesktop,
+  ...ProfileRouterDesktop,
+  ...ReportInventoryRouterDesktop,
   //   {
   //     path: "/unauthorized",
   //     name: "unauthorized",

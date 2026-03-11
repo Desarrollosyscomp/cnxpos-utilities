@@ -6,6 +6,9 @@ import HomeView from "../components/HelloWorld.vue";
 // import { WebReporterRouter } from "../apps/web-reporter/router/web-reporter.router";
 // import { RangeSalesRouterDesktop } from "../apps/web-reporter/modules/sales-by-range/router/range-sales.router";
 import { RangeSalesRouterMobile } from "../apps/web-reporter/modules/sales-by-range/router/mobile-range-sales.router";
+import { ProfileRouterMobile } from "../modules/profile/router/profile.router.mobile";
+import { ReportInventoryRouterMobile } from "../apps/inventory/modules/report-inventory/router/mobile-report-inventory.router";
+// import { ReportInventoryRouterMobile } from "../apps/inventory/modules/report-inventory/router/mobile-report-inventory.router";
 
 const routes = [
   {
@@ -18,6 +21,8 @@ const routes = [
   // ...HomeRouter,
   // ...WebReporterRouter,
   ...RangeSalesRouterMobile,
+  ...ProfileRouterMobile,
+  ...ReportInventoryRouterMobile,
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",
