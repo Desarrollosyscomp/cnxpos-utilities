@@ -8,6 +8,7 @@ import { WebReporterRouter } from "../apps/web-reporter/router/web-reporter.rout
 import { useAuthStore } from "../modules/auth/store/auth.store";
 import { ProfileRouterDesktop } from "../modules/profile/router/profile.router";
 import { ReportInventoryRouterDesktop } from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
+// import { ProfileRouterMobile } from "../modules/profile/router/profile.router.mobile";
 // import { ReportInventoryRouterDesktop } from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
 // import { ReportInventoryRouterDesktop} from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
 
@@ -25,6 +26,7 @@ const routes = [
   ...WebReporterRouter,
   ...RangeSalesRouterDesktop,
   ...ProfileRouterDesktop,
+  // ...ProfileRouterMobile,
   ...ReportInventoryRouterDesktop,
   //   {
   //     path: "/unauthorized",

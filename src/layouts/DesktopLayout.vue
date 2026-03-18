@@ -3,7 +3,7 @@
     <div class="menu-container">
       <img class="beto-avatar-menu" src="../assets/avatars/beto.svg" />
       <div class="menu-buttons">
-        <button class="form-button-2">
+        <button class="form-button-2" @click="router.push('/account/profile')">
           Cuenta
           <Icon :path="mdiPencil" :class="'pencil-icon'" />
         </button>
@@ -21,6 +21,10 @@
         <div class="menu-item" @click="router.push('/web-report-v2/dashboard')" >
           <WebReporterIcon :class="'web-report-icon'" />
           <span>Web Reporter</span>
+        </div>
+        <div class="menu-item" @click="router.push('/inventory/report-inventory')">
+          <Icon :path="mdiCurrencyUsd" :class="'icon'" />
+          <span>Inventario</span>
         </div>
       </div>
     </div>
@@ -41,7 +45,8 @@ import {
   mdiDotsVertical,
   mdiPencil,
   mdiHome,
-  mdiExitToApp
+  mdiExitToApp,
+  mdiCurrencyUsd
 } from "@mdi/js";
 import { toggleTheme } from "../utils/theme-transitions";
 import { useRoute, useRouter } from "vue-router";

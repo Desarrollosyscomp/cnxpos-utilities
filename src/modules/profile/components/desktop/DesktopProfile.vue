@@ -1,15 +1,91 @@
 <template>
   <div class="app-background"></div>
   <div class="container">
-desktop
+    <div class="beto-message-container">
+      <img class="beto-avatar" :src="BetoImg" />
+      <div class="bubble bubble-a bubble-left">
+        <span class="font-montserrat-bold"
+          >Aquí puedes editar algunos detalles de tu cuenta, como correo,
+          contraseña, y ver algunos datos mas</span
+        >
+      </div>
+    </div>
+    <div class="home-content">
+      <Card>
+        <CardContent>
+          <div class="params-container">
+            <img
+              class="beto-avatar-params"
+              :src="isGirl ? WomanImg : BetoImg"
+            />
+            <div class="flex sex">
+              <span
+                class="font-montserrat-bold clickable"
+                :class="!isGirl ? 'selected-sex' : ''"
+                @click="isGirl = false"
+                >Soy chico</span
+              >
+              |
+              <span
+                class="font-montserrat-bold clickable"
+                :class="isGirl ? 'selected-sex' : ''"
+                @click="isGirl = true"
+                >Soy chica</span
+              >
+            </div>
+          </div>
+          <div class="forms">
+            <div class="form-email">
+              <span class="text-contrast font-montserrat-bold"
+                >Correo electrónico</span
+              >
+              <input type="text" placeholder="Correo" class="form-input" />
+              <Icon :path="mdiContentSaveOutline" class="icon" />
+            </div>
+            <div class="form-password">
+              <span class="text-contrast font-montserrat-bold">Contraseña</span>
+              <input
+                type="password"
+                placeholder="Contraseña actual"
+                class="form-input"
+              />
+              <input
+                type="password"
+                placeholder="Contraseña nueva"
+                class="form-input"
+              />
+              <input
+                type="password"
+                placeholder="Confirmar contraseña"
+                class="form-input"
+              />
+            </div>
+            <div align="center">
+              <button class="form-button">Guardar contraseña</button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+      <div></div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
+import { mdiContentSaveOutline } from "@mdi/js";
+import Card from "../../../../apps/web-reporter/modules/daily-sales/components/Card.vue";
+import CardContent from "../../../../apps/web-reporter/modules/daily-sales/components/CardContent.vue";
+import BetoImg from "../../../../assets/avatars/beto.svg";
+import WomanImg from "../../../../assets/avatars/woman.jpg";
+import { ref } from "vue-demi";
+import Icon from "../../../../components/Icon.vue";
 
+let isGirl = ref<boolean>(true);
 </script>
 <style scoped>
 @import "../../../../utils/css/dialog-bubble.css";
 @import "../../../../styles/backgrounds.css";
+@import "../../../../styles/forms.css";
+@import "../../../../styles/style.css";
 
 :global(:root) {
   --beto-proportion: 1;
@@ -19,13 +95,12 @@ desktop
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
 }
 
 .home-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  width: 30%;
 }
 
 .beto-message-container {
@@ -38,9 +113,12 @@ desktop
 .beto-avatar {
   width: calc(45% * var(--beto-proportion));
 }
+.beto-avatar-params {
+  width: calc(25% * var(--beto-proportion));
+}
 
 .bubble-a.bubble {
-  --border: calc(3px * var(--beto-proportion));
+  --border: calc(2px * var(--beto-proportion));
   --border-color: var(--color-contrast);
   --background: var(--color-primary-light);
   --triangle-size: calc(1.3 * var(--beto-proportion));
@@ -50,7 +128,7 @@ desktop
   border-radius: calc(17px * var(--beto-proportion));
   width: calc(340px * var(--beto-proportion));
   height: calc(190px * var(--beto-proportion));
-  padding: 0;
+  padding: 5px;
 }
 
 .beto-content {
@@ -62,56 +140,48 @@ desktop
   gap: calc(10px * var(--beto-proportion));
 }
 
-.hello {
-  font-size: calc(28px * var(--beto-proportion)) !important;
-}
-
-.question {
-  font-size: calc(24px * var(--beto-proportion)) !important;
-}
-
-.options {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.item {
-  color: var(--color-contrast);
-  cursor: pointer;
-  width: calc(150px * var(--beto-proportion));
-  height: calc(160px * var(--beto-proportion));
-  border-radius: calc(17px * var(--beto-proportion));
-  border: calc(3px * var(--beto-proportion)) solid var(--color-contrast);
-  background-color: var(--color-primary-light);
+.params-container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  text-align: center;
-  transition: all 0.3s ease;
-  gap: calc(10px * var(--beto-proportion));
+  gap: 10px;
+  padding-bottom: 10px;
 }
 
-.item:hover {
-  background-color: #c5c2c2ce;
-
-  [data-theme="dark"] & {
-    background-color: #ebebeb1e;
-  }
+.sex {
+  gap: 10px;
 }
 
-.item-label {
-  font-size: calc(16px * var(--beto-proportion));
+.selected-sex {
+  color: var(--color-accent);
+}
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.form-email {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-password {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .icon {
-  width: calc(74px * var(--beto-proportion));
-  --icon-proportion: 1;
+  position: absolute;
+  top: 50.2%;
+  right: 13%;
+  width: 20px;
   fill: var(--color-contrast);
 }
-
-
 @media (min-width: 1440px) {
   :global(:root) {
     --beto-proportion: 1.3;

@@ -4,7 +4,7 @@
       <div class="menu-content">
         <img class="beto-avatar-menu" :src="BetoAvatar" />
         <div class="menu-buttons">
-          <button class="form-button-2">
+          <button class="form-button-2" @click="router.push('/account/profile')">
             Cuenta
             <Icon :path="mdiPencil" class="pencil-icon" />
           </button>
@@ -26,6 +26,13 @@
             <WebReporterIcon class="web-report-icon" />
             <span>Web Reporter</span>
           </div>
+          <div
+            class="menu-item"
+            @click="router.push('/inventory/report-inventory')"
+          >
+            <Icon :path="mdiCurrencyUsd" :class="'icon'" />
+            <span>Inventario</span>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +53,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { mdiDotsVertical, mdiPencil, mdiHome, mdiExitToApp } from "@mdi/js";
+import { mdiDotsVertical, mdiPencil, mdiHome, mdiExitToApp, mdiCurrencyUsd } from "@mdi/js";
 import { toggleTheme } from "../../../utils/theme-transitions";
 import ThemeModeIcon from "../../../assets/general/icons/ThemeModeIcon.vue";
 import { useRoute, useRouter } from "vue-router";

@@ -2,7 +2,7 @@ export const ProfileRouterDesktop = [
   {
     path: "/account",
     // @ts-ignore
-    component: () => import("../../../layouts/DesktopLayout.vue"),
+    component: () => import("../../../layouts/LayoutOne.vue"),
     children: [
       {
         path: "profile",

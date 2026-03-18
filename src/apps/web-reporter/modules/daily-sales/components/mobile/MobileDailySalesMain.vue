@@ -76,6 +76,12 @@
                   <span class="item-bold">Utilidad</span>
                   <span>{{ numberToCurrency(summary.totalProfit) }}</span>
                 </div>
+                <!-- <hr>
+                <div class="item">
+                  <span class="item-bold">Metodos de pago</span>
+                  <span>{{ summary.paymentMethods }}</span>
+                </div>
+                <hr> -->
               </div>
             </CardContent>
           </Card>
@@ -248,8 +254,9 @@ const closeModal = () => {
   openModal.value = false;
   selectedItem.value = null;
 };
+
 onMounted(async () => {
-  // setArray();
+  setArray();
 });
 </script>
 <style scoped>

@@ -13,7 +13,7 @@
         <h3>Facturas del día</h3>
         <span class="font-montserrat-bold">{{ warehouseName }}</span>
       </div>
-      <div class="beto-message-container">
+      <!-- <div class="beto-message-container">
         <img
           class="beto-avatar"
           src="../../../../../../assets/avatars/beto.svg"
@@ -21,15 +21,27 @@
         <div class="bubble bubble-a bubble-left">
           <p>
             Para el dia
-            <span class="font-montserrat-semibold">{{ formatDateWithHyphen(route.params.date as string) }}</span> tuviste un
-            subtotal de ventas de
-            <span class="font-montserrat-semibold">{{ numberToCurrency(summary.subtotal) }}</span> un total
-            de <span class="font-montserrat-semibold">impuestos</span> de
-            <span class="font-montserrat-semibold">{{ numberToCurrency(summary.totalTaxes) }}</span> para un
-            total de <span class="font-montserrat-semibold">{{ numberToCurrency(summary.totalSales) }}</span>
+            <span class="font-montserrat-semibold">{{
+              formatDateWithHyphen(route.params.date as string)
+            }}</span>
+            tuviste un subtotal de ventas de
+            <span class="font-montserrat-semibold">{{
+              numberToCurrency(summary.subtotal)
+            }}</span>
+            un total de
+            <span class="font-montserrat-semibold">impuestos</span> de
+            <span class="font-montserrat-semibold">{{
+              numberToCurrency(summary.totalTaxes)
+            }}</span>
+            para un total de
+            <span class="font-montserrat-semibold"
+              >{{ numberToCurrency(summary.totalSales) }}
+            </span>
+            para ver los metodos de pago click
+            <span class="font-montserrat-semibold clickable">AQUI</span>
           </p>
         </div>
-      </div>
+      </div> -->
       <div class="search-container">
         <div class="date-field">
           <input placeholder="Buscar" class="form-input size-input" />
@@ -37,6 +49,44 @@
       </div>
       <div class="daily-sales-container">
         <div class="cards-container">
+          <Card dark>
+            <CardContent>
+              <span class="font-montserrat-bold color-contrast">Resumen</span>
+              <div class="text-container-summary">
+                <div class="item-primary">
+                  <span class="item-bold">Fecha</span>
+                  <span>{{
+                    formatDateWithHyphen(route.params.date as string)
+                  }}</span>
+                </div>
+                <hr />
+                <div class="item-primary">
+                  <span class="item-bold">Subtotal</span>
+                  <span>{{ numberToCurrency(summary.subtotal) }}</span>
+                </div>
+                <hr />
+                <div class="item-primary">
+                  <span class="item-bold">Impuestos</span>
+                  <span>{{ numberToCurrency(summary.totalTaxes) }}</span>
+                </div>
+                <hr />
+                <div class="item-primary">
+                  <span class="item-bold">Total</span>
+                  <span>{{ numberToCurrency(summary.totalSales) }}</span>
+                </div>
+                <hr />
+                <div class="item-primary">
+                  <span class="item-bold">Métodos de pago</span>
+                  <span
+                    class="clickable color-button-link"
+                    @click="openModalPaymentMethods()"
+                    >Ver más</span
+                  >
+                </div>
+                <hr />
+              </div>
+            </CardContent>
+          </Card>
           <Card v-for="(invoice, index) in invoices" :key="index">
             <CardContent>
               <div class="text-container">
@@ -91,6 +141,23 @@
       </div>
     </div>
   </div>
+  <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
+    <div class="modal-container">
+      <h3>Resumen de pagos</h3>
+      <div
+        v-for="paymentMethod in summary.paymentMethods"
+        :key="paymentMethod.payment_id"
+      >
+        <div class="item-payment">
+          <span class="font-montserrat-bold">{{ paymentMethod.payment_name }}</span>
+          <span>{{ numberToCurrency(paymentMethod.payment_total) }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="form-button-2" @click="closeModal()">Salir</button>
+    </div>
+  </Modal>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue-demi";
@@ -107,6 +174,7 @@ import Paginator from "../../../../../../components/Paginator.vue";
 import Icon from "../../../../../../components/Icon.vue";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
 import type { TSummaryInvoices } from "../../interfaces/summary-daily-sales.type";
+import Modal from "../../../../../../components/Modal.vue";
 const router = useRouter();
 const route = useRoute();
 let invoices = ref<TWarehouseDayInvoice[]>([]);
@@ -114,10 +182,11 @@ let summary = ref<TSummaryInvoices>({
   subtotal: 0,
   totalTaxes: 0,
   totalSales: 0,
+  paymentMethods: [],
 });
 const warehouseName = ref<string | undefined>("");
 const dailySalesStore = useDailySalesStore();
-
+const openModal = ref<boolean>(false);
 const setInvoices = async () => {
   let { date, warehouse_id } = route.params;
   let response = await dailySalesStore.dailyInvoices(
@@ -137,6 +206,14 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+const openModalPaymentMethods = () => {
+  openModal.value = true;
+};
+
+const closeModal = () => {
+  openModal.value = false;
+};
+
 onMounted(() => {
   setInvoices();
 });
@@ -153,7 +230,7 @@ onMounted(() => {
   --gap-size: 1;
 }
 .container {
-  width: 100vw;
+  width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -272,6 +349,7 @@ onMounted(() => {
   flex-direction: column;
   gap: 5px;
 }
+
 .buttons {
   display: flex;
   justify-content: center;
@@ -292,6 +370,10 @@ onMounted(() => {
   color: var(--color-contrast) !important;
   margin-top: 10px;
 }
+
+.button-modal {
+  background-color: red;
+}
 .back-button {
   color: var(--color-contrast);
   width: 100%;
@@ -305,6 +387,57 @@ onMounted(() => {
 .back-icon {
   fill: var(--color-contrast);
   width: 20px;
+}
+.text-container-summary {
+  text-align: start;
+  font-weight: bold;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-primary {
+  color: var(--color-primary);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+.modal-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-payment {
+  color: var(--color-contrast);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-payment span:first-child {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.item-payment span:first-child::after {
+  content: "";
+  border-bottom: 2px dotted var(--color-contrast);
+  flex: 1;
+  margin: 0 3px;
+}
+
+.item-payment span:last-child {
+  white-space: nowrap;
+}
+
+.color-button-link {
+  color: var(--color-accent);
 }
 @media (min-width: 360px) {
   .invoice-title h3 {

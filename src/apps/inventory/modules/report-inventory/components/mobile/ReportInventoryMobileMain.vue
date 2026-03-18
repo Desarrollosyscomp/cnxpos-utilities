@@ -93,6 +93,13 @@
                 <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
               </div>
               <hr />
+              <div class="item">
+                <span class="font-montserrat-bold font-size-title"
+                  >Utilidad</span
+                >
+                <span>{{ numberToCurrency(summary?.profit) }}</span>
+              </div>
+              <hr />
             </div>
           </CardContent>
         </Card>
@@ -275,13 +282,21 @@ import CardContent from "../../../../../web-reporter/modules/daily-sales/compone
 import Modal from "../../../../../../components/Modal.vue";
 import { mdiArrowLeftCircle } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
+import type { TSummaryInventory } from "../../interfaces/summary-inventory.type";
 
 const appStore = useAppStore();
 const inventoryStore = useReportInventoryStore();
 const all_warehouses = ref(false);
 const selectedWarehouse = ref<any>(null);
 const inventory = ref<any[]>([]);
-const summary = ref<any>({});
+const summary = ref<TSummaryInventory>({
+    warehouseName: "",
+    inventoryStock: 0,
+    averageInventoryCost: 0,
+    inventoryCost: 0,
+    inventoryPrice: 0,
+    profit: 0,
+});
 const warehouses_array = ref<TOptionsType[]>([]);
 const params = ref<boolean>(true);
 const modal = ref<boolean>(false);

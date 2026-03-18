@@ -49,7 +49,7 @@
               :options="warehouses_array"
               @checked-option="
                 (meta) => {
-                  console.log(meta);
+                  selectedWarehouse = meta;
                 }
               "
             />
@@ -132,7 +132,7 @@
                 <td class="text-center">
                   {{ formatDateWithHyphen(sale.fecha) }}
                 </td>
-                <td class="text-center">{{ sale.idalmacen }}</td>
+                <td class="text-center">{{ sale.nomalmacen }}</td>
                 <td class="text-center">{{ sale.prodvendid }}</td>
                 <td class="text-center">
                   {{ numberToCurrency(sale.costoacum) }}

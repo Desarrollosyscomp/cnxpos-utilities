@@ -5,7 +5,7 @@ import type { IStoreResponse } from "../../../../../interfaces/store-response.in
 export const useReportInventoryStore = defineStore("daily-sales", {
   state: () => ({
     page: 1,
-    limit: 5,
+    limit: 6,
     search: "",
     itemsCount: 0,
     totalPages: 0,
