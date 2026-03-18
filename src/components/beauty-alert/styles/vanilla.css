@@ -1,0 +1,72 @@
+.ba-vanilla-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: background 0.2s ease;
+}
+
+.ba-vanilla-modal{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+    font-family: sans-serif;
+
+    /* estado inicial (para animación) */
+    transform: scale(0.9);
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+
+
+.ba-vanilla-title{
+    margin-bottom: 10px;
+}
+
+.ba-vanilla-message{
+    margin-bottom: 20px;
+}
+
+.ba-vanilla-description{
+    margin-bottom: 20px;
+    color: gray;
+}
+
+.ba-vanilla-input{
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border: 1px solid gray;
+}
+.ba-vanilla-input::placeholder {
+    text-indent: 10px; /* Solo el placeholder tendrá indentación */
+    color: #999;
+  }
+
+.ba-vanilla-button{
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.ba-vanilla-button:hover{
+    opacity: 0.8;
+}
+
+
+
+.confirm-modal{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

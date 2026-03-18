@@ -1,0 +1,54 @@
+/* MODAL */
+.ba-vue-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .ba-vue-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+  }
+  
+  /* Animaciones */
+  .ba-vue-overlay-fade-enter-active,
+  .ba-vue-overlay-fade-leave-active {
+    transition: opacity 0.2s ease;
+  }
+  
+  .ba-vue-overlay-fade-enter-from,
+  .ba-vue-overlay-fade-leave-to {
+    opacity: 0;
+  }
+  
+  .ba-vue-overlay-fade-enter-to,
+  .ba-vue-overlay-fade-leave-from {
+    opacity: 1;
+  }
+  
+  .ba-vue-modal-scale-enter-active,
+  .ba-vue-modal-scale-leave-active {
+    transition: all 0.2s ease;
+  }
+  
+  .ba-vue-modal-scale-enter-from,
+  .ba-vue-modal-scale-leave-to {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  
+  .ba-vue-modal-scale-enter-to,
+  .ba-vue-modal-scale-leave-from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  /* MODAL */

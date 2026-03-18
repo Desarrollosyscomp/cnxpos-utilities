@@ -25,19 +25,32 @@
   </div>
 </template>
 <script setup lang="ts">
+import { createAlertCore } from "../../../../components/beauty-alert/factory";
 import { ref } from "vue";
 import { useAuthStore } from "../../store/auth.store";
 import { type TFormLogin } from "../../interfaces/auth.type";
 import { useRouter } from "vue-router";
+// import { vueAdapters as adapters } from "../../../../components/beauty-alert/adapters/vue";
+import { vanillaAdapters as adapters} from "../../../../components/beauty-alert/adapters/vanilla";
+
 let showPassword = ref(false);
 let env = ref()
 const authStore = useAuthStore();
 const router = useRouter();
 const authForm = ref<TFormLogin>({
-    username: "",
-    password: "",
+  username: "",
+  password: "",
 })
 const onSubmit = async () => {
+  
+  const alert = createAlertCore(adapters);
+  const r = await alert.show("doubleInput", {
+    title: "Confirm",
+    message: "Are you sure you want to continue?",
+    description: "Are you sure you want to continue?",
+  });
+  console.log(r)
+
   let response = await authStore.login(authForm.value);
   env.value = import.meta.env;
   console.log(response)
@@ -45,6 +58,8 @@ const onSubmit = async () => {
     router.push("/home/welcome")
   }
 }
+
+
 </script>
 
 <style scoped>
