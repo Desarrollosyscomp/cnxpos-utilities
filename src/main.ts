@@ -5,7 +5,8 @@ import { createPinia } from "pinia";
 
 // import router from "./router";
 import App from "./App.vue";
-
+import "./components/beauty-alert/styles/vue.css";
+import "./components/beauty-alert/styles/vanilla.css";
 const app = createApp(App);
 console.log("mode: " + import.meta.env.VITE_TARGET);
 
