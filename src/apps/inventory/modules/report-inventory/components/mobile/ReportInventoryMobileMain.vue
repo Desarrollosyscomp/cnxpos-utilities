@@ -303,6 +303,7 @@ const modal = ref<boolean>(false);
 const selectedItem = ref<any>(null);
 
 const searchSales = async () => {
+  appStore.showLoadingScreen = true;
   const response = await inventoryStore.reportInventory(
     selectedWarehouse.value?.idalmacen ?? 0
   );
@@ -310,6 +311,7 @@ const searchSales = async () => {
   summary.value = response.data.summary;
   console.log(response.data);
   params.value = false;
+  appStore.showLoadingScreen = false;
 };
 
 const loadWarehouses = async () => {
@@ -345,7 +347,7 @@ const closeModal = () => {
 };
 
 onMounted(() => {
-  loadWarehouses();
+  appStore.afterLoading(loadWarehouses);
 });
 </script>
 <style scoped>

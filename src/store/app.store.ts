@@ -5,6 +5,8 @@ import type { IStoreResponse } from "../interfaces/store-response.interface";
 
 export const useAppStore = defineStore("app", {
   state: () => ({
+    showLoadingScreen: false,
+    showSplashScreen: false,
     theme: useStorage("theme", {
       "dataTheme": "light",
     }),
@@ -21,5 +23,11 @@ export const useAppStore = defineStore("app", {
         error: false
       }
     },
+
+    async afterLoading(f: Function) {
+      this.showLoadingScreen = true;
+      await f();
+      this.showLoadingScreen = false;
+    }
   },
 });

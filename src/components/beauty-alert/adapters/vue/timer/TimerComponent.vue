@@ -1,6 +1,6 @@
 <template>
   <BaseModal :onClose="onCancel">
-    <template #default="{ close }">
+    <template>
       <div class="timer-content">
         <h2>{{ title }}</h2>
         <p>{{ message }}</p>
@@ -35,6 +35,16 @@ const timeLeft = ref(props.time);
 const progressColor = ref("green");
 let startTime: number;
 let animationFrameId: number;
+// let colorTitle = ref("");
+
+// Puede servir para cambiar el color del titulo
+// const changeColorTitle = () => {
+//   if (props.title == "Error") {
+//     colorTitle.value = "red";
+//   } else {
+//     colorTitle.value = "green";
+//   }
+// }
 
 onMounted(() => {
   startTime = Date.now();
@@ -52,6 +62,8 @@ function animateProgress() {
 
   // Cambiar color según el tiempo restante
   progressColor.value = "darkblue";
+
+  // changeColorTitle();
 
   // Si el tiempo no se ha agotado, continuar la animación
   if (timeLeft.value > 0) {

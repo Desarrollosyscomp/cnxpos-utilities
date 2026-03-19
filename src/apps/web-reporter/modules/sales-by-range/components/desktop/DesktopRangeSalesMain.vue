@@ -234,6 +234,7 @@ let summary = ref<TSummaryRangeSales>({
   totalCosts: 0,
   returns: 0,
   salesMinusReturns: 0,
+  profit: 0,
 });
 let params = ref<boolean>(true);
 const rangeSalesStore = useRangeSalesStore();

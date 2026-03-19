@@ -7,16 +7,17 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import "./components/beauty-alert/styles/vue.css";
 import "./components/beauty-alert/styles/vanilla.css";
+import "./styles/custom-beauty-alert.css";
 const app = createApp(App);
+app.use(createPinia());
 console.log("mode: " + import.meta.env.VITE_TARGET);
 
-if (import.meta.env.VITE_TARGET === 'mobile') {
-  const { default: router } = await import('./router/index.mobile')
-  app.use(router)
+if (import.meta.env.VITE_TARGET === "mobile") {
+  const { default: router } = await import("./router/index.mobile");
+  app.use(router);
 } else {
-  const { default: router } = await import('./router/index')
-  app.use(router)
+  const { default: router } = await import("./router/index");
+  app.use(router);
 }
 
-app.use(createPinia());
 app.mount("#app");

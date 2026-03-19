@@ -7,4 +7,5 @@ export type TSummaryRangeSales = {
   totalCosts: number;
   returns: number;
   salesMinusReturns: number;
+  profit: number;
 };

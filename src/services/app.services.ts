@@ -5,10 +5,10 @@ import { getApiUrl } from "../utils/http/get-api-url";
 import { useAuthStore } from "../modules/auth/store/auth.store";
 
 const URL_API = getApiUrl();
-const authStore = useAuthStore();
 
 export const AppService = {
   getWarehouses: async () => {
+    const authStore = useAuthStore();
     return axios.get({
       url: `${URL_API}/warehouses`,
       config: {

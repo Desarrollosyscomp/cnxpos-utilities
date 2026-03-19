@@ -120,6 +120,11 @@
                 <span>{{ summary.invoiceQuantity }}</span>
               </div>
               <hr />
+              <div class="item">
+                <span class="font-montserrat-bold">Utilidad</span>
+                <span>{{ numberToCurrency(summary.profit) }}</span>
+              </div>
+              <hr />
             </div>
           </CardContent>
         </Card>
@@ -348,6 +353,7 @@ let summary = ref<TSummaryRangeSales>({
   totalCosts: 0,
   returns: 0,
   salesMinusReturns: 0,
+  profit: 0,
 });
 let params = ref<boolean>(true);
 const rangeSalesStore = useRangeSalesStore();
@@ -376,6 +382,7 @@ const loadWarehouses = async () => {
 };
 
 const searchSales = async () => {
+  appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
   const parseEndDate = rangeDates.value.end_date.replace(/-/g, "");
   const response = await rangeSalesStore.rangeSales(
@@ -386,6 +393,7 @@ const searchSales = async () => {
   sales.value = response.data.list;
   summary.value = response.data.summary;
   params.value = false;
+  appStore.showLoadingScreen = false;
 };
 
 const onChangePage = (emmited: any) => {

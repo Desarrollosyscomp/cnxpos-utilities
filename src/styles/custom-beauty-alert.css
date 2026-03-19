@@ -1,0 +1,22 @@
+:root {
+  --ba-vue-modal-width: 1;
+}
+.ba-vue-modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  min-width: calc(100px * var(--ba-vue-modal-width));
+}
+
+@media (min-width: 360px) {
+  .ba-vue-modal {
+    --ba-vue-modal-width: 2.5;
+  }
+}
+
+@media (min-width: 768px) {
+  .ba-vue-modal {
+    --ba-vue-modal-width: 3;
+  }
+}
+
