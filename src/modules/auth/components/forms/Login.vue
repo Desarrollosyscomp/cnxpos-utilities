@@ -118,7 +118,7 @@ const onSubmit = async () => {
       const alert2 = createAlertCore(vueAdapters);
       const r = await alert2.show("timer", {
         title: "Error",
-        message: "Error al iniciar sesión",
+        message: response.data,
         time: 5,
       }); 
       console.log(r);
