@@ -14,20 +14,15 @@
             class="form-input size-input"
           />
         </div>
+        <span @click="date = ''" class="clickable clean" v-if="warehousesArray.length > 0">Limpiar</span>
       </div>
       <div class="beto-message-container" v-if="warehousesArray.length == 0">
         <img
-          v-if="initBettoMessage"
           class="beto-avatar"
-          src="../../../../../../assets/avatars/beto.svg"
-        />
-        <img
-          v-if="BettoMessageNotFound"
-          class="beto-avatar"
-          src="../../../../../../assets/avatars/beto-sad.png"
+          :src="beto_state == BetoState.WELCOME ? BetoImg : BetoImgSad"
         />
         <div class="bubble bubble-a bubble-up">
-          <div v-if="initBettoMessage">
+          <div v-if="beto_state == BetoState.WELCOME">
             <span>Aquí encontraras</span>
             <h3 class="web-reporter-title">
               Informes de <br />
@@ -35,7 +30,7 @@
             </h3>
             <span>Ingresa una fecha para continuar</span>
           </div>
-          <div v-if="BettoMessageNotFound">
+          <div v-else>
             <h3 class="web-reporter-title">UPS!</h3>
             <span
               >No se encontraron <br />
@@ -125,75 +120,74 @@
               </div>
             </CardContent>
           </Card>
-          </div>
-          <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
-            <div class="modal-content">
-              <div class="modal-title">
-                <span class="color-contrast font-warehouse">{{
-                  selectedItem?.nomalmacen
-                }}</span>
-                <h3 class="color-contrast">Detalle de ventas</h3>
-              </div>
-              <div>
-                <div class="item-3">
-                  <span class="item-3-bold">Fecha</span>
-                  <span class="item3-value">{{
-                    formatDateWithHyphen(selectedItem?.fecha || "")
-                  }}</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Id del almacen</span>
-                  <span class="item3-value">{{ selectedItem?.idalmacen }}</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Subtotal</span>
-                  <span class="item3-value">{{
-                    numberToCurrency(selectedItem?.subtot || 0)
-                  }}</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Costo</span>
-                  <span class="item3-value">{{
-                    numberToCurrency(selectedItem?.costoacum || 0)
-                  }}</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Facturas</span>
-                  <span class="item3-value">{{ selectedItem?.cantfact }}</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Productos vendidos</span>
-                  <span class="item3-value">{{ selectedItem?.prodvendid }}</span>
-                </div>
-                <hr />
-                <div class="item-3">
-                  <span class="item-3-bold">Total</span>
-                  <span class="item3-value">{{
-                    numberToCurrency(selectedItem?.total || 0)
-                  }}</span>
-                </div>
-                <hr />
-              </div>
-              <div class="container-button">
-                <button
-                  @click="closeModal()"
-                  class="form-button-2 color-button"
-                >
-                  Regresar
-                </button>
-              </div>
-            </div>
-          </Modal>
         </div>
+        <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
+          <div class="modal-content">
+            <div class="modal-title">
+              <span class="color-contrast font-warehouse">{{
+                selectedItem?.nomalmacen
+              }}</span>
+              <h3 class="color-contrast">Detalle de ventas</h3>
+            </div>
+            <div>
+              <div class="item-3">
+                <span class="item-3-bold">Fecha</span>
+                <span class="item3-value">{{
+                  formatDateWithHyphen(selectedItem?.fecha || "")
+                }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Id del almacen</span>
+                <span class="item3-value">{{ selectedItem?.idalmacen }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Subtotal</span>
+                <span class="item3-value">{{
+                  numberToCurrency(selectedItem?.subtot || 0)
+                }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Costo</span>
+                <span class="item3-value">{{
+                  numberToCurrency(selectedItem?.costoacum || 0)
+                }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Facturas</span>
+                <span class="item3-value">{{ selectedItem?.cantfact }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Productos vendidos</span>
+                <span class="item3-value">{{ selectedItem?.prodvendid }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Total</span>
+                <span class="item3-value">{{
+                  numberToCurrency(selectedItem?.total || 0)
+                }}</span>
+              </div>
+              <hr />
+            </div>
+            <div class="container-button">
+              <button @click="closeModal()" class="form-button-2 color-button">
+                Regresar
+              </button>
+            </div>
+          </div>
+        </Modal>
       </div>
     </div>
+  </div>
 </template>
 <script setup lang="ts">
+import BetoImg from "../../../../../../assets/avatars/beto.svg";
+import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
 import ConexionPosLogo from "../../../../../../assets/logos/ConexionPosLogo.vue";
 import { onMounted, ref, watch } from "vue";
 import Card from "../Card.vue";
@@ -203,9 +197,14 @@ import { useRouter } from "vue-router";
 import { useDailySalesStore } from "../../store/daily-sales.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
-import type { TDetailModal, TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.type";
+import type {
+  TDetailModal,
+  TWarehouseDaySale,
+} from "../../interfaces/warehouse-day-sales.type";
 import type { TSummary } from "../../interfaces/summary-daily-sales.type";
 import { useAppStore } from "../../../../../../store/app.store";
+import Icon from "../../../../../../components/Icon.vue";
+import { mdiArrowLeftCircle } from "@mdi/js";
 const appStore = useAppStore();
 const initBettoMessage = ref(true);
 const BettoMessageNotFound = ref(false);
@@ -218,28 +217,33 @@ const date = ref("");
 const dailySalesStore = useDailySalesStore();
 const warehousesArray = ref<TWarehouseDaySale[]>([]);
 const summary = ref<TSummary>({
-    totalSales: 0,
-    totalProducts: 0,
-    totalInvoices: 0,
-    totalCost: 0,
-    totalProfit: 0,
+  totalSales: 0,
+  totalProducts: 0,
+  totalInvoices: 0,
+  totalCost: 0,
+  totalProfit: 0,
 });
 
+enum BetoState {
+  WELCOME = 0,
+  NOT_FOUND = 1,
+}
+
+let beto_state = ref(BetoState.WELCOME);
+
 const setArray = async () => {
-  BettoMessageNotFound.value = false;
-  initBettoMessage.value = false;
   warehousesArray.value = [];
-  
+
   const sendDateParsed = date.value.replace(/-/g, "");
   appStore.showLoadingScreen = true;
   let response = await dailySalesStore.dailySales(sendDateParsed);
 
   if (response.error || !response.data.sales.length) {
-    BettoMessageNotFound.value = true;
+    beto_state.value = BetoState.NOT_FOUND;
     appStore.showLoadingScreen = false;
     return;
   }
-  
+
   appStore.showLoadingScreen = false;
   summary.value = response.data.summary;
   warehousesArray.value = response.data.sales;
@@ -248,11 +252,10 @@ const setArray = async () => {
 watch(date, () => {
   setArray();
 });
- 
+
 const openDetail = (item: any) => {
   selectedItem.value = item;
   openModal.value = true;
-  console.log(selectedItem.value);
 };
 
 const closeModal = () => {
@@ -260,8 +263,13 @@ const closeModal = () => {
   selectedItem.value = null;
 };
 
+const onBack = () => {
+  date.value = "";
+  beto_state.value = BetoState.WELCOME;
+};
+
 onMounted(async () => {
-  setArray();
+  // setArray();
 });
 </script>
 <style scoped>
@@ -303,7 +311,7 @@ onMounted(async () => {
   align-items: center;
 }
 .search-container {
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   width: 80%;
 }
 .size-input {
@@ -465,6 +473,10 @@ onMounted(async () => {
   font-weight: bold;
 }
 
+.clean {
+  font-size: calc(12px * var(--font-size));
+  font-weight: bold;
+}
 @media (min-width: 375px) {
   .item {
     --font-size: 1.2;
