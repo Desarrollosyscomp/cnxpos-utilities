@@ -203,11 +203,7 @@ import type {
 } from "../../interfaces/warehouse-day-sales.type";
 import type { TSummary } from "../../interfaces/summary-daily-sales.type";
 import { useAppStore } from "../../../../../../store/app.store";
-import Icon from "../../../../../../components/Icon.vue";
-import { mdiArrowLeftCircle } from "@mdi/js";
 const appStore = useAppStore();
-const initBettoMessage = ref(true);
-const BettoMessageNotFound = ref(false);
 const openModal = ref(false);
 const selectedItem = ref<TDetailModal | null>(null);
 const router = useRouter();
@@ -261,11 +257,6 @@ const openDetail = (item: any) => {
 const closeModal = () => {
   openModal.value = false;
   selectedItem.value = null;
-};
-
-const onBack = () => {
-  date.value = "";
-  beto_state.value = BetoState.WELCOME;
 };
 
 onMounted(async () => {
