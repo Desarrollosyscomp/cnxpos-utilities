@@ -114,7 +114,7 @@
           <div class="font-montserrat-bold text-contrast main-title-table">
             Resultados
           </div>
-          <table>
+          <table class="custom-table-one">
             <thead>
               <tr>
                 <th class="text-center">Fecha</th>

@@ -2,10 +2,7 @@
   <div class="app-background"></div>
   <div class="container">
     <div class="invoice-container">
-      <div
-        class="back-button clickable"
-        @click="router.back()"
-      >
+      <div class="back-button clickable" @click="router.back()">
         <Icon :path="mdiArrowLeftCircle" class="back-icon" />
         <span>Facturas del día</span>
       </div>
@@ -51,12 +48,23 @@
                   <span>{{ numberToCurrency(sumary.profit) }}</span>
                 </div>
                 <hr />
+                <div class="item">
+                  <span class="item-bold">Método de pago</span>
+                  <span
+                    class="clickable color-button-link"
+                    @click="openModalPaymentMethods()"
+                    >Ver más</span
+                  >
+                </div>
+                <hr />
               </div>
             </CardContent>
           </Card>
           <Card class="" v-for="(invoice, index) in invoices" :key="index">
             <CardContent>
-              <span class="font-montserrat-bold">{{ invoice.descripcion }}</span>
+              <span class="font-montserrat-bold">{{
+                invoice.descripcion
+              }}</span>
               <div class="text-container">
                 <div class="item-3">
                   <span class="item-bold">Valor</span>
@@ -80,6 +88,25 @@
       </div>
     </div>
   </div>
+  <Modal :openModal="openModal" @closeModal="closeModal()" width="80vw">
+    <div class="modal-container">
+      <h3>Resumen de pagos</h3>
+      <div
+        v-for="paymentMethod in sumary.paymentMethods"
+        :key="paymentMethod.payment_id"
+      >
+        <div class="item-payment">
+          <span class="font-montserrat-bold">{{
+            paymentMethod.payment_name
+          }}</span>
+          <span>{{ numberToCurrency(paymentMethod.payment_total) }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="buttons">
+      <button class="form-button-2" @click="closeModal()">Salir</button>
+    </div>
+  </Modal>
 </template>
 <script setup lang="ts">
 //@ts-ignore
@@ -94,6 +121,7 @@ import { useRoute, useRouter } from "vue-router";
 import { mdiArrowLeftCircle } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
 import type { TSummaryInvoiceDetails } from "../../interfaces/summary-daily-sales.type";
+import Modal from "../../../../../../components/Modal.vue";
 
 const dailySalesStore = useDailySalesStore();
 const route = useRoute();
@@ -101,14 +129,17 @@ const router = useRouter();
 
 let invoices = ref<TWarehouseDayInvoiceDetail[]>([]);
 let sumary = ref<TSummaryInvoiceDetails>({
-    subtotal: 0,
-    valueAddedTax: 0,
-    totalDiscounts: 0,
-    totalSale: 0,
-    customer: "",
-    profit: 0,
-    totalItems: 0,
+  subtotal: 0,
+  valueAddedTax: 0,
+  totalDiscounts: 0,
+  totalSale: 0,
+  customer: "",
+  profit: 0,
+  paymentMethods: [],
+  totalItems: 0,
 });
+
+const openModal = ref<boolean>(false);
 
 const loadInvoiceDetails = async () => {
   let { warehouse_id, invoice_id } = route.params;
@@ -119,8 +150,16 @@ const loadInvoiceDetails = async () => {
   if (!response.error) {
     invoices.value = response.data.daily_invoice_details;
     sumary.value = response.data.summary_invoice;
-    console.log(response.data)
+    console.log(response.data);
   }
+};
+
+const openModalPaymentMethods = () => {
+  openModal.value = true;
+};
+
+const closeModal = () => {
+  openModal.value = false;
 };
 
 onMounted(async () => {
@@ -325,5 +364,41 @@ onMounted(async () => {
 .back-icon {
   fill: var(--color-contrast);
   width: 20px;
+}
+
+.color-button-link {
+  color: var(--color-accent);
+}
+
+.modal-container {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item-payment {
+  color: var(--color-contrast);
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-payment span:first-child {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.item-payment span:first-child::after {
+  content: "";
+  border-bottom: 2px dotted var(--color-contrast);
+  flex: 1;
+  margin: 0 3px;
+}
+
+.item-payment span:last-child {
+  white-space: nowrap;
 }
 </style>

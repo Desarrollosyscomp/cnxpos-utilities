@@ -27,4 +27,5 @@ export type TSummaryInvoiceDetails = {
   customer: string;
   profit: number;
   totalItems: number;
+  paymentMethods: Array<TPaymentMethod>;
 };

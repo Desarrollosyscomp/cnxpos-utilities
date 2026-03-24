@@ -100,14 +100,15 @@ const handleBlur = (field: "username" | "password") => {
 // submit
 const onSubmit = async () => {
   try {
-    appStore.showLoadingScreen = true;
     await validationSchema.validate(authForm, { abortEarly: false });
+    appStore.showLoadingScreen = true;
 
     // limpiar errores
     errors.username = "";
     errors.password = "";
 
     let response = await authStore.login(authForm);
+    console.log(response.data);
     if (response.data.isLogged) {
       appStore.showLoadingScreen = false;
       router.push("/home/welcome");
@@ -117,9 +118,9 @@ const onSubmit = async () => {
       const alert2 = createAlertCore(vueAdapters);
       const r = await alert2.show("timer", {
         title: "Error",
-        message: response.data,
+        message: "Error al iniciar sesión",
         time: 5,
-      });
+      }); 
       console.log(r);
     }
   } catch (e: any) {

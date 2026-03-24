@@ -8,6 +8,7 @@ import HomeView from "../components/HelloWorld.vue";
 import { RangeSalesRouterMobile } from "../apps/web-reporter/modules/sales-by-range/router/mobile-range-sales.router";
 import { ProfileRouterMobile } from "../modules/profile/router/profile.router.mobile";
 import { ReportInventoryRouterMobile } from "../apps/inventory/modules/report-inventory/router/mobile-report-inventory.router";
+import { CashCountsRouterMobile } from "../apps/web-reporter/modules/cash-counts/router/mobile-cash-count.router";
 // import { ReportInventoryRouterMobile } from "../apps/inventory/modules/report-inventory/router/mobile-report-inventory.router";
 
 const routes = [
@@ -23,6 +24,7 @@ const routes = [
   ...RangeSalesRouterMobile,
   ...ProfileRouterMobile,
   ...ReportInventoryRouterMobile,
+  ...CashCountsRouterMobile,
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",

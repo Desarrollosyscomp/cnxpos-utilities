@@ -10,8 +10,8 @@ export const useCashCountsStore = defineStore("cash-counts", {
     totalPages: 0,
   }),
   actions: {
-    async cashCounts(date: string): Promise<IStoreResponse> {
-      const response = await cashCountsService.cashCounts(date);
+    async cashCounts(date: string | undefined, warehouse_id: string): Promise<IStoreResponse> {
+      const response = await cashCountsService.cashCounts(date ?? "", warehouse_id);
       if (response?.status !== 200) {
         return {
           error: true,

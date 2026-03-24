@@ -44,7 +44,7 @@
       </div>
       <CenterAndScroll>
         <div class="table-container">
-          <table>
+          <table class="custom-table-one">
             <thead>
               <tr>
                 <th class="text-center">Fecha</th>
@@ -120,7 +120,7 @@
               >
                 Facturas del dia {{ formatDateWithHyphen(sale_date) }}
               </div>
-              <table>
+              <table class="custom-table-one">
                 <thead>
                   <tr>
                     <th class="text-center">Fecha</th>
@@ -182,7 +182,7 @@
                 >
                   Detalles de la factura #{{ invoice_id }}
                 </div>
-                <table>
+                <table class="custom-table-one">
                   <thead>
                     <tr>
                       <th class="text-center">Producto</th>
@@ -338,6 +338,7 @@ onMounted(() => {
 @import "../../../../../../styles/backgrounds.css";
 @import "../../../../../../styles/forms.css";
 @import "../../../../../../utils/css/dialog-bubble.css";
+@import "../../../../../../styles/style.css";
 
 :global(:root) {
   --message-proportion: 1;
