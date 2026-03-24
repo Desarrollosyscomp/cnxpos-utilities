@@ -4,7 +4,7 @@
       <h2>{{ title }}</h2>
       <p>{{ message }}</p>
 
-      <button @click="() => close(true)">Aceptarr</button>
+      <button @click="() => close(true)">Aceptar</button>
       <button @click="() => close(false)">Cancelar</button>
     </template>
   </BaseModal>

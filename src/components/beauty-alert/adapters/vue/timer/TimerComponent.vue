@@ -1,6 +1,6 @@
 <template>
   <BaseModal :onClose="onCancel">
-    <template>
+    <template #default="{ close }">
       <div class="timer-content">
         <h2>{{ title }}</h2>
         <p>{{ message }}</p>
@@ -35,16 +35,6 @@ const timeLeft = ref(props.time);
 const progressColor = ref("green");
 let startTime: number;
 let animationFrameId: number;
-// let colorTitle = ref("");
-
-// Puede servir para cambiar el color del titulo
-// const changeColorTitle = () => {
-//   if (props.title == "Error") {
-//     colorTitle.value = "red";
-//   } else {
-//     colorTitle.value = "green";
-//   }
-// }
 
 onMounted(() => {
   startTime = Date.now();

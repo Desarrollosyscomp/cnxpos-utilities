@@ -8,7 +8,6 @@ export function timerAdapter(options: {
   return new Promise<boolean>((resolve) => {
     const container = document.createElement("div");
     document.body.appendChild(container);
-
     const app = createApp(TimerComponent, {
       ...options,
       onResolve: (value: boolean) => {
