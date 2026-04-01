@@ -23,11 +23,19 @@
         </div>
         <fieldset class="input-field date-field">
           <legend>Fecha inicial</legend>
-          <input type="date" v-model="rangeDates.init_date" class="text-contrast"/>
+          <input
+            type="date"
+            v-model="rangeDates.init_date"
+            class="text-contrast"
+          />
         </fieldset>
         <fieldset class="input-field date-field">
           <legend>Fecha final</legend>
-          <input type="date" v-model="rangeDates.end_date" class="text-contrast"/>
+          <input
+            type="date"
+            v-model="rangeDates.end_date"
+            class="text-contrast"
+          />
         </fieldset>
         <div class="checkbox-container">
           <input
@@ -255,6 +263,7 @@ const loadWarehouses = async () => {
 };
 
 const searchSales = async () => {
+  appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
   const parseEndDate = rangeDates.value.end_date.replace(/-/g, "");
   const response = await rangeSalesStore.rangeSales(
@@ -263,11 +272,13 @@ const searchSales = async () => {
     selectedWarehouse.value?.idalmacen ?? 0
   );
   if (response.data.list.length === 0) {
+    appStore.showLoadingScreen = false;
     beto_state.value = BetoState.NOT_FOUND;
     params.value = true;
     sales.value = [];
     return;
   } else {
+    appStore.showLoadingScreen = false;
     sales.value = response.data.list;
     summary.value = response.data.summary;
     params.value = false;
@@ -277,7 +288,7 @@ const searchSales = async () => {
 const onChangePage = (emmited: any) => {
   if (rangeSalesStore.page !== emmited.data.page) {
     rangeSalesStore.page = emmited.data.page;
-    searchSales();
+    appStore.afterLoading(searchSales);
   }
 };
 

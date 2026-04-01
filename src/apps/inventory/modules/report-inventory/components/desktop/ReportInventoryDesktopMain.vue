@@ -257,16 +257,18 @@ const loadWarehouses = async () => {
 };
 
 const searchSales = async () => {
-  console.log(selectedWarehouse.value);
+  appStore.showLoadingScreen = true;
   const response = await reportInventoryStore.reportInventory(
     selectedWarehouse.value?.idalmacen ?? 0
   );
   if (response.data.list.length === 0) {
+    appStore.showLoadingScreen = false;
     beto_state.value = BetoState.NOT_FOUND;
     params.value = true;
     inventory.value = [];
     return;
   } else {
+    appStore.showLoadingScreen = false;
     inventory.value = response.data.list;
     summary.value = response.data.summary;
     params.value = false;
@@ -276,7 +278,7 @@ const searchSales = async () => {
 const onChangePage = (emmited: any) => {
   if (reportInventoryStore.page !== emmited.data.page) {
     reportInventoryStore.page = emmited.data.page;
-    searchSales();
+    appStore.afterLoading(searchSales);
   }
 };
 

@@ -237,8 +237,10 @@ import { numberToCurrency } from "../../../../../../utils/parsers/number-currenc
 import type { TSummary } from "../../interfaces/summary-daily-sales.type";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
 import Paginator from "../../../../../../components/Paginator.vue";
+import { useAppStore } from "../../../../../../store/app.store";
 
 const dailySalesStore = useDailySalesStore();
+const appStore = useAppStore();
 
 let open_modal = ref(false);
 let date = ref("");
@@ -273,14 +275,12 @@ const summary = ref<TSummary>({
 const loadDailySales = async () => {
   const sendDateParsed = date.value.replace(/-/g, "");
   let response = await dailySalesStore.dailySales(sendDateParsed);
-  console.log(response);
   warehousesArray.value = response.data.sales;
   summary.value = response.data.summary;
-  console.log(summary.value);
 };
 
 watch(date, () => {
-  loadDailySales();
+  appStore.afterLoading(loadDailySales);
 });
 
 const invoicesArray = ref<TWarehouseDayInvoice[]>([]);
@@ -326,7 +326,9 @@ const closeModal = () => {
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;
-    loadInvoices(sale_date.value, warehousesArray?.value[0]?.idalmacen?.toString() || "");
+    appStore.afterLoading(() => {
+      loadInvoices(sale_date.value, warehousesArray?.value[0]?.idalmacen?.toString() || "");
+    });
   }
 };
 

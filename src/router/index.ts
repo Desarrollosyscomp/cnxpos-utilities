@@ -9,6 +9,7 @@ import { useAuthStore } from "../modules/auth/store/auth.store";
 import { ProfileRouterDesktop } from "../modules/profile/router/profile.router";
 import { ReportInventoryRouterDesktop } from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
 import { CashCountsRouterDesktop } from "../apps/web-reporter/modules/cash-counts/router/cash-counts.router";
+import { AccountsPayableReceivableRouterDesktop } from "../apps/web-reporter/modules/accounts-payable-receivable/router/accounts.router";
 
 const routes = [
   {
@@ -26,6 +27,8 @@ const routes = [
   ...ProfileRouterDesktop,
   ...ReportInventoryRouterDesktop,
   ...CashCountsRouterDesktop,
+  ...AccountsPayableReceivableRouterDesktop,
+  
   //   {
   //     path: "/unauthorized",
   //     name: "unauthorized",

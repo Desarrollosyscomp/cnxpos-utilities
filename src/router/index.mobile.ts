@@ -9,6 +9,7 @@ import { RangeSalesRouterMobile } from "../apps/web-reporter/modules/sales-by-ra
 import { ProfileRouterMobile } from "../modules/profile/router/profile.router.mobile";
 import { ReportInventoryRouterMobile } from "../apps/inventory/modules/report-inventory/router/mobile-report-inventory.router";
 import { CashCountsRouterMobile } from "../apps/web-reporter/modules/cash-counts/router/mobile-cash-count.router";
+import { AccountsPayableReceivableRouterMobile } from "../apps/web-reporter/modules/accounts-payable-receivable/router/mobile-accounts.router";
 // import { ReportInventoryRouterMobile } from "../apps/inventory/modules/report-inventory/router/mobile-report-inventory.router";
 
 const routes = [
@@ -25,6 +26,7 @@ const routes = [
   ...ProfileRouterMobile,
   ...ReportInventoryRouterMobile,
   ...CashCountsRouterMobile,
+  ...AccountsPayableReceivableRouterMobile,
 //   {
 //     path: "/unauthorized",
 //     name: "unauthorized",

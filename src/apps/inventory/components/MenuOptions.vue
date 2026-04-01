@@ -1,8 +1,9 @@
 <template>
+  <DateSalesIcon :class="isActive('range-sales')" @click="redirect('range-sales')"/>
   <Icon :path="mdiCurrencyUsd" :class="isActive('daily-sales')" @click="redirect('daily-sales')"/>
   <DashboardIcon :class="isActive('dashboard')" @click="redirect('dashboard')"/>
   <RegisterBoxIcon :class="isActive('registers')" @click="redirect('registers')"/>
-  <DateSalesIcon :class="isActive('range-sales')" @click="redirect('range-sales')"/>
+  <Icon :path="mdiCreditCardOutline" :class="isActive('accounts-payable-receivable')" @click="redirect('accounts-payable-receivable')"/>
 </template>
 <script setup lang="ts">
 // @ts-ignore
@@ -13,7 +14,7 @@ import RegisterBoxIcon from "../../../assets/general/icons/RegisterBoxIcon.vue";
 import DateSalesIcon from "../../../assets/general/icons/DateSales.vue";
 // @ts-ignore
 import Icon from "../../../components/Icon.vue";
-import {mdiCurrencyUsd} from "@mdi/js";
+import { mdiCreditCardOutline, mdiCurrencyUsd} from "@mdi/js";
 import { useRouter } from "vue-router";
 import { useRoute } from "vue-router";
 const router = useRouter();
