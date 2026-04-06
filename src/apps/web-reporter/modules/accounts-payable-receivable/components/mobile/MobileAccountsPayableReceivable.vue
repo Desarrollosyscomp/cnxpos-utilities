@@ -168,6 +168,17 @@
           </CardContent>
         </Card>
       </div>
+      <div align="center" class="pagination" v-if="!params">
+        <Paginator
+          v-if="accountsPayableReceivableStore.itemsCount > accountsPayableReceivableStore.limit"
+          :key="accountsPayableReceivableStore.page"
+          :items-per-page="accountsPayableReceivableStore.limit"
+          :max-buttons="4"
+          :total-pages="accountsPayableReceivableStore.totalPages"
+          :current-page="accountsPayableReceivableStore.page"
+          @on-change-page="onChangePage"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -186,6 +197,7 @@ import Icon from "../../../../../../components/Icon.vue";
 import { mdiArrowLeftCircle } from "@mdi/js";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
+import Paginator from "../../../../../../components/Paginator.vue";
 
 const appStore = useAppStore();
 const accountsPayableReceivableStore = useAccountsPayableReceivableStore();
@@ -280,6 +292,13 @@ const onBack = () => {
   selectedWarehouse.value = null;
   accountsPayableResult.value = [];
   accountReceivableResult.value = [];
+};
+
+const onChangePage = (emmited: any) => {
+  if (accountsPayableReceivableStore.page !== emmited.data.page) {
+    accountsPayableReceivableStore.page = emmited.data.page;
+    appStore.afterLoading(selectedAccount ? loadAccountsReceivable : loadAccountsPayable);
+  }
 };
 
 onMounted(() => {

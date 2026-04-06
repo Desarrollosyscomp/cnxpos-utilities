@@ -157,7 +157,7 @@ import DonutChart from "../utils/DonutChart.vue";
 }
 
 .web-reporter-title {
-  font-size: calc(20px * var(--item-title-font-size));
+  font-size: calc(16px * var(--item-title-font-size));
   margin-bottom: calc(5px * var(--margin-title-bottom));
 }
 

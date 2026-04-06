@@ -229,6 +229,7 @@ const onBack = () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+
 onMounted(() => {
   loadWarehouses();
 });

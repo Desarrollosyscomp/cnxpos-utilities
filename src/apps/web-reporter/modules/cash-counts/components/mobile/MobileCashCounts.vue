@@ -20,7 +20,7 @@
           v-if="beto_state == BetoState.WELCOME"
         >
           <span>Bienvenido al modulo de</span>
-          <h3 class="web-reporter-title">Arqueos de caja</h3>
+          <h4 class="web-reporter-title">Arqueos de caja</h4>
           <span>Selecciona un alamacen para generar un</span>
           <span class="font-montserrat-bold text-contrast"
             >informe de arqueos</span
@@ -408,7 +408,7 @@ onMounted(() => {
 }
 
 .web-reporter-title {
-  font-size: calc(20px * var(--item-title-font-size));
+  font-size: calc(16px * var(--item-title-font-size));
   margin-bottom: calc(5px * var(--margin-title-bottom));
 }
 .warehouses-container {
