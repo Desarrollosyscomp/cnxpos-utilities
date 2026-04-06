@@ -1,5 +1,5 @@
 <template>
-    <div class="hide-on-desktop">
+    <!-- <div class="hide-on-desktop">
         <WebReporterLayoutMobile>
             <router-view />
         </WebReporterLayoutMobile>
@@ -8,9 +8,9 @@
         <WebReporterLayout>
             <router-view />
         </WebReporterLayout>
-    </div>
+    </div> -->
 </template>
 <script setup>
-import WebReporterLayoutMobile from "../../../layouts/WebReporterLayoutMobile.vue";
-import WebReporterLayout from "../../../layouts/WebReporterLayoutDesktop.vue";
+// import WebReporterLayoutMobile from "../../../layouts/WebReporterLayoutMobile.vue";
+// import WebReporterLayout from "../../../layouts/WebReporterLayoutDesktop.vue";
 </script>

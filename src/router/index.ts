@@ -10,6 +10,8 @@ import { ProfileRouterDesktop } from "../modules/profile/router/profile.router";
 import { ReportInventoryRouterDesktop } from "../apps/inventory/modules/report-inventory/router/report-inventory.router";
 import { CashCountsRouterDesktop } from "../apps/web-reporter/modules/cash-counts/router/cash-counts.router";
 import { AccountsPayableReceivableRouterDesktop } from "../apps/web-reporter/modules/accounts-payable-receivable/router/accounts.router";
+import { DailySalesRouter } from "../apps/web-reporter/modules/daily-sales/router/daily-sales.router";
+import { DashboardRouter } from "../apps/web-reporter/modules/dashboard/router/dashboard.router";
 
 const routes = [
   {
@@ -28,6 +30,8 @@ const routes = [
   ...ReportInventoryRouterDesktop,
   ...CashCountsRouterDesktop,
   ...AccountsPayableReceivableRouterDesktop,
+  ...DailySalesRouter,
+  ...DashboardRouter,
   
   //   {
   //     path: "/unauthorized",

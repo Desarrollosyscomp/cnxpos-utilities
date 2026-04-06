@@ -1,7 +1,7 @@
 <template>
-  <MobileLayout>
+  <!-- <MobileLayout>
     <router-view />
-  </MobileLayout>
+  </MobileLayout> -->
 </template>
 <script setup>
 import MobileLayout from '../../../../../layouts/MobileLayout.vue';

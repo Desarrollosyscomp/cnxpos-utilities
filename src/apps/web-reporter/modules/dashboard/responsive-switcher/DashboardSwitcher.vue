@@ -1,5 +1,5 @@
 <template>
-    <div class="hide-on-desktop">
+    <!-- <div class="hide-on-desktop">
         <MobileLayout>
             <router-view />
         </MobileLayout>
@@ -8,7 +8,7 @@
         <DesktopLayout>
             <router-view />
         </DesktopLayout>
-    </div>
+    </div> -->
 </template>
 <script setup>
 import MobileLayout from "../../../../../layouts/MobileLayout.vue";

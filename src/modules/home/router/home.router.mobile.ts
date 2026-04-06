@@ -1,31 +1,16 @@
 export const HomeRouter = [
     {
-        path: '/home',
+        path: "/home",
         // @ts-ignore
-        component: () => import('../../../layouts/MobileHomeLayout.vue'),
-
-        // children: [ 
-        //     {
-        //         path:'login',    
-        //         name:'login',
-        //         meta: {
-        //             // @ts-ignore
-        //             headerComponent: () => import('../components/beto-messages/LoginBetoMessage.vue')
-        //         },
-        //         // @ts-ignore
-        //         component: () => import('../components/desktop/Login.vue')
-        //     },
-        //     {
-        //         path:'forgot-password',
-        //         name:'forgot-password',
-        //         meta: {
-        //             // @ts-ignore
-        //             headerComponent: () => import('../components/beto-messages/LoginBetoMessage.vue')
-        //         },
-        //         // @ts-ignore
-        //         component: () => import('../components/desktop/Login.vue')
-        //     }
-        // ]
-
-    },
+        component: () => import("../../../layouts/MobileLayout.vue"),
+        children: [
+          {
+            path: "welcome",
+            name: "welcome",
+            // @ts-ignore
+            component: () => import("../pages/MobileHomePage.vue"),
+          },
+          
+        ]
+      }
 ]
