@@ -1,8 +1,8 @@
 <template>
     <MobileRangeSalesMain />
 </template>
-<script setup>
-import MobileRangeSalesMain from "../components/mobile/MobileRangeSalesMain.vue";
+<script setup lang="ts">
+import MobileRangeSalesMain from "../components/mobile/MobileAccountsPayableReceivable.vue";
 
 </script>
 <style scoped>
