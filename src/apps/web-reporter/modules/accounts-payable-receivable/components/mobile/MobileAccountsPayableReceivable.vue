@@ -114,7 +114,7 @@
         v-if="!params && (selectedAccount ? accountsPayableResult : accountReceivableResult).length > 0"
         class="scrollable-y result-report-container"
       >
-        <span class="text-center font-montserrat-bold"
+        <span class="text-center font-montserrat-bold text-contrast"
           >Informe de cuentas por
           {{ selectedAccount ? "pagar" : "cobrar" }}</span
         >
@@ -602,7 +602,7 @@ li {
 }
 .back-button {
   color: var(--color-contrast);
-  width: 100%;
+  width: 50%;
   font-weight: bold;
   font-size: 12px;
   display: flex;

@@ -340,7 +340,7 @@ label {
 }
 .back-button {
   color: var(--color-contrast);
-  width: 100%;
+  width: 10%;
   font-weight: bold;
   font-size: calc(12px * var(--font-size));
   display: flex;

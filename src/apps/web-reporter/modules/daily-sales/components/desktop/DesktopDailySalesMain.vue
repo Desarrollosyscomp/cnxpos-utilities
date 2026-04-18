@@ -1,7 +1,7 @@
 <template>
-  <div class="app-background"></div>
+  <div class="app-plain-background"></div>
   <div class="container layout-container">
-    <div class="beto-message" v-if="page_state === PageState.BETO_MESSAGE">
+    <!-- <div class="beto-message" v-if="page_state === PageState.BETO_MESSAGE">
       <div class="beto-message-content">
         <img
           :src="beto_state === BetoState.WELCOME ? BetoImg : BetoSad"
@@ -28,81 +28,131 @@
         <label for="fecha">Consultar fecha</label>
         <input type="date" class="form-input searcher-input" v-model="date" />
       </div>
-    </div>
-    <div class="data date-field" v-else>
+    </div> -->
+    <div class="daily-sales-container">
       <div class="search">
         <span class="font-montserrat-bold text-contrast page-title"
           >Informe de ventas por día</span
         >
-        <input
-          type="date"
-          id="fecha"
-          required
-          class="form-input searcher-input"
-          v-model="date"
-        />
-      </div>
-      <CenterAndScroll>
-        <div class="table-container">
-          <table class="custom-table-one">
-            <thead>
-              <tr>
-                <th class="text-center">Fecha</th>
-                <th class="text-center">Id de almacén</th>
-                <th class="text-center">Subtotal</th>
-                <th class="text-center">Total</th>
-                <th class="text-center">Facturas</th>
-                <th class="text-center">Productos vendidos</th>
-                <th class="text-center">Costo</th>
-              </tr>
-            </thead>
-            <tbody class="clickable">
-              <tr v-for="sale in warehousesArray" @click="openModal(sale)">
-                <td class="text-center">
-                  {{ formatDateWithHyphen(sale.fecha) }}
-                </td>
-                <td class="text-center">{{ sale.idalmacen }}</td>
-                <td class="text-center">{{ numberToCurrency(sale.subtot) }}</td>
-                <td class="text-center">{{ numberToCurrency(sale.total) }}</td>
-                <td class="text-center">{{ sale.cantfact }}</td>
-                <td class="text-center">{{ sale.prodvendid }}</td>
-                <td class="text-center">
-                  {{ numberToCurrency(sale.costoacum) }}
-                </td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="date-field">
+          <label for="fecha">Fecha de inicio</label>
+          <input
+            type="date"
+            id="fecha"
+            required
+            class="form-input size-input"
+            v-model="date"
+          />
         </div>
-      </CenterAndScroll>
-      <div class="summary">
-        <img :src="BetoImg" class="summary-beto" />
-        <Card>
-          <CardContent class="summary-content">
-            <div class="summary-title font-montserrat-bold">
-              Este es un resumen de tu búsqueda:
-            </div>
-            <div class="summary-item">
-              <span>Total ventas</span>
-              <span>{{ numberToCurrency(summary.totalSales) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total productos</span>
-              <span>{{ summary.totalProducts }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total facturas</span>
-              <span>{{ summary.totalInvoices }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Costo</span>
-              <span>{{ numberToCurrency(summary.totalCost) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Utilidad</span>
-              <span>{{ numberToCurrency(summary.totalProfit) }}</span>
-            </div>
-          </CardContent>
-        </Card>
+      </div>
+      <div class="data date-field">
+        <CenterAndScroll>
+          <div class="table-container" v-if="warehousesArray.length > 0">
+            <table class="custom-table-one">
+              <thead>
+                <tr>
+                  <th class="text-left">Fecha</th>
+                  <th class="text-center">Nombre almacén</th>
+                  <th class="text-center">Subtotal</th>
+                  <th class="text-center">Total</th>
+                  <th class="text-center">Facturas</th>
+                  <th class="text-center">Productos vendidos</th>
+                  <th class="text-right">Costo</th>
+                </tr>
+              </thead>
+              <tbody class="clickable">
+                <tr v-for="sale in warehousesArray" @click="openModal(sale)">
+                  <td class="text-left">
+                    {{ formatDateWithHyphen(sale.fecha) }}
+                  </td>
+                  <td class="text-center">{{ sale.nomalmacen }}</td>
+                  <td class="text-center">
+                    {{ numberToCurrency(sale.subtot) }}
+                  </td>
+                  <td class="text-center">
+                    {{ numberToCurrency(sale.total) }}
+                  </td>
+                  <td class="text-center">{{ sale.cantfact }}</td>
+                  <td class="text-center">{{ sale.prodvendid }}</td>
+                  <td class="text-center">
+                    {{ numberToCurrency(sale.costoacum) }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CenterAndScroll>
+        <div
+          class="summary"
+          :class="{ 'summary-not-found': warehousesArray.length === 0 }"
+        >
+          <img
+            :src="BetoImg"
+            class="summary-beto"
+            v-if="warehousesArray.length > 0"
+          />
+          <img
+            :src="beto_state === BetoState.WELCOME ? BetoImg : BetoSad"
+            :class="
+              beto_state === BetoState.WELCOME
+                ? 'summary-beto-welcome'
+                : 'summary-beto-sad'
+            "
+            v-else
+          />
+          <Card>
+            <CardContent
+              class="summary-content"
+              v-if="warehousesArray.length > 0"
+            >
+              <div class="summary-title font-montserrat-bold">
+                Este es un resumen de tu búsqueda:
+              </div>
+              <div class="summary-item">
+                <span>Total ventas</span>
+                <span>{{ numberToCurrency(summary.totalSales) }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Total productos</span>
+                <span>{{ summary.totalProducts }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Total facturas</span>
+                <span>{{ summary.totalInvoices }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Costo</span>
+                <span>{{ numberToCurrency(summary.totalCost) }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Utilidad</span>
+                <span>{{ numberToCurrency(summary.totalProfit) }}</span>
+              </div>
+            </CardContent>
+            <CardContent
+              class="summary-content"
+              v-else-if="beto_state === BetoState.WELCOME"
+            >
+              <div class="welcome-title font-montserrat-medium">
+                <p>Bienvenido al modulo</p>
+                <p>de ventas diarias</p>
+                <p>selecciona una fecha</p>
+                <p>para consultar el informe</p>
+                <p class="font-montserrat-bold">de ventas diarias</p>
+              </div>
+            </CardContent>
+            <CardContent
+              class="summary-content"
+              v-if="beto_state === BetoState.NOT_FOUND"
+            >
+              <div class="not-found-title font-montserrat-medium">
+                <p>No se encontraron datos</p>
+                <p>en esta fecha por favor</p>
+                <p>intenta con otra</p>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
     <Modal :open-modal="open_modal" @close-modal="closeModal" min-height="60vh">
@@ -155,16 +205,16 @@
                 </tbody>
               </table>
               <div align="center" class="pagination">
-                  <Paginator
-                    v-if="dailySalesStore.itemsCount > dailySalesStore.limit"
-                    :key="dailySalesStore.page"
-                    :items-per-page="dailySalesStore.limit"
-                    :max-buttons="4"
-                    :total-pages="dailySalesStore.totalPages"
-                    :current-page="dailySalesStore.page"
-                    @on-change-page="onChangePage"
-                  />
-                </div>
+                <Paginator
+                  v-if="dailySalesStore.itemsCount > dailySalesStore.limit"
+                  :key="dailySalesStore.page"
+                  :items-per-page="dailySalesStore.limit"
+                  :max-buttons="4"
+                  :total-pages="dailySalesStore.totalPages"
+                  :current-page="dailySalesStore.page"
+                  @on-change-page="onChangePage"
+                />
+              </div>
             </div>
             <div class="invoices-details">
               <div
@@ -245,11 +295,6 @@ const appStore = useAppStore();
 let open_modal = ref(false);
 let date = ref("");
 
-enum PageState {
-  BETO_MESSAGE = 0,
-  DATA = 1,
-}
-
 enum BetoState {
   WELCOME = 0,
   NOT_FOUND = 1,
@@ -260,8 +305,7 @@ enum InvoiceDetailsState {
   NOT_SELECTED = 1,
 }
 
-let page_state = ref(PageState.DATA);
-let beto_state = ref(BetoState.NOT_FOUND);
+let beto_state = ref(BetoState.WELCOME);
 let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 const warehousesArray = ref<TWarehouseDaySale[]>([]);
@@ -275,6 +319,13 @@ const summary = ref<TSummary>({
 const loadDailySales = async () => {
   const sendDateParsed = date.value.replace(/-/g, "");
   let response = await dailySalesStore.dailySales(sendDateParsed);
+  console.log(response);
+  if (response.error == true) {
+    beto_state.value = BetoState.NOT_FOUND;
+    warehousesArray.value = [];
+    return;
+  }
+  beto_state.value = BetoState.WELCOME;
   warehousesArray.value = response.data.sales;
   summary.value = response.data.summary;
 };
@@ -285,9 +336,10 @@ watch(date, () => {
 
 const invoicesArray = ref<TWarehouseDayInvoice[]>([]);
 const loadInvoices = async (date: string, warehouse_id: string) => {
+  appStore.showLoadingScreen = true;
   let response = await dailySalesStore.dailyInvoices(date, warehouse_id);
   invoicesArray.value = response.data.list;
-  console.log(invoicesArray.value);
+  appStore.showLoadingScreen = false;
 };
 const invoiceDetailsArray = ref<TWarehouseDayInvoiceDetail[]>([]);
 const invoice_id = ref<string>("");
@@ -326,14 +378,17 @@ const closeModal = () => {
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;
-    appStore.afterLoading(() => {
-      loadInvoices(sale_date.value, warehousesArray?.value[0]?.idalmacen?.toString() || "");
+    appStore.afterLoading(async () => {
+      await loadInvoices(
+        sale_date.value,
+        warehousesArray?.value[0]?.idalmacen?.toString() || ""
+      );
     });
   }
 };
 
 onMounted(() => {
-  loadDailySales();
+  // loadDailySales();
 });
 </script>
 <style scoped>
@@ -344,23 +399,43 @@ onMounted(() => {
 
 :global(:root) {
   --message-proportion: 1;
+  --font-size-title: 1;
 }
 
 .container {
   height: 100%;
+  z-index: 1;
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
-
-.search {
+.daily-sales-container {
   display: flex;
+  flex-direction: column;
+  width: 80%;
+  max-height: 100%;
+  height: 80%;
+}
+.search {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
   justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+}
 
-  gap: 10px;
+.data {
+  border-radius: 5px;
+  background-color: var(--color-primary-dark);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 90%;
 }
 
 .page-title {
-  font-size: 2rem;
+  font-size: calc(17px * var(--font-size-title));
 }
 .searcher-input {
   width: 25%;
@@ -419,18 +494,20 @@ onMounted(() => {
   font-size: calc(1.4rem * var(--message-proportion));
 }
 
-.data {
-  margin-top: 5%;
-  height: 90%;
-  display: flex;
-  flex-direction: column;
-}
-
 .table-container {
   padding: 10px;
 }
 
 .summary {
+  padding-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.summary-not-found {
+  padding-bottom: 10px;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -452,6 +529,14 @@ onMounted(() => {
   margin-bottom: 10px;
   font-size: calc(1rem * var(--message-proportion));
 }
+.not-found-title {
+  text-align: center;
+  font-size: calc(1rem * var(--message-proportion));
+}
+.welcome-title {
+  text-align: center;
+  font-size: calc(0.9rem * var(--message-proportion));
+}
 
 .summary-item > :nth-child(1) {
   font-size: calc(0.9rem * var(--message-proportion));
@@ -462,6 +547,7 @@ onMounted(() => {
 }
 
 .modal-wrapper {
+  padding-top: 5px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -473,15 +559,19 @@ onMounted(() => {
   flex-direction: column;
   justify-content: center;
 }
+
+.modal-header {
+  display: flex;
+  padding-top: 10px;
+  justify-content: center;
+}
 .modal-title {
-  padding: 15px;
-  font-size: 1.6rem;
+  font-size: 20px;
 }
 .modal-content {
   width: 90vw;
   display: flex;
-  padding-top: 30px;
-  padding-bottom: 30px;
+  justify-content: start;
 }
 
 .modal-footer {
@@ -495,7 +585,7 @@ onMounted(() => {
 }
 
 .table-title {
-  font-size: 1.4rem;
+  font-size: 18px;
   margin-bottom: 1rem;
 }
 
@@ -509,9 +599,25 @@ onMounted(() => {
 .summary-beto {
   width: calc(130px * var(--message-proportion));
 }
-.pagination{
-    margin-top: 1rem;
+.summary-beto-welcome {
+  width: calc(160px * var(--message-proportion));
 }
+.summary-beto-sad {
+  width: calc(160px * var(--message-proportion));
+  transform: scaleX(-1);
+}
+.pagination {
+  margin-top: 1rem;
+}
+
+.size-input {
+  width: 100%;
+}
+
+label {
+  background-color: var(--color-primary-dark-2) !important;
+}
+
 @media (min-width: 1920px) {
   :global(:root) {
     --message-proportion: 1.3;

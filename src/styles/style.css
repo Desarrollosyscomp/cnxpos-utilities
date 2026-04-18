@@ -375,13 +375,10 @@ input {
 }
 
 .custom-table-one thead th {
-  text-align: left;
   padding: 1rem;
   font-weight: 600;
   font-size: calc(var(--table-font-size-proportion) * 15px);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  border-bottom: 2px solid var(--color-primary-dark-2);
 }
 
 /* Filas */

@@ -693,7 +693,7 @@ li {
 }
 .back-button {
   color: var(--color-contrast);
-  width: 100%;
+  width: 50%;
   font-weight: bold;
   font-size: 12px;
   display: flex;

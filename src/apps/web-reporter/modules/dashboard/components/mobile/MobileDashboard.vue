@@ -18,7 +18,16 @@
               <span class="subtitle">Total</span>
             </div>
             <div class="value">
-              <span>$25.000.000</span>
+              <span>{{ numberToCurrency(summaryDashboard?.salesDay?.totalSales) }}</span>
+            </div>
+          </div>
+          <div class="item">
+            <div class="text">
+              <span>Cuentas por cobrar</span>
+              <span class="subtitle">Total</span>
+            </div>
+            <div class="value">
+              <span>{{ numberToCurrency(summaryDashboard?.receivablePortfolio?.pendingPaid) }}</span>
             </div>
           </div>
           <div class="item">
@@ -27,32 +36,67 @@
               <span class="subtitle">Total</span>
             </div>
             <div class="value">
-              <span>$25.000.000</span>
+              <span>{{ numberToCurrency(summaryDashboard?.payablePortfolio?.pendingPaid) }}</span>
             </div>
           </div>
           <div class="item">
-            <BarChart />
-          </div>
-          <div class="item">
-            <BarChart2 />
-          </div>
-          <div class="item">
-            <DonutChart />
+            <BarChart2 :labels="dates" :data="values" />
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
-<script setup>
-import Chart from "chart.js/auto";
-// import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
-import Icon from "../../../../../../components/Icon.vue";
-import WebReporterIcon from "../../../../../../assets/general/icons/WebReporterIcon.vue";
-import { computed, defineAsyncComponent, ref } from "vue";
-import BarChart from "../utils/BarChart.vue";
+<script setup lang="ts">
+import { onMounted, ref } from "vue";
 import BarChart2 from "../utils/BarChart2.vue";
-import DonutChart from "../utils/DonutChart.vue";
+import { useAppStore } from "../../../../../../store/app.store";
+import { useDashboardStore } from "../../store/dashboard.store";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+
+const appStore = useAppStore();
+const dashboardStore = useDashboardStore();
+
+const formDates = ref({
+  init_date: new Date().toISOString().split("T")[0],
+  end_date: new Date().toISOString().split("T")[0],
+});
+
+const summaryDashboard = ref({} as any);
+const cumulativeSales = ref([] as any);
+const dates = ref([] as any);
+const values = ref([] as any);
+const setDashboardSummary = async () => {
+  const parsedInitDate = formDates.value.init_date?.replace(/-/g, "");
+  const parsedEndDate = formDates.value.end_date?.replace(/-/g, "");
+  if (!parsedInitDate || !parsedEndDate) return;
+  const response = await dashboardStore.getDashboardSummary(
+    parsedInitDate,
+    parsedEndDate
+  );
+  summaryDashboard.value = response.data;
+  cumulativeSales.value = response.data.cumulativeSales;
+  console.log(cumulativeSales.value);
+  extractDatesOfCumulativeSales();
+  extractValuesOfCumulativeSales();
+};
+const extractDatesOfCumulativeSales = async () => {
+  dates.value = cumulativeSales.value.map((item: any) => {
+    const date = item.date.toString();
+    const formatted = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(
+      6,
+      8
+    )}`;
+    return formatted;
+  });
+};
+const extractValuesOfCumulativeSales = () => {
+  values.value = cumulativeSales.value.map((item: any) => item.totalSales);
+};
+
+onMounted(async () => {
+  appStore.afterLoading(setDashboardSummary);
+});
 </script>
 <style scoped>
 @import "../../../../../../utils/css/dialog-bubble.css";
@@ -114,17 +158,17 @@ import DonutChart from "../utils/DonutChart.vue";
   font-weight: 600;
 }
 
-.item:nth-child(3) {
-  height: 18vh;
-  padding-bottom: 0px;
-}
 .item:nth-child(4) {
-  height: 18vh;
+  height: 28vh;
   padding-bottom: 0px;
 }
 .item:nth-child(5) {
+  height: 28vh;
   padding-bottom: 0px;
-  height: 30vh;
+}
+.item:nth-child(6) {
+  padding-bottom: 0px;
+  min-height: 40vh;
 }
 
 .item:first-child {

@@ -3,8 +3,9 @@
     <canvas ref="chartRef" id="bar-chart"></canvas>
   </div>
 </template>
+
 <script setup>
-import { ref, onMounted, onBeforeUnmount, watch } from "vue";
+import { ref, onBeforeUnmount, watch } from "vue";
 import Chart from "chart.js/auto";
 import { useAppStore } from "../../../../../../store/app.store";
 import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
@@ -12,39 +13,68 @@ import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
 const appStore = useAppStore();
 const chartRef = ref(null);
 let chartInstance = null;
-const isDark = appStore.theme.dataTheme === "dark";
 
-onMounted(() => {
-  if (!chartRef.value) return;
-
-  chartInstance = new Chart(chartRef.value, {
-    type: "bar",
-    data: {
-      labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-      datasets: [
-        {
-          label: "# of Votes",
-          data: [12, 19, 3, 5, 2, 3],
-          borderWidth: 1,
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-    },
-  });
-
-  useChartTheme(() => chartInstance);
+const props = defineProps({
+  labels: {
+    type: Array,
+    default: () => [],
+  },
+  data: {
+    type: Array,
+    default: () => [],
+  },
 });
 
+watch(
+  () => [props.labels, props.data],
+  ([labels, data]) => {
+    if (!chartRef.value || !labels?.length || !data?.length) return;
+
+    if (chartInstance) {
+      chartInstance.data.labels = labels;
+      chartInstance.data.datasets[0].data = data;
+      chartInstance.update();
+    } else {
+      chartInstance = new Chart(chartRef.value, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Facturado ultimos 7 dias",
+              data: data,
+              backgroundColor: [
+                "#541811",
+                "#ff4c00",
+              ],
+              borderColor: [
+                "#541811",
+                "#ff4c00",
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+        },
+      });
+
+      useChartTheme(() => chartInstance);
+    }
+  },
+  { immediate: true }
+);
 
 onBeforeUnmount(() => {
   if (chartInstance) {
     chartInstance.destroy();
+    chartInstance = null;
   }
 });
 </script>
+
 <style scoped>
 .chart {
   width: 100%;

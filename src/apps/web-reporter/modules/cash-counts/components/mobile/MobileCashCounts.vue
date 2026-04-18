@@ -478,7 +478,7 @@ onMounted(() => {
 
 .back-button {
   color: var(--color-contrast);
-  width: 100%;
+  width: 50%;
   font-weight: bold;
   font-size: calc(12px * var(--font-size));
   display: flex;

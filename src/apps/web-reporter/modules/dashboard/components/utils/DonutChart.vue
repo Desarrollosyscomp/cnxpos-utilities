@@ -5,57 +5,85 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount, computed, watch } from "vue";
+import { ref, watch, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
-import { useLocalStorage } from "@vueuse/core";
 import { useAppStore } from "../../../../../../store/app.store";
 import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
+
 const appStore = useAppStore();
 const chartRef = ref(null);
 let chartInstance = null;
 
-const isDark = ref(false);
-onMounted(() => {
-  if (!chartRef.value) return;
+const props = defineProps({
+  labels: {
+    type: Array,
+    default: () => [],
+  },
+  data: {
+    type: Array,
+    default: () => [],
+  },
+});
 
-  chartInstance = new Chart(chartRef.value, {
-    type: "doughnut",
-    data: {
-      labels: ["1", "una metrica", "metrica 3"],
-      datasets: [
-        {
-          data: [20, 60, 20],
-          backgroundColor: [
-            "#F4B400", // amarillo
-            "#FF5C8D", // rosado
-            "#4285F4", // azul
+// 👇 Watch reactivo
+watch(
+  () => [props.labels, props.data, appStore.theme.dataTheme],
+  () => {
+    if (!chartRef.value || !props.labels.length || !props.data.length) return;
+
+    const textColor =
+      appStore.theme.dataTheme === "dark" ? "#ffffff" : "#000000";
+
+    if (chartInstance) {
+      // 🔄 actualizar
+      chartInstance.data.labels = props.labels;
+      chartInstance.data.datasets[0].data = props.data;
+      chartInstance.options.plugins.legend.labels.color = textColor;
+      chartInstance.update();
+    } else {
+      // 🆕 crear
+      chartInstance = new Chart(chartRef.value, {
+        type: "doughnut",
+        data: {
+          labels: props.labels,
+          datasets: [
+            {
+              data: props.data,
+              backgroundColor: [
+                "#541811",
+                "#ff4c00",
+                "#c5351b",
+              ],
+              borderWidth: 1,
+            },
           ],
-          borderWidth: 1,
         },
-      ],
-    },
-    options: {
-      maintainAspectRatio: false,
-      responsive: true,
-      plugins: {
-        legend: {
-          position: "bottom",
-          labels: {
-            usePointStyle: true,
-            pointStyle: "rect",
-            color: appStore.theme.dataTheme === "dark" ? "#ffffff" : "#000000",
+        options: {
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                usePointStyle: true,
+                pointStyle: "rect",
+                color: textColor,
+              },
+            },
           },
         },
-      },
-    },
-  });
+      });
 
-  useChartTheme(() => chartInstance);
-});
+      useChartTheme(() => chartInstance);
+    }
+  },
+  { immediate: true }
+);
 
 onBeforeUnmount(() => {
   if (chartInstance) {
     chartInstance.destroy();
+    chartInstance = null;
   }
 });
 </script>
@@ -63,7 +91,6 @@ onBeforeUnmount(() => {
 <style scoped>
 .card {
   width: 100%;
-  height: 30vh;
   display: flex;
   justify-content: center;
 }

@@ -11,7 +11,10 @@
           <div class="bubble bubble-a bubble-left">
             <span>Bienvenido al</span>
             <h3 class="web-reporter-title">Web <br />Reporter</h3>
-            <span>Aquí encontraras un resumen de tu negocio</span>
+            <span
+              >Aquí encontrarás <br />
+              un resumen de tu negocio</span
+            >
           </div>
         </div>
         <div class="item">
@@ -20,7 +23,9 @@
             <span class="subtitle">Total</span>
           </div>
           <div class="value">
-            <span>$25.000.000</span>
+            <span>{{
+              numberToCurrency(summaryDashboard?.salesDay?.totalSales)
+            }}</span>
           </div>
         </div>
         <div class="item">
@@ -29,7 +34,9 @@
             <span class="subtitle">Total</span>
           </div>
           <div class="value">
-            <span>$25.000.000</span>
+            <span>{{
+              numberToCurrency(summaryDashboard?.payablePortfolio?.pendingPaid)
+            }}</span>
           </div>
         </div>
         <div class="item">
@@ -38,38 +45,73 @@
             <span class="subtitle">Total</span>
           </div>
           <div class="value">
-            <span>$25.000.000</span>
+            <span>{{
+              numberToCurrency(
+                summaryDashboard?.receivablePortfolio?.pendingPaid
+              )
+            }}</span>
           </div>
         </div>
       </div>
     </div>
-
     <div class="charts-container">
       <div class="bar-charts">
         <div class="item-chart">
-          <BarChart />
+          <BarChart :labels="dates" :data="values" />
         </div>
-        <div class="item-chart">
-          <BarChart2 />
-        </div>
-      </div>
-      <div class="donut-chart">
-        <DonutChart />
       </div>
     </div>
   </div>
 </template>
-<script setup>
-import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
-import Icon from "../../../../../../components/Icon.vue";
-import WebReporterIcon from "../../../../../../assets/general/icons/WebReporterIcon.vue";
-import { useRoute } from "vue-router";
-import { computed, defineAsyncComponent, ref } from "vue";
+<script setup lang="ts">
 import BarChart from "../utils/BarChart.vue";
-import BarChart2 from "../utils/BarChart2.vue";
-import DonutChart from "../utils/DonutChart.vue";
-const route = useRoute();
-console.log(route.meta.headerComponent);
+import { useDashboardStore } from "../../store/dashboard.store";
+import { onMounted, ref } from "vue";
+import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+import { useAppStore } from "../../../../../../store/app.store";
+const dashboardStore = useDashboardStore();
+const appStore = useAppStore();
+
+const formDates = ref({
+  init_date: new Date().toISOString().split("T")[0],
+  end_date: new Date().toISOString().split("T")[0],
+});
+
+const summaryDashboard = ref({} as any);
+const cumulativeSales = ref([] as any);
+const dates = ref([] as any);
+const values = ref([] as any);
+const setDashboardSummary = async () => {
+  const parsedInitDate = formDates.value.init_date?.replace(/-/g, "");
+  const parsedEndDate = formDates.value.end_date?.replace(/-/g, "");
+  if (!parsedInitDate || !parsedEndDate) return;
+  const response = await dashboardStore.getDashboardSummary(
+    parsedInitDate,
+    parsedEndDate
+  );
+  summaryDashboard.value = response.data;
+  cumulativeSales.value = response.data.cumulativeSales;
+  console.log(cumulativeSales.value);
+  extractDatesOfCumulativeSales();
+  extractValuesOfCumulativeSales();
+};
+const extractDatesOfCumulativeSales = async () => {
+  dates.value = cumulativeSales.value.map((item: any) => {
+    const date = item.date.toString();
+    const formatted = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(
+      6,
+      8
+    )}`;
+    return formatted;
+  });
+};
+const extractValuesOfCumulativeSales = () => {
+  values.value = cumulativeSales.value.map((item: any) => item.totalSales);
+};
+
+onMounted(async () => {
+  appStore.afterLoading(setDashboardSummary);
+});
 </script>
 <style scoped>
 @import "../../../../../../utils/css/dialog-bubble.css";
@@ -93,7 +135,7 @@ console.log(route.meta.headerComponent);
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 25px;
 }
 .items-dashboard {
   display: flex;
@@ -141,7 +183,7 @@ console.log(route.meta.headerComponent);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 25px;
 }
 
 .beto-avatar {
@@ -155,7 +197,7 @@ console.log(route.meta.headerComponent);
   --border-color: var(--color-contrast);
   --background: var(--color-primary-light);
   --triangle-size: 1;
-  --triangle-y: 30px;
+  --triangle-y: 60px;
 
   color: var(--color-contrast);
   font-size: calc(12px * var(--font-size-proportion));
@@ -165,9 +207,8 @@ console.log(route.meta.headerComponent);
 }
 
 .bubble > :nth-child(1) {
-  font-weight: light;
-  font-size: calc(12px * var(--font-size-proportion));
-  margin-bottom: 2px;
+  font-weight: medium;
+  font-size: calc(13px * var(--font-size-proportion));
 }
 
 .web-reporter-title {
@@ -182,15 +223,15 @@ console.log(route.meta.headerComponent);
 }
 
 .bar-charts {
-  width: 60%;
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
 .item-chart {
-  padding: 25px;
-  height: 15vh;
+  padding: 20px;
+  height: 18vh;
   border-radius: 10px;
   border: 1px solid #2f1310;
   background-color: var(--color-primary-light);
@@ -211,7 +252,7 @@ console.log(route.meta.headerComponent);
   align-items: center;
   padding: 25px 25px;
   width: 15%;
-  height: 38.5vh;
+  height: 41vh;
   border-radius: 10px;
   border: 1px solid #2f1310;
   background-color: var(--color-primary-light);

@@ -217,7 +217,7 @@
           <span>{{ numberToCurrency(selectedItem.ultimo_costo) }}</span>
         </div>
         <hr />
-        <div class="item">
+        <div class="item">                                                                                     
           <span class="font-montserrat-bold">Costo inventario (última compra)</span>
           <span>{{ numberToCurrency(selectedItem.costo_total) }}</span>
         </div>
@@ -484,7 +484,7 @@ onMounted(() => {
 
 .back-button {
   color: var(--color-contrast);
-  width: 100%;
+  width: 50%;
   font-weight: bold;
   font-size: calc(12px * var(--font-size));
   display: flex;
