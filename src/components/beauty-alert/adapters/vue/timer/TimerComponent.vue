@@ -1,6 +1,6 @@
 <template>
   <BaseModal :onClose="onCancel">
-    <template #default="{ close }">
+    <template #default>
       <div class="timer-content">
         <h2>{{ title }}</h2>
         <p>{{ message }}</p>
