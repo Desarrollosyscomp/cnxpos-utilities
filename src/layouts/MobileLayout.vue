@@ -68,7 +68,6 @@ import WebReporterIcon from "../assets/general/icons/WebReporterIcon.vue";
 import { useAuthStore } from "../modules/auth/store/auth.store";
 const route = useRoute();
 const authStore = useAuthStore();
-console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
   return loader ? defineAsyncComponent(loader) : null;

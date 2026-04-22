@@ -10,7 +10,6 @@ import "./components/beauty-alert/styles/vanilla.css";
 import "./styles/custom-beauty-alert.css";
 const app = createApp(App);
 app.use(createPinia());
-console.log("mode: " + import.meta.env.VITE_TARGET);
 
 if (import.meta.env.VITE_TARGET === "mobile") {
   const { default: router } = await import("./router/index.mobile");

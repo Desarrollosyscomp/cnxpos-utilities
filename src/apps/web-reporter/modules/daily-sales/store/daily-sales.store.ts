@@ -48,7 +48,6 @@ export const useDailySalesStore = defineStore("daily-sales", {
         warehouse_id,
         number_invoice
       );
-      console.log(response);
       return {
         error: false,
         data: {

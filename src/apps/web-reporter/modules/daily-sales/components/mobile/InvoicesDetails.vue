@@ -150,7 +150,6 @@ const loadInvoiceDetails = async () => {
   if (!response.error) {
     invoices.value = response.data.daily_invoice_details;
     sumary.value = response.data.summary_invoice;
-    console.log(response.data);
   }
 };
 

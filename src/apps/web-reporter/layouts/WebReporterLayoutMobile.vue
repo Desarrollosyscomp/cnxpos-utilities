@@ -66,7 +66,6 @@ import WebReporterBottomMenu from "../components/WebReporterBottomMenu.vue";
 import { useAuthStore } from "../../../modules/auth/store/auth.store";
 const authStore = useAuthStore();
 const route = useRoute();
-console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
   return loader ? defineAsyncComponent(loader as any) : null;

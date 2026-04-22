@@ -309,7 +309,6 @@ const searchSales = async () => {
   );
   inventory.value = response.data.list;
   summary.value = response.data.summary;
-  console.log(response.data);
   params.value = false;
   appStore.showLoadingScreen = false;
 };

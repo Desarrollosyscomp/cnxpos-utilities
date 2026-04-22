@@ -39,7 +39,6 @@ import BetoImg from "../../../../assets/avatars/beto.svg"
 import { useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
-console.log(route.meta.headerComponent);
 
 let name = ref('Fernando')
 

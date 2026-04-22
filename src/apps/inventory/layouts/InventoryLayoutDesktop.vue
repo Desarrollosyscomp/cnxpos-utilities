@@ -69,7 +69,6 @@ import InventoryRightMenu from "../components/InventoryRightMenu.vue";
 const authStore = useAuthStore();
 const route = useRoute();
 const router = useRouter();
-console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
   return loader ? defineAsyncComponent(loader as any) : null;

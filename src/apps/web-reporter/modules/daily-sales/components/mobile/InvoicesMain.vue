@@ -198,7 +198,6 @@ const setInvoices = async () => {
   invoices.value = response.data.list;
   summary.value = response.data.summary;
   warehouseName.value = invoices.value[0]?.nomalmacen;
-  console.log(invoices.value);
 };
 
 const onChangePage = (emmited: any) => {

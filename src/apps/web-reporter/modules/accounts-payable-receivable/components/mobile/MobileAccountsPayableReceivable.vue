@@ -276,7 +276,6 @@ const loadAccountsReceivable = async () => {
     beto_state.value = BetoState.NOT_FOUND;
     return;
   }
-  console.log(response);
   accountReceivableResult.value = response.data.list;
   params.value = false;
   appStore.showLoadingScreen = false;

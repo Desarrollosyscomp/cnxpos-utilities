@@ -32,7 +32,6 @@ import { useRoute, useRouter } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 const route = useRoute();
 const router = useRouter();
-console.log(route.meta.headerComponent);
 </script>
 <style scoped>
 @import "../../../../utils/css/dialog-bubble.css";

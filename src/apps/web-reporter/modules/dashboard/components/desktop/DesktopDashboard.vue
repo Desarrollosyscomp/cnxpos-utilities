@@ -91,7 +91,6 @@ const setDashboardSummary = async () => {
   );
   summaryDashboard.value = response.data;
   cumulativeSales.value = response.data.cumulativeSales;
-  console.log(cumulativeSales.value);
   extractDatesOfCumulativeSales();
   extractValuesOfCumulativeSales();
 };

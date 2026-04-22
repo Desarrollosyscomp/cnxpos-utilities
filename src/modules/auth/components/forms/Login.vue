@@ -108,7 +108,6 @@ const onSubmit = async () => {
     errors.password = "";
 
     let response = await authStore.login(authForm);
-    console.log(response.data);
     if (response.data.isLogged) {
       appStore.showLoadingScreen = false;
       router.push("/home/welcome");

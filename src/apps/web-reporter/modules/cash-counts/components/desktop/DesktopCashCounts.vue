@@ -201,12 +201,10 @@ const loadWarehouses = async () => {
 const searchCashCounts = async () => {
   appStore.showLoadingScreen = true;
   const newDate = new Date().toISOString().split("T")[0];
-  console.log(selectedWarehouse.value?.idalmacen ?? 0);
   const response = await cashCountStore.cashCounts(
     newDate,
     selectedWarehouse.value?.idalmacen ?? 0
   );
-  console.log(response.data);
   if (response.data.cash_balance) {
     cashCounts.value = response.data.cash_balance;
     params.value = false;

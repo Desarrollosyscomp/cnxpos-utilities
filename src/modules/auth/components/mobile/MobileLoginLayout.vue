@@ -35,7 +35,6 @@ import { useRoute } from "vue-router";
 import { computed, defineAsyncComponent, ref } from "vue";
 import ConexionPosColorLogo from "../../../../assets/logos/ConexionPosColorLogo.vue";
 const route = useRoute();
-console.log(route.meta.headerComponent);
 const Header = computed(() => {
   const loader = route.meta.headerComponent;
   return loader ? defineAsyncComponent(loader) : null;

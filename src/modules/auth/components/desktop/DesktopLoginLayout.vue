@@ -20,13 +20,11 @@ import BetoMessage from './BetoMessage.vue';
 import { useRoute } from 'vue-router'
 import { computed, defineAsyncComponent } from 'vue'
 const route = useRoute()
-console.log(route.meta.headerComponent)
 const Header = computed(() => {
 const loader = route.meta.headerComponent
 return loader ? defineAsyncComponent(loader) : null
 })
 console.log(Header.value)
-console.log(route.meta.logoStyle)
 </script>
 <style scoped>
 @import "../../../../styles/backgrounds.css";

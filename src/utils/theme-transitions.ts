@@ -9,6 +9,5 @@ export const toggleTheme = () => {
     const theme = html.getAttribute('data-theme')
     html.setAttribute('data-theme',theme === 'dark' ? 'light' : 'dark')
     setTimeout(()=>{html.classList.remove('theme-transition')},500)
-    console.log(theme)
     appStore.changeTheme(theme === 'dark' ? 'light' : 'dark')
 }

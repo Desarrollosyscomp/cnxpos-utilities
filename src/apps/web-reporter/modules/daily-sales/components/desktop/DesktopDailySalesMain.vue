@@ -319,7 +319,6 @@ const summary = ref<TSummary>({
 const loadDailySales = async () => {
   const sendDateParsed = date.value.replace(/-/g, "");
   let response = await dailySalesStore.dailySales(sendDateParsed);
-  console.log(response);
   if (response.error == true) {
     beto_state.value = BetoState.NOT_FOUND;
     warehousesArray.value = [];
@@ -354,7 +353,6 @@ const loadInvoiceDetails = async (
   );
   invoice_id.value = _invoice_id;
   invoiceDetailsArray.value = response.data.daily_invoice_details;
-  console.log(invoiceDetailsArray.value);
 };
 
 const sale_date = ref<string>("");
