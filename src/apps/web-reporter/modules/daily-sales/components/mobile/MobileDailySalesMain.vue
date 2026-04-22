@@ -14,7 +14,7 @@
             class="form-input size-input"
           />
         </div>
-        <span @click="clean()" class="clickable clean" v-if="warehousesArray.length > 0">Limpiar</span>
+        <span @click="clean()" class="clickable color-contrast clean" v-if="warehousesArray.length > 0">Limpiar</span>
       </div>
       <div class="beto-message-container" v-if="warehousesArray.length == 0">
         <img
