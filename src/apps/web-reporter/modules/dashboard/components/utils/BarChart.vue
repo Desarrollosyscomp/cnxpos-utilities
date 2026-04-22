@@ -1,5 +1,8 @@
 <template>
   <div class="chart">
+    <p v-if="messageNotFound" class="message-not-found">
+      {{ messageNotFound }}
+    </p>
     <canvas ref="chartRef" id="bar-chart"></canvas>
   </div>
 </template>
@@ -25,10 +28,15 @@ const props = defineProps({
   },
 });
 
+
 watch(
   () => [props.labels, props.data],
   ([labels, data]) => {
-    if (!chartRef.value || !labels?.length || !data?.length) return;
+    const messageNotFound = ref("");
+    if (!chartRef.value || !labels?.length || !data?.length) {
+      messageNotFound.value = "No hay datos para mostrar";
+      return;
+    }
 
     if (chartInstance) {
       chartInstance.data.labels = labels;
@@ -79,5 +87,10 @@ onBeforeUnmount(() => {
 .chart {
   width: 100%;
   height: 100%;
+}
+
+.message-not-found {
+  font-size: 18px;
+  text-align: center;
 }
 </style>

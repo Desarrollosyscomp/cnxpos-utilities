@@ -1,6 +1,12 @@
 <template>
   <div class="chart">
-    <canvas ref="chartRef" id="bar-line-chart"></canvas>
+    <p v-if="messageNotFound" class="message-not-found">
+      {{ messageNotFound }}
+    </p>
+    <!-- <div v-if="messageNotFound" class="not-found">
+      <img :src="NotFound" alt="" />
+    </div> -->
+    <canvas v-else ref="chartRef" id="bar-line-chart"></canvas>
   </div>
 </template>
 
@@ -8,6 +14,7 @@
 import { ref, watch, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
 import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";
+import NotFound from "../../../../../../assets/general/notFound.svg";
 
 const chartRef = ref(null);
 let chartInstance = null;
@@ -27,7 +34,9 @@ const props = defineProps({
 watch(
   () => [props.labels, props.data],
   ([labels, data]) => {
-    if (!chartRef.value || !labels?.length || !data?.length) return;
+    const messageNotFound = ref("");
+    if (!chartRef.value || !labels?.length || !data?.length)
+      return (messageNotFound.value = "No hay datos para mostrar");
 
     if (chartInstance) {
       // 🔄 actualizar
@@ -75,4 +84,12 @@ onBeforeUnmount(() => {
   width: 100%;
   height: 100%;
 }
+
+.message-not-found {
+  text-align: center;
+}
+/* 
+.not-found {
+  width: 80%;
+} */
 </style>

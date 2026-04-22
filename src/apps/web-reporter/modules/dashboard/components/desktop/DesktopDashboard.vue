@@ -57,7 +57,7 @@
     <div class="charts-container">
       <div class="bar-charts">
         <div class="item-chart">
-          <BarChart :labels="dates" :data="values" />
+          <BarChart :labels="dates || [1,2,3]" :data="values || [1,2,3]" />
         </div>
       </div>
     </div>

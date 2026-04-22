@@ -14,7 +14,7 @@
             class="form-input size-input"
           />
         </div>
-        <span @click="date = ''" class="clickable clean" v-if="warehousesArray.length > 0">Limpiar</span>
+        <span @click="clean()" class="clickable clean" v-if="warehousesArray.length > 0">Limpiar</span>
       </div>
       <div class="beto-message-container" v-if="warehousesArray.length == 0">
         <img
@@ -257,6 +257,10 @@ const openDetail = (item: any) => {
 const closeModal = () => {
   openModal.value = false;
   selectedItem.value = null;
+};
+
+const clean = () => {
+  date.value = "";
 };
 
 onMounted(async () => {
