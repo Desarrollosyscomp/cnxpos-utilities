@@ -293,7 +293,7 @@ const onChangePage = (emmited: any) => {
 };
 
 onMounted(() => {
-  loadWarehouses();
+  appStore.afterLoading(loadWarehouses);
 });
 </script>
 

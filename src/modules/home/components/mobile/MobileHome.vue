@@ -5,7 +5,7 @@
       <div class="beto-message-container">
         <img class="beto-avatar" src="../../../../assets/avatars/beto.svg" />
         <div class="bubble bubble-a bubble-left">
-          <span>¡Hola Fernando!</span>
+          <span>¡Hola!</span>
           <span>¿Qué quieres hacer hoy?</span>
         </div>
       </div>

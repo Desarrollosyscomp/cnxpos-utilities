@@ -417,7 +417,6 @@ const selectedItem = ref<TRangeSales>({} as TRangeSales);
 const openModalDetails = (item: TRangeSales) => {
   selectedItem.value = item;
   modalDetails.value = true;
-  console.log(selectedItem.value);
 };
 
 const closeModalDetails = () => {
