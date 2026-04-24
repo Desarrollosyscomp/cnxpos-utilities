@@ -52,7 +52,7 @@
             >
           </div>
         </div>
-        <div class="warehouses-container" v-if="params">
+        <div class="warehouses-container scrollable-y" v-if="params">
           <span class="font-montserrat-medium text-contrast"
             >Selecciona un almacen para generar un informe de arqueos</span
           >
@@ -121,7 +121,7 @@
                   </div>
                 </td>
                 <td class="text-center">
-                  <div>
+                  <div class="font-montserrat-bold">
                     {{ numberToCurrency(cashCount.total_facturas) }}
                   </div>
                   <div>
@@ -132,7 +132,7 @@
                   </div>
                 </td>
                 <td class="text-center">
-                  <div>
+                  <div class="font-montserrat-bold">
                     {{ numberToCurrency(cashCount.total_pedidos) }}
                   </div>
                   <div>
@@ -175,7 +175,7 @@ const all_warehouses = ref(false);
 const selectedWarehouse = ref<any | null>(null);
 const warehouses_array = ref([]);
 const cashCountStore = useCashCountsStore();
-const date = ref<string | undefined>(new Date().toISOString().split("T")[0]);
+const date = ref<string>("");
 const cashCounts = ref<any[]>([]);
 const params = ref<boolean>(true);
 const messageNotFound = ref<string>("");
@@ -200,9 +200,9 @@ const loadWarehouses = async () => {
 
 const searchCashCounts = async () => {
   appStore.showLoadingScreen = true;
-  const newDate = new Date().toISOString().split("T")[0];
+  console.log(date.value);
   const response = await cashCountStore.cashCounts(
-    newDate,
+    date.value,
     selectedWarehouse.value?.idalmacen ?? 0
   );
   if (response.data.cash_balance) {
@@ -331,9 +331,10 @@ label {
   justify-content: center;
   gap: 20px;
   width: 30%;
+  height: 80%;
 }
 .table-container {
-  width: 95%;
+  width: 98%;
   margin: 20px;
 }
 .back-button {

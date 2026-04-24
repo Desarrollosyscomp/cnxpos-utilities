@@ -76,16 +76,8 @@
       </div>
       <div class="warehouses-container scrollable-y" v-if="params">
         <div class="checkbox-container">
-          <input
-            class="input-checkbox"
-            type="checkbox"
-            id="all-warehouses"
-            v-model="all_warehouses"
-          />
-          <label
-            class="text-contrast font-montserrat-medium"
-            @click="all_warehouses = !all_warehouses"
-            >Todos los almacenes</label
+          <span class="font-montserrat-medium text-contrast"
+            >Selecciona un almacen para continuar</span
           >
         </div>
         <div class="scrollable-y flex flex-column">
@@ -111,17 +103,59 @@
         </div>
       </div>
       <div
-        v-if="!params && (selectedAccount ? accountsPayableResult : accountReceivableResult).length > 0"
+        v-if="
+          !params &&
+          (selectedAccount ? accountsPayableResult : accountReceivableResult)
+            .length > 0
+        "
         class="scrollable-y result-report-container"
       >
         <span class="text-center font-montserrat-bold text-contrast"
           >Informe de cuentas por
           {{ selectedAccount ? "pagar" : "cobrar" }}</span
         >
-        <Card v-for="(account, index) in (selectedAccount ? accountsPayableResult : accountReceivableResult)" :key="index">
+        <Card>
+          <CardContent>
+            <div class="flex flex-justify-center">
+              <span class="font-montserrat-medium title-summary text-contrast">
+                RESUMEN GENERAL
+              </span>
+            </div>
+            <div class="liquidation">
+              <div class="item-liquidation">
+                <span class="font-montserrat-medium text-contrast"
+                  >Total general</span
+                >
+                <span class="font-montserrat-bold text-contrast">{{
+                  numberToCurrency(
+                    selectedAccount
+                      ? summaryAccountsPayable.pendingPaid
+                      : summaryAccountReceivable.pendingPaid
+                  )
+                }}</span>
+              </div>
+              <div class="item-liquidation">
+                <span class="font-montserrat-medium text-contrast">Abono</span>
+                <span class="font-montserrat-bold text-contrast">{{
+                  numberToCurrency(
+                    selectedAccount
+                      ? summaryAccountsPayable.totalPayed
+                      : summaryAccountReceivable.totalPayed
+                  )
+                }}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+        <Card
+          v-for="(account, index) in selectedAccount
+            ? accountsPayableResult
+            : accountReceivableResult"
+          :key="index"
+        >
           <CardContent>
             <span class="font-montserrat-medium title">
-              Almacen principal
+              {{ account.nomalmacen }}
             </span>
             <div class="form-container">
               <div class="liquidation">
@@ -170,7 +204,10 @@
       </div>
       <div align="center" class="pagination" v-if="!params">
         <Paginator
-          v-if="accountsPayableReceivableStore.itemsCount > accountsPayableReceivableStore.limit"
+          v-if="
+            accountsPayableReceivableStore.itemsCount >
+            accountsPayableReceivableStore.limit
+          "
           :key="accountsPayableReceivableStore.page"
           :items-per-page="accountsPayableReceivableStore.limit"
           :max-buttons="4"
@@ -214,7 +251,9 @@ const warehouses_array = ref([]);
 const selectedWarehouse = ref<any>(null);
 const all_warehouses = ref(false);
 const accountsPayableResult = ref<any>([]);
+const summaryAccountsPayable = ref<any>([]);
 const accountReceivableResult = ref<any>([]);
+const summaryAccountReceivable = ref<any>([]);
 
 const rangeDates = ref({
   init_date: "",
@@ -257,6 +296,7 @@ const loadAccountsPayable = async () => {
     return;
   }
   accountsPayableResult.value = response.data.list;
+  summaryAccountsPayable.value = response.data.summary;
   params.value = false;
   appStore.showLoadingScreen = false;
   beto_state.value = BetoState.WELCOME;
@@ -277,6 +317,7 @@ const loadAccountsReceivable = async () => {
     return;
   }
   accountReceivableResult.value = response.data.list;
+  summaryAccountReceivable.value = response.data.summary;
   params.value = false;
   appStore.showLoadingScreen = false;
   beto_state.value = BetoState.WELCOME;
@@ -296,7 +337,9 @@ const onBack = () => {
 const onChangePage = (emmited: any) => {
   if (accountsPayableReceivableStore.page !== emmited.data.page) {
     accountsPayableReceivableStore.page = emmited.data.page;
-    appStore.afterLoading(selectedAccount ? loadAccountsReceivable : loadAccountsPayable);
+    appStore.afterLoading(
+      selectedAccount ? loadAccountsReceivable : loadAccountsPayable
+    );
   }
 };
 
@@ -398,6 +441,7 @@ onMounted(() => {
 }
 
 .search-container {
+  margin-top: 15px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -465,6 +509,12 @@ onMounted(() => {
 
 .title {
   font-size: calc(16px * var(--font-size-title));
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
+.title-summary {
+  font-size: calc(18px * var(--font-size-title));
   font-weight: bold;
   padding-bottom: 5px;
 }

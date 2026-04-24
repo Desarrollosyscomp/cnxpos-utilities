@@ -3,10 +3,10 @@
   <div class="container">
     <div class="left-bar scrollable-y">
       <div class="helper-container corners spaces-padding container-background">
-        <div class="font-montserrat-bold text-contrast">
+        <div class="font-montserrat-bold text-contrast text-center">
           ¿Como hacer un reporte?
         </div>
-        <ul class="text-contrast unordered-list">
+        <ul class="text-contrast unordered-list font-size">
           <li>Selecciona la fecha inicial</li>
           <li>Selecciona la fecha final</li>
           <li>
@@ -16,9 +16,9 @@
         </ul>
       </div>
       <div
-        class="form-container corners spaces-padding container-background scrollable-y"
+        class="form-container corners spaces-padding container-background"
       >
-        <div class="font-montserrat-bold text-contrast">
+        <div class="font-montserrat-bold text-contrast ">
           Generar nuevo reporte
         </div>
         <fieldset class="input-field date-field">
@@ -50,8 +50,7 @@
             >Todos los almacenes</label
           >
         </div>
-        <div class="scrollable-y flex flex-column">
-          <CenterAndScroll>
+        <div class="scrollable-y">
             <RadioLabels
               :disabled="all_warehouses"
               :options="warehouses_array"
@@ -61,7 +60,6 @@
                 }
               "
             />
-          </CenterAndScroll>
         </div>
         <div class="flex flex-justify-center">
           <button class="form-button" @click="searchSales()">Buscar</button>
@@ -192,6 +190,10 @@
               <span>Total ventas | devoluciones</span>
               <span>{{ numberToCurrency(summary.salesMinusReturns) }}</span>
             </div>
+            <div class="summary-item">
+              <span>Utilidad</span>
+              <span>{{ numberToCurrency(summary.profit) }}</span>
+            </div>
           </CardContent>
         </Card>
       </div>
@@ -303,7 +305,7 @@ onMounted(() => {
 
 .container {
   display: grid;
-  grid-template-columns: 20% 1fr;
+  grid-template-columns: 22% 1fr;
   width: 100%;
   height: 100%;
 }
@@ -347,13 +349,13 @@ onMounted(() => {
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 15px;
 }
 
 .helper-container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 10px;
 }
 
 .content {
@@ -422,5 +424,9 @@ onMounted(() => {
 .result-container {
   display: flex;
   flex-direction: column;
+}
+
+.font-size {
+  font-size: calc(15px* var(--message-proportion));
 }
 </style>

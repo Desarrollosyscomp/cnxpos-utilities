@@ -11,7 +11,7 @@
       </div>
       <div class="invoice-title">
         <h3>Facturas del día</h3>
-        <span class="font-montserrat-bold">{{ warehouseName }}</span>
+        <span class="font-montserrat-bold text-center">{{ warehouseName }}</span>
       </div>
       <!-- <div class="beto-message-container">
         <img

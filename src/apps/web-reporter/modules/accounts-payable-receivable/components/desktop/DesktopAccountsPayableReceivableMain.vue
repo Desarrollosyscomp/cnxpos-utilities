@@ -8,7 +8,7 @@
       </div>
       <div class="title-container">
         <h3 class="font-montserrat-bold text-contrast font-size-title">
-          Informe de cuentas por {{ selectedAccount ? 'pagar' : 'cobrar' }}
+          Informe de cuentas por {{ selectedAccount ? "pagar" : "cobrar" }}
         </h3>
         <div class="date-field">
           <label for="fecha">Fecha de inicio</label>
@@ -30,6 +30,28 @@
             v-model="rangeDates.end_date"
           />
         </div>
+        <div class="date-field">
+          <div class="dropdown">
+            <div
+              class="dropdown-btn form-input clickable"
+              tabindex="0"
+              @click="open = !open"
+            >
+              {{ selectedAccount ? "Cuentas por pagar" : "Cuentas por cobrar" }}
+              <Icon :path="mdiTriangleSmallDown" class="dropdown-icon" />
+            </div>
+
+            <div v-if="open" class="dropdown-menu" @click="toogleAccounts()">
+              <div
+                v-for="item in options"
+                @click="select(item)"
+                class="clickable"
+              >
+                {{ item }}
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- <div class="dropdown">
         <div class="dropdown-btn form-input" @click="open = !open">
           {{ selected || "Seleccionar opción  ▼" }}
@@ -42,8 +64,9 @@
         </div> -->
       </div>
       <div
-        :class="['cash-counts',
-          params ? 'cash-counts-container' : 'cash-counts-container-table'
+        :class="[
+          'cash-counts',
+          params ? 'cash-counts-container' : 'cash-counts-container-table',
         ]"
       >
         <div class="beto-message-container" v-if="params">
@@ -60,7 +83,9 @@
             v-if="beto_state == BetoState.WELCOME"
           >
             <span>Bienvenido al modulo de</span>
-            <h2 class="web-reporter-title">Cuentas por {{ selectedAccount ? 'pagar' : 'cobrar' }}</h2>
+            <h2 class="web-reporter-title">
+              Cuentas por {{ selectedAccount ? "pagar" : "cobrar" }}
+            </h2>
             <span>por favor selecciona una fecha </span>
             <span>y un almacen para continuar</span>
           </div>
@@ -70,8 +95,8 @@
             <span class="font-montserrat-bold">almacen y/o fecha</span>
           </div>
         </div>
-        <div class="warehouses-container" v-if="params">
-          <div class="container-tab">
+        <div class="warehouses-container scrollable-y" v-if="params">
+          <!-- <div class="container-tab">
             <div class="accounts-title">
               <div
                 class="tab-slider"
@@ -97,7 +122,7 @@
                 Cuentas por <br />cobrar
               </div>
             </div>
-          </div>
+          </div> -->
           <span class="font-montserrat-medium text-contrast font-size"
             >Selecciona un almacen para generar un informe</span
           >
@@ -142,11 +167,14 @@
             </button>
           </div>
         </div>
-        <div style="display: flex; flex-direction: column; align-items: center;" class="scrollable-y" v-if="
-              (selectedAccount ? accountsPayableResult : accountReceivableResult)
-                .length > 0
-            ">
-
+        <div
+          style="display: flex; flex-direction: column; align-items: center"
+          class="scrollable-y"
+          v-if="
+            (selectedAccount ? accountsPayableResult : accountReceivableResult)
+              .length > 0
+          "
+        >
           <div class="table-container scrollable-y">
             <table class="custom-table-two">
               <thead>
@@ -156,8 +184,15 @@
                   <th class="font-montserrat-bold text-center">Cliente</th>
                   <th class="font-montserrat-bold text-center">NIT</th>
                   <th class="font-montserrat-bold text-center">Detalle</th>
-                  <th class="font-montserrat-bold text-center">Fecha factura</th>
-                  <th class="font-montserrat-bold text-right">Fecha acordada</th>
+                  <th class="font-montserrat-bold text-center">
+                    Numero de factura
+                  </th>
+                  <th class="font-montserrat-bold text-center">
+                    Fecha factura
+                  </th>
+                  <th class="font-montserrat-bold text-right">
+                    Fecha acordada
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -193,155 +228,8 @@
                     </div>
                   </td>
                   <td class="text-center">
-                    {{ formatDateWithHyphen(account.fechadoc) }}
-                  </td>
-                  <td class="text-right">
-                    {{ formatDateWithHyphen(account.fechacuota) }}
-                  </td>
-                </tr>
-                <tr
-                  v-for="account in selectedAccount
-                    ? accountsPayableResult
-                    : accountReceivableResult"
-                  :key="account.id"
-                >
-                  <td>{{ account.nomalmacen }}</td>
-                  <td class="text-center">
                     <div>
-                      {{ numberToCurrency(account.valtotaldoc) }}
-                    </div>
-                    <div>
-                      <span class="font-montserrat-bold">Abono: </span>
-                      {{ numberToCurrency(account.total_pagado) }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ `${account.nombres} ${account.apellidos}` }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.nit }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.tipodoc }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    {{ formatDateWithHyphen(account.fechadoc) }}
-                  </td>
-                  <td class="text-right">
-                    {{ formatDateWithHyphen(account.fechacuota) }}
-                  </td>
-                </tr>
-                <tr
-                  v-for="account in selectedAccount
-                    ? accountsPayableResult
-                    : accountReceivableResult"
-                  :key="account.id"
-                >
-                  <td>{{ account.nomalmacen }}</td>
-                  <td class="text-center">
-                    <div>
-                      {{ numberToCurrency(account.valtotaldoc) }}
-                    </div>
-                    <div>
-                      <span class="font-montserrat-bold">Abono: </span>
-                      {{ numberToCurrency(account.total_pagado) }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ `${account.nombres} ${account.apellidos}` }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.nit }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.tipodoc }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    {{ formatDateWithHyphen(account.fechadoc) }}
-                  </td>
-                  <td class="text-right">
-                    {{ formatDateWithHyphen(account.fechacuota) }}
-                  </td>
-                </tr>
-                <tr
-                  v-for="account in selectedAccount
-                    ? accountsPayableResult
-                    : accountReceivableResult"
-                  :key="account.id"
-                >
-                  <td>{{ account.nomalmacen }}</td>
-                  <td class="text-center">
-                    <div>
-                      {{ numberToCurrency(account.valtotaldoc) }}
-                    </div>
-                    <div>
-                      <span class="font-montserrat-bold">Abono: </span>
-                      {{ numberToCurrency(account.total_pagado) }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ `${account.nombres} ${account.apellidos}` }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.nit }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.tipodoc }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    {{ formatDateWithHyphen(account.fechadoc) }}
-                  </td>
-                  <td class="text-right">
-                    {{ formatDateWithHyphen(account.fechacuota) }}
-                  </td>
-                </tr>
-                <tr
-                  v-for="account in selectedAccount
-                    ? accountsPayableResult
-                    : accountReceivableResult"
-                  :key="account.id"
-                >
-                  <td>{{ account.nomalmacen }}</td>
-                  <td class="text-center">
-                    <div>
-                      {{ numberToCurrency(account.valtotaldoc) }}
-                    </div>
-                    <div>
-                      <span class="font-montserrat-bold">Abono: </span>
-                      {{ numberToCurrency(account.total_pagado) }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ `${account.nombres} ${account.apellidos}` }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.nit }}
-                    </div>
-                  </td>
-                  <td class="text-center">
-                    <div>
-                      {{ account.tipodoc }}
+                      {{ account.iddocumento ?? "N/A" }}
                     </div>
                   </td>
                   <td class="text-center">
@@ -367,10 +255,55 @@
               />
             </div>
           </div>
+          <!-- <div
+
+
+      class="help-beto clickable"
+      @click=""
+    >
+      <img :src="BetoImg" alt="" class="size-img" />
+    </div> -->
+    <!-- <div class="container-summary">
+      <div class="summary" v-if="!params">
+        <Card>
+          <CardContent class="summary-content">
+            <div class="summary-title font-montserrat-bold">
+              Este es un resumen de tu búsqueda:
+            </div>
+            <div class="summary-item">
+              <span>Total ventas</span>
+              <span>{{ numberToCurrency(0) }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Total productos</span>
+              <span>{{ 0 }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Total facturas</span>
+              <span>{{ 0 }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Costo</span>
+              <span>{{ numberToCurrency(0) }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Total ventas | devoluciones</span>
+              <span>{{ numberToCurrency(0) }}</span>
+            </div>
+            <div class="summary-item">
+              <span>Utilidad</span>
+              <span>{{ numberToCurrency(0) }}</span>
+            </div>
+          </CardContent>
+        </Card>
+          <img :src="BetoImg" class="size-img" />
         </div>
-      </div>
+          </div> -->
+        </div>
+    </div>
     </div>
   </div>
+  
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
@@ -381,10 +314,12 @@ import RadioLabels from "../../../../../../components/radio-label/RadioLabels.vu
 import { useAppStore } from "../../../../../../store/app.store";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
-import { mdiArrowLeftCircle } from "@mdi/js";
+import { mdiArrowLeftCircle, mdiTriangleSmallDown } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
 import { useAccountsPayableReceivableStore } from "../../store/accounts-payable-receivable.store";
 import Paginator from "../../../../../../components/Paginator.vue";
+// import Card from "../../../daily-sales/components/Card.vue";
+// import CardContent from "../../../daily-sales/components/CardContent.vue";
 
 const all_warehouses = ref(false);
 const selectedWarehouse = ref<any | null>(null);
@@ -465,7 +400,6 @@ const onBack = () => {
 };
 
 const toogleAccounts = () => {
-  selectedAccount.value = !selectedAccount.value;
   beto_state.value = BetoState.WELCOME;
   selectedWarehouse.value = null;
 };
@@ -488,9 +422,12 @@ const toogleAccounts = () => {
 const onChangePage = (emmited: any) => {
   if (accountsPayableReceivableStore.page !== emmited.data.page) {
     accountsPayableReceivableStore.page = emmited.data.page;
-    appStore.afterLoading(
-      selectedAccount ? loadAccountsReceivable : loadAccountsPayable
-    );
+    console.log(selectedAccount.value);
+    if (!selectedAccount.value) {
+      loadAccountsReceivable();
+    } else {
+      loadAccountsPayable();
+    }
   }
 };
 
@@ -502,6 +439,15 @@ const disabledButton = computed(() => {
   );
 });
 
+const open = ref(false);
+const selected = ref("");
+const options = ["Cuentas por pagar", "Cuentas por cobrar"];
+
+const select = (item: string) => {
+  selectedAccount.value = item === "Cuentas por pagar";
+  selected.value = item;
+  open.value = false;
+};
 onMounted(() => {
   loadWarehouses();
 });
@@ -515,18 +461,19 @@ onMounted(() => {
   --accounts-title-top: 1;
   --beto-width: 1;
   --proportion-padding: 1;
+  --width-circle: 1;
+  --message-proportion: 1;
 }
 .container {
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .title-container {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
@@ -534,11 +481,13 @@ onMounted(() => {
 }
 
 .report-inventory-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   width: 80%;
-  max-height: 100%;
-  height: 80%;
+  height: 90%;
 }
-.paginator-container{
+.paginator-container {
   width: 100%;
   padding-bottom: 20px;
 }
@@ -548,16 +497,13 @@ onMounted(() => {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-  
 }
 .cash-counts-container {
-  height: 90%;
-
+  height: 80%;
 }
 .cash-counts-container-table {
   flex-direction: column;
-  max-height: 90%;
-  
+  max-height: 80%;
 }
 
 .beto-message-container {
@@ -612,14 +558,15 @@ label {
   flex-direction: column;
   justify-content: center;
   gap: 20px;
-  width: 30%;
+  width: 35%;
+  height: 80%;
 }
 .accounts-title {
   background-color: rgb(202, 200, 200);
   border-radius: 7px;
   position: absolute;
   width: calc(20% * var(--accounts-title-width));
-  top: calc(24% * var(--accounts-title-top));
+  top: calc(20% * var(--accounts-title-top));
   display: flex;
   text-align: center;
   color: var(--color-contrast);
@@ -695,10 +642,15 @@ label {
 .dropdown-btn {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 10px;
   cursor: pointer;
 }
-
+.dropdown-btn:focus,
+.dropdown-btn:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
 .dropdown-menu {
   padding-top: 10px;
   padding-bottom: 10px;
@@ -720,7 +672,10 @@ label {
 .dropdown-menu.active {
   display: block;
 }
-
+.dropdown-icon {
+  width: 26px;
+  fill: var(--color-contrast);
+}
 .container-tab {
   display: flex;
   justify-content: center;
@@ -729,11 +684,86 @@ label {
 }
 
 .font-size {
-  font-size: calc(13px * var(--font-size-title));
+  text-align: center;
+  font-size: calc(14px * var(--font-size-title));
 }
 
 .font-size-title {
   font-size: calc(17px * var(--font-size-title));
+}
+
+.help-beto {
+  display: flex;
+  justify-content: center;
+  position: relative;
+  background-color: var(--color-contrast);
+  padding-top: 5px;
+  width: calc(80px * var(--width-circle));
+  border-radius: 100%;
+  top: calc(0 * var(--padding-top));
+  left: calc(45% * var(--padding-left));
+  transform: translatey(-40%);
+}
+
+.help-beto::after {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  left: -150px;
+  content: "Ver resumen";
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--color-accent);
+  width: calc(200% * var(--width-circle-2));
+  border-radius: 20px;
+  background-color: var(--color-contrast);
+}
+
+.size-img {
+  width: calc(55px * var(--width-img));
+  transform: scaleX(-1);
+}
+
+.container-summary {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.summary-content {
+  color: var(--color-contrast);
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.summary-title {
+  margin-bottom: 10px;
+  font-size: calc(1rem * var(--message-proportion));
+}
+
+.summary-item > :nth-child(1) {
+  font-size: calc(13px * var(--message-proportion));
+  font-weight: bold;
+}
+.summary-item > :nth-child(2) {
+  font-size: calc(13px * var(--message-proportion));
+}
+
+.summary-beto {
+  width: calc(70px * var(--message-proportion));
 }
 
 /* .tab-slider {
