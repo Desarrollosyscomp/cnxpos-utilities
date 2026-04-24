@@ -6,7 +6,7 @@
         <img :src="BetoImg" class="beto-avatar">
         <div class="bubble bubble-a bubble-left">
           <div class="beto-content">
-            <div class="hello">¡Hola <br><b>{{ name }}</b>!</div>
+            <div class="hello">¡Hola!</div>
             <div class="question">¿Qué quieres hacer hoy?</div>
           </div>
         </div>
@@ -40,7 +40,6 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
-let name = ref('Fernando')
 
 
 </script>
