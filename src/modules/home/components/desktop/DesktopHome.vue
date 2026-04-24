@@ -6,7 +6,7 @@
         <img :src="BetoImg" class="beto-avatar">
         <div class="bubble bubble-a bubble-left">
           <div class="beto-content">
-            <div class="hello">¡Hola!</div>
+            <div class="hello font-montserrat-bold">¡Hola!</div>
             <div class="question">¿Qué quieres hacer hoy?</div>
           </div>
         </div>
