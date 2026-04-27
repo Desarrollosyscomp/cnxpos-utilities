@@ -176,7 +176,7 @@
         </div>
         <hr />
         <div class="item">
-          <span class="font-montserrat-bold">Total cierre</span>
+          <span class="font-montserrat-bold">Total efectivo</span>
           <span>{{ numberToCurrency(selectedItem.total_cierre) }}</span>
         </div>
         <hr />
@@ -203,11 +203,6 @@
         <div class="item">
           <span class="font-montserrat-bold">Total salidas</span>
           <span>{{ numberToCurrency(selectedItem.total_salidas) }}</span>
-        </div>
-        <hr />
-        <div class="item">
-          <span class="font-montserrat-bold">Total en pagos</span>
-          <span>{{ numberToCurrency(selectedItem.total_pagos) }}</span>
         </div>
         <hr />
         <div class="button-leave">
