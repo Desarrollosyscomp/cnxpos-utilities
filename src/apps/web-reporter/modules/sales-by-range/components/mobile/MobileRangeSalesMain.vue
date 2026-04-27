@@ -63,7 +63,7 @@
           </CenterAndScroll>
         </div>
         <div class="flex flex-justify-center">
-          <button class="form-button-2" @click="searchSales()">Buscar</button>
+          <button class="form-button-2" :class="{ 'disabled': disableButton }" @click="searchSales()" :disabled="disableButton">Buscar</button>
         </div>
       </div>
       <div v-if="sales.length > 0" class="scrollable-y card-container">
@@ -214,10 +214,10 @@
       <div class="steps">
         <span class="title"> Para hacer una búsqueda deberás: </span>
         <ul class="text-contrast unordered-list">
-          <li>Selecciona la fecha inicial</li>
-          <li>Selecciona la fecha final</li>
-          <li>Selecciona uno o varios almacenes"</li>
-          <li>Presiona el boton de buscar</li>
+          <li>Seleccionar la fecha inicial</li>
+          <li>Seleccionar la fecha final</li>
+          <li>Seleccionar uno o varios almacenes</li>
+          <li>Presionar el botón de buscar</li>
         </ul>
       </div>
       <div class="button">
@@ -297,11 +297,11 @@
       <div class="text-container">
         <div class="warehouse-container">
           <span class="font-montserrat-bold">Almacenes</span>
-          <div class="warehouse-list">
+          <div class="warehouse-list scrollable-y">
             <span
               v-for="(warehouse, index) in warehouses_array"
               :key="index"
-              class="form-input"
+              class="form-input-2"
               :disabled="true"
               >{{ warehouse.title }}</span
             >
@@ -318,7 +318,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
 import type { TOptionsType } from "../../../../../../components/radio-label/RadioLabels.vue";
 import { useAppStore } from "../../../../../../store/app.store";
@@ -430,6 +430,17 @@ const openModalWarehouses = () => {
 const closeModalWarehouses = () => {
   return (modalWarehouses.value = false);
 };
+
+
+const disableButton = computed(() => {
+  const noDates =
+    !rangeDates.value.init_date || !rangeDates.value.end_date;
+
+  const noWarehouseSelected =
+    !selectedWarehouse.value && !all_warehouses.value;
+
+  return noDates || noWarehouseSelected;
+});
 
 onMounted(async () => {
   loadWarehouses();
@@ -603,7 +614,7 @@ li {
 
   color: var(--color-contrast);
   font-size: calc(12px * var(--font-size-proportion));
-
+  width: 50%;
   line-height: calc(24px * var(--line-height-proportion));
   text-align: center;
 }
@@ -685,6 +696,7 @@ li {
 }
 
 .warehouse-list {
+  max-height: 350px;
   display: flex;
   flex-direction: column;
   text-align: start;
@@ -703,6 +715,23 @@ li {
 .back-icon {
   fill: var(--color-contrast);
   width: 20px;
+}
+
+
+.form-input-2 {
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 7px;
+  border: 1px solid gray;
+  color: var(--color-contrast);
+  [data-theme="dark"] & {
+    color: white;
+    border: 1px solid white;
+  }
+}
+
+.disabled {
+  opacity: 0.5;
 }
  @media (min-width: 360px) {
   .help-beto {

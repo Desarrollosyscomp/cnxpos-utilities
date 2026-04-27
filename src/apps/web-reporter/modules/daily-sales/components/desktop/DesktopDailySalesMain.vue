@@ -35,7 +35,7 @@
           >Informe de ventas por día</span
         >
         <div class="date-field">
-          <label for="fecha">Fecha de inicio</label>
+          <label for="fecha">Seleccionar fecha</label>
           <input
             type="date"
             id="fecha"
@@ -53,11 +53,11 @@
                 <tr>
                   <th class="text-left">Fecha</th>
                   <th class="text-center">Nombre almacén</th>
-                  <th class="text-center">Subtotal</th>
-                  <th class="text-center">Total</th>
                   <th class="text-center">Facturas</th>
                   <th class="text-center">Productos vendidos</th>
-                  <th class="text-right">Costo</th>
+                  <th class="text-center">Costo</th>
+                  <th class="text-center">Subtotal</th>
+                  <th class="text-right">Total</th>
                 </tr>
               </thead>
               <tbody class="clickable">
@@ -66,16 +66,16 @@
                     {{ formatDateWithHyphen(sale.fecha) }}
                   </td>
                   <td class="text-center">{{ sale.nomalmacen }}</td>
+                  <td class="text-center">{{ sale.cantfact }}</td>
+                  <td class="text-center">{{ sale.prodvendid }}</td>
+                  <td class="text-center">
+                    {{ numberToCurrency(sale.costoacum) }}
+                  </td>
                   <td class="text-center">
                     {{ numberToCurrency(sale.subtot) }}
                   </td>
                   <td class="text-center">
                     {{ numberToCurrency(sale.total) }}
-                  </td>
-                  <td class="text-center">{{ sale.cantfact }}</td>
-                  <td class="text-center">{{ sale.prodvendid }}</td>
-                  <td class="text-center">
-                    {{ numberToCurrency(sale.costoacum) }}
                   </td>
                 </tr>
               </tbody>
@@ -134,11 +134,10 @@
               v-else-if="beto_state === BetoState.WELCOME"
             >
               <div class="welcome-title font-montserrat-medium">
-                <p>Bienvenido al modulo</p>
-                <p>de ventas diarias</p>
-                <p>selecciona una fecha</p>
-                <p>para consultar el informe</p>
-                <p class="font-montserrat-bold">de ventas diarias</p>
+                <p>Bienvenido al módulo</p>
+                <p class="font-montserrat-bold">de ventas diarias.</p>
+                <p>Selecciona una fecha</p>
+                <p>para consultar el informe.</p>
               </div>
             </CardContent>
             <CardContent
@@ -147,7 +146,7 @@
             >
               <div class="not-found-title font-montserrat-medium">
                 <p>No se encontraron datos</p>
-                <p>en esta fecha por favor</p>
+                <p>en la fecha seleccionada. Por favor</p>
                 <p>intenta con otra</p>
               </div>
             </CardContent>
@@ -169,6 +168,51 @@
                 class="font-montserrat-bold text-contrast text-center table-title"
               >
                 Facturas del dia {{ formatDateWithHyphen(sale_date) }}
+              </div>
+              <div class="container-summary">
+                <div class="summary-2">
+                  <img :src="BetoImg" class="size-img" />
+                  <Card class="summary-card">
+                    <CardContent class="summary-content-2">
+                      <div class="summary-title-2 font-montserrat-bold">
+                        Este es un resumen del almacen:
+                      </div>
+                      <div class="summary-item-2">
+                        <span class="font-montserrat-bold">Subtotal:</span>
+                        <span>{{
+                          numberToCurrency(summaryInvoices.subtotal)
+                        }}</span>
+                      </div>
+                      <div class="summary-item-2">
+                        <span class="font-montserrat-bold">Total ventas:</span>
+                        <span>{{
+                          numberToCurrency(summaryInvoices.totalSales)
+                        }}</span>
+                      </div>
+                      <div class="summary-item-2">
+                        <span class="font-montserrat-bold">Impuestos:</span>
+                        <span>{{
+                          numberToCurrency(summaryInvoices.totalTaxes)
+                        }}</span>
+                      </div>
+                      <div class="summary-item-2">
+                        <span class="font-montserrat-bold"
+                          >Métodos de pago:</span
+                        >
+                        <span>
+                          <ul>
+                            <li
+                              v-for="paymentMethod in summaryInvoices.paymentMethods"
+                              :key="paymentMethod.payment_id"
+                            >
+                              {{ paymentMethod.payment_name }}
+                            </li>
+                          </ul>
+                        </span>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
               </div>
               <table class="custom-table-one">
                 <thead>
@@ -216,7 +260,7 @@
                 />
               </div>
             </div>
-            <div class="invoices-details">
+            <div class="invoices-details scrollable-y">
               <div
                 v-if="
                   invoice_details_state === InvoiceDetailsState.NOT_SELECTED
@@ -226,7 +270,7 @@
                 Haz click sobre una factura para ver más detalles
               </div>
 
-              <div class="w-100" v-else>
+              <div class="table-wrapper details-scroll" v-else>
                 <div
                   class="text-contrast font-montserrat-bold text-center table-title"
                 >
@@ -271,7 +315,7 @@ import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png";
 
-import { onMounted, ref, watch } from "vue-demi";
+import { ref, watch } from "vue-demi";
 //@ts-ignore
 import Card from "../Card.vue";
 //@ts-ignore
@@ -284,7 +328,11 @@ import type { TWarehouseDaySale } from "../../interfaces/warehouse-day-sales.typ
 import type { TWarehouseDayInvoice } from "../../interfaces/warehouse-day-invoice.type";
 import type { TWarehouseDayInvoiceDetail } from "../../interfaces/warehouse-day-invoice-detail.type";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
-import type { TSummary } from "../../interfaces/summary-daily-sales.type";
+import type {
+  // TPaymentMethod,
+  TSummary,
+  TSummaryInvoices,
+} from "../../interfaces/summary-daily-sales.type";
 import { formatDateWithHyphen } from "../../../../../../utils/parsers/parse-date";
 import Paginator from "../../../../../../components/Paginator.vue";
 import { useAppStore } from "../../../../../../store/app.store";
@@ -309,12 +357,20 @@ let beto_state = ref(BetoState.WELCOME);
 let invoice_details_state = ref(InvoiceDetailsState.NOT_SELECTED);
 
 const warehousesArray = ref<TWarehouseDaySale[]>([]);
+const selectedWarehouse = ref<TWarehouseDaySale>({} as TWarehouseDaySale);
 const summary = ref<TSummary>({
   totalSales: 0,
   totalProducts: 0,
   totalInvoices: 0,
   totalCost: 0,
   totalProfit: 0,
+});
+
+const summaryInvoices = ref<TSummaryInvoices>({
+  totalSales: 0,
+  totalTaxes: 0,
+  subtotal: 0,
+  paymentMethods: [],
 });
 const loadDailySales = async () => {
   const sendDateParsed = date.value.replace(/-/g, "");
@@ -338,6 +394,7 @@ const loadInvoices = async (date: string, warehouse_id: string) => {
   appStore.showLoadingScreen = true;
   let response = await dailySalesStore.dailyInvoices(date, warehouse_id);
   invoicesArray.value = response.data.list;
+  summaryInvoices.value = response.data.summary;
   appStore.showLoadingScreen = false;
 };
 const invoiceDetailsArray = ref<TWarehouseDayInvoiceDetail[]>([]);
@@ -361,6 +418,7 @@ const openModal = (sale: TWarehouseDaySale) => {
   open_modal.value = true;
   sale_date.value = sale.fecha;
   warehouse_name.value = sale.nomalmacen;
+  selectedWarehouse.value = sale;
   loadInvoices(sale.fecha, sale.idalmacen.toString());
 };
 
@@ -371,23 +429,22 @@ const closeModal = () => {
   invoice_details_state.value = InvoiceDetailsState.NOT_SELECTED;
   invoicesArray.value = [];
   invoiceDetailsArray.value = [];
+  dailySalesStore.page = 1;
 };
 
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;
-    appStore.afterLoading(async () => {
-      await loadInvoices(
-        sale_date.value,
-        warehousesArray?.value[0]?.idalmacen?.toString() || ""
-      );
-    });
+    loadInvoices(sale_date.value, selectedWarehouse.value.idalmacen.toString());
   }
 };
 
-onMounted(() => {
-  // loadDailySales();
-});
+// let paymentMethodsArray: Array<string> = [];
+// const extractPaymentMethods = (paymentMethods: TPaymentMethod[]) => {
+//   paymentMethods.forEach((paymentMethod) => {
+//     paymentMethodsArray.push(paymentMethod.payment_name);
+//   });
+// };
 </script>
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
@@ -496,6 +553,31 @@ onMounted(() => {
   padding: 10px;
 }
 
+.table-wrapper {
+  max-height: 100%;
+  overflow-y: auto;
+}
+
+.details-scroll {
+  max-height: 500px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.details-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.details-scroll table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.details-scroll thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
 .summary {
   padding-bottom: 10px;
   display: flex;
@@ -561,6 +643,7 @@ onMounted(() => {
 .modal-header {
   display: flex;
   padding-top: 10px;
+  padding-bottom: 10px;
   justify-content: center;
 }
 .modal-title {
@@ -578,7 +661,10 @@ onMounted(() => {
 }
 
 .invoices-list {
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 10px;
 }
 
@@ -590,8 +676,8 @@ onMounted(() => {
 .invoices-details {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
   padding: 10px;
 }
 .summary-beto {
@@ -605,7 +691,42 @@ onMounted(() => {
   transform: scaleX(-1);
 }
 .pagination {
-  margin-top: 1rem;
+  margin-top: 10px;
+}
+.size-img {
+  width: calc(80px * var(--message-proportion));
+}
+.container-summary {
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.summary-2 {
+  display: flex;
+  gap: 15px;
+}
+
+.summary-title-2 {
+  margin-bottom: 10px;
+  font-size: calc(15px * var(--message-proportion));
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.summary-item-2 {
+  font-size: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 5px;
 }
 
 .size-input {

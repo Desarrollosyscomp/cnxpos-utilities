@@ -82,17 +82,17 @@
             class="bubble bubble-a bubble-left"
             v-if="beto_state == BetoState.WELCOME"
           >
-            <span>Bienvenido al modulo de</span>
+            <span>Bienvenido al módulo de</span>
             <h2 class="web-reporter-title">
               Cuentas por {{ selectedAccount ? "pagar" : "cobrar" }}
             </h2>
             <span>por favor selecciona una fecha </span>
-            <span>y un almacen para continuar</span>
+            <span>y un almacén para continuar</span>
           </div>
           <div class="bubble bubble-a bubble-left" v-else>
             <span>No se encontraron resultados</span>
             <span class="text-contrast">Por favor selecciona otro </span>
-            <span class="font-montserrat-bold">almacen y/o fecha</span>
+            <span class="font-montserrat-bold">almacén y/o fecha</span>
           </div>
         </div>
         <div class="warehouses-container scrollable-y" v-if="params">
@@ -124,7 +124,7 @@
             </div>
           </div> -->
           <span class="font-montserrat-medium text-contrast font-size"
-            >Selecciona un almacen para generar un informe</span
+            >Selecciona un almacén para generar un informe</span
           >
           <!-- <div class="checkbox-container">
             <input
@@ -176,6 +176,9 @@
           "
         >
           <div class="table-container scrollable-y">
+            <!-- <div class="flex flex-justify-end">
+              <button class="form-button">Ver resumen</button>
+            </div> -->
             <table class="custom-table-two">
               <thead>
                 <tr>
@@ -185,7 +188,7 @@
                   <th class="font-montserrat-bold text-center">NIT</th>
                   <th class="font-montserrat-bold text-center">Detalle</th>
                   <th class="font-montserrat-bold text-center">
-                    Numero de factura
+                    Número de factura
                   </th>
                   <th class="font-montserrat-bold text-center">
                     Fecha factura
@@ -229,7 +232,7 @@
                   </td>
                   <td class="text-center">
                     <div>
-                      {{ account.iddocumento ?? "N/A" }}
+                      {{ account.numero ?? "N/A" }}
                     </div>
                   </td>
                   <td class="text-center">
@@ -254,6 +257,38 @@
                 @on-change-page="onChangePage"
               />
             </div>
+            <div class="container-summary">
+              <div class="summary" v-if="!params">
+                <Card class="summary-card">
+                  <CardContent class="summary-content">
+                    <div class="summary-title font-montserrat-bold">
+                      Este es un resumen de tu búsqueda:
+                    </div>
+                    <div class="summary-item">
+                      <span>Total ventas</span>
+                      <span>{{
+                        selectedAccount
+                          ? numberToCurrency(summaryAccountsPayable.pendingPaid)
+                          : numberToCurrency(
+                              summaryAccountsReceivable.pendingPaid
+                            )
+                      }}</span>
+                    </div>
+                    <div class="summary-item">
+                      <span>Total productos</span>
+                      <span>{{
+                        selectedAccount
+                          ? numberToCurrency(summaryAccountsPayable.totalPayed)
+                          : numberToCurrency(
+                              summaryAccountsReceivable.totalPayed
+                            )
+                      }}</span>
+                    </div>
+                  </CardContent>
+                </Card>
+                <img :src="BetoImg" class="size-img" />
+              </div>
+            </div>
           </div>
           <!-- <div
 
@@ -263,47 +298,10 @@
     >
       <img :src="BetoImg" alt="" class="size-img" />
     </div> -->
-    <!-- <div class="container-summary">
-      <div class="summary" v-if="!params">
-        <Card>
-          <CardContent class="summary-content">
-            <div class="summary-title font-montserrat-bold">
-              Este es un resumen de tu búsqueda:
-            </div>
-            <div class="summary-item">
-              <span>Total ventas</span>
-              <span>{{ numberToCurrency(0) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total productos</span>
-              <span>{{ 0 }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total facturas</span>
-              <span>{{ 0 }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Costo</span>
-              <span>{{ numberToCurrency(0) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total ventas | devoluciones</span>
-              <span>{{ numberToCurrency(0) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Utilidad</span>
-              <span>{{ numberToCurrency(0) }}</span>
-            </div>
-          </CardContent>
-        </Card>
-          <img :src="BetoImg" class="size-img" />
         </div>
-          </div> -->
-        </div>
-    </div>
+      </div>
     </div>
   </div>
-  
 </template>
 <script setup lang="ts">
 import { computed, onMounted, ref } from "vue";
@@ -318,8 +316,8 @@ import { mdiArrowLeftCircle, mdiTriangleSmallDown } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
 import { useAccountsPayableReceivableStore } from "../../store/accounts-payable-receivable.store";
 import Paginator from "../../../../../../components/Paginator.vue";
-// import Card from "../../../daily-sales/components/Card.vue";
-// import CardContent from "../../../daily-sales/components/CardContent.vue";
+import Card from "../../../daily-sales/components/Card.vue";
+import CardContent from "../../../daily-sales/components/CardContent.vue";
 
 const all_warehouses = ref(false);
 const selectedWarehouse = ref<any | null>(null);
@@ -340,6 +338,14 @@ const rangeDates = ref({
   end_date: "",
 });
 const selectedAccount = ref(true);
+const summaryAccountsPayable = ref({
+  pendingPaid: 0,
+  totalPayed: 0,
+});
+const summaryAccountsReceivable = ref({
+  pendingPaid: 0,
+  totalPayed: 0,
+});
 const appStore = useAppStore();
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
@@ -367,6 +373,7 @@ const loadAccountsPayable = async () => {
   }
   accountsPayableResult.value = response.data.list;
   params.value = false;
+  summaryAccountsPayable.value = response.data.summary;
   appStore.showLoadingScreen = false;
   beto_state.value = BetoState.WELCOME;
 };
@@ -387,6 +394,7 @@ const loadAccountsReceivable = async () => {
   }
   accountReceivableResult.value = response.data.list;
   params.value = false;
+  summaryAccountsReceivable.value = response.data.summary;
   appStore.showLoadingScreen = false;
   beto_state.value = BetoState.WELCOME;
 };
@@ -488,7 +496,10 @@ onMounted(() => {
   height: 90%;
 }
 .paginator-container {
-  width: 100%;
+  display: flex;
+  justify-content: start;
+  width: 95%;
+  padding-top: 10px;
   padding-bottom: 20px;
 }
 .cash-counts {
@@ -692,40 +703,13 @@ label {
   font-size: calc(17px * var(--font-size-title));
 }
 
-.help-beto {
-  display: flex;
-  justify-content: center;
-  position: relative;
-  background-color: var(--color-contrast);
-  padding-top: 5px;
-  width: calc(80px * var(--width-circle));
-  border-radius: 100%;
-  top: calc(0 * var(--padding-top));
-  left: calc(45% * var(--padding-left));
-  transform: translatey(-40%);
-}
-
-.help-beto::after {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: -150px;
-  content: "Ver resumen";
-  font-size: 15px;
-  font-weight: bold;
-  color: var(--color-accent);
-  width: calc(200% * var(--width-circle-2));
-  border-radius: 20px;
-  background-color: var(--color-contrast);
-}
-
 .size-img {
-  width: calc(55px * var(--width-img));
+  width: calc(65px * var(--width-img));
   transform: scaleX(-1);
 }
 
 .container-summary {
+  margin-top: -30px;
   width: 100%;
   display: flex;
   justify-content: end;
@@ -737,6 +721,9 @@ label {
   justify-content: center;
   align-items: center;
   gap: 15px;
+}
+.summary-card {
+  width: 70%;
 }
 .summary-content {
   color: var(--color-contrast);

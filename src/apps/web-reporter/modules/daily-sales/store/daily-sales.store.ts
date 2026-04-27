@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { dailySalesService } from "../services/daily-sales.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
+import type { TWarehouseDayInvoice } from "../interfaces/warehouse-day-invoice.type";
 
 export const useDailySalesStore = defineStore("daily-sales", {
   state: () => ({
@@ -8,6 +9,7 @@ export const useDailySalesStore = defineStore("daily-sales", {
     limit: 5,
     itemsCount: 0,
     totalPages: 0,
+    selectedWarehouse: {} as TWarehouseDayInvoice,
   }),
   actions: {
     async dailySales(date: string): Promise<IStoreResponse> {

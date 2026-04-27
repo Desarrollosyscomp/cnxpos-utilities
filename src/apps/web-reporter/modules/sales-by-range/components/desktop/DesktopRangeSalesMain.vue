@@ -1,24 +1,24 @@
 <template>
   <div class="app-plain-background"></div>
   <div class="container">
-    <div class="left-bar scrollable-y">
+    <div class="left-bar">
       <div class="helper-container corners spaces-padding container-background">
         <div class="font-montserrat-bold text-contrast text-center">
-          ¿Como hacer un reporte?
+          ¿Cómo hacer un reporte?
         </div>
         <ul class="text-contrast unordered-list font-size">
           <li>Selecciona la fecha inicial</li>
           <li>Selecciona la fecha final</li>
           <li>
-            Selecciona 1 almacen, o selecciona la casilla "todos los almacenes"
+            Selecciona un almacén, o selecciona la casilla "todos los almacenes"
           </li>
-          <li>Presiona el boton de buscar</li>
+          <li>Presiona el botón de buscar</li>
         </ul>
       </div>
       <div
-        class="form-container corners spaces-padding container-background"
+        class="form-container corners spaces-padding container-background scrollable-y"
       >
-        <div class="font-montserrat-bold text-contrast ">
+        <div class="font-montserrat-bold text-contrast">
           Generar nuevo reporte
         </div>
         <fieldset class="input-field date-field">
@@ -50,19 +50,19 @@
             >Todos los almacenes</label
           >
         </div>
-        <div class="scrollable-y">
-            <RadioLabels
-              :disabled="all_warehouses"
-              :options="warehouses_array"
-              @checked-option="
-                (meta) => {
-                  selectedWarehouse = meta;
-                }
-              "
-            />
+        <div class="scrollable-y radios-container">
+          <RadioLabels
+            :disabled="all_warehouses"
+            :options="warehouses_array"
+            @checked-option="
+              (meta) => {
+                selectedWarehouse = meta;
+              }
+            "
+          />
         </div>
         <div class="flex flex-justify-center">
-          <button class="form-button" @click="searchSales()">Buscar</button>
+          <button class="form-button" :class="{ 'disabled': disableButton }" @click="searchSales()" :disabled="disableButton">Buscar</button>
         </div>
       </div>
     </div>
@@ -93,8 +93,8 @@
                 Bienvenido al reporte de ventas acumulado
               </div>
               <div class="font-montserrat-medium text-contrast text-center">
-                Aqui podrás ver el resume de ventas por almacenes en un rango de
-                fechas determinado
+                Aquí podrás ver el resumen de ventas por almacenes en un rango de
+                fechas determinado.
               </div>
             </CenterAndScroll>
             <CenterAndScroll v-if="beto_state === BetoState.NOT_FOUND">
@@ -124,12 +124,12 @@
             <thead>
               <tr>
                 <th class="text-center">Fecha</th>
-                <th class="text-center">Id de almacén</th>
+                <th class="text-center">Almacén</th>
                 <th class="text-center">Productos vendidos</th>
-                <th class="text-center">Costo</th>
-                <th class="text-center">Subtotal</th>
                 <th class="text-center">IVA</th>
                 <th class="text-center">Facturas</th>
+                <th class="text-center">Costo</th>
+                <th class="text-center">Subtotal</th>
                 <th class="text-center">Total</th>
               </tr>
             </thead>
@@ -140,68 +140,68 @@
                 </td>
                 <td class="text-center">{{ sale.nomalmacen }}</td>
                 <td class="text-center">{{ sale.prodvendid }}</td>
+                <td class="text-center">{{ numberToCurrency(sale.ivaimp) }}</td>
+                <td class="text-center">{{ sale.cantfact }}</td>
                 <td class="text-center">
                   {{ numberToCurrency(sale.costoacum) }}
                 </td>
                 <td class="text-center">{{ numberToCurrency(sale.subtot) }}</td>
-                <td class="text-center">{{ numberToCurrency(sale.ivaimp) }}</td>
-                <td class="text-center">{{ sale.cantfact }}</td>
                 <td class="text-center">{{ numberToCurrency(sale.total) }}</td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <div align="center" class="pagination">
-          <Paginator
-            v-if="rangeSalesStore.itemsCount > rangeSalesStore.limit"
-            :key="rangeSalesStore.page"
-            :items-per-page="rangeSalesStore.limit"
-            :max-buttons="4"
-            :total-pages="rangeSalesStore.totalPages"
-            :current-page="rangeSalesStore.page"
-            @on-change-page="onChangePage"
-          />
+          <div class="pagination">
+            <Paginator
+              v-if="rangeSalesStore.itemsCount > rangeSalesStore.limit"
+              :key="rangeSalesStore.page"
+              :items-per-page="rangeSalesStore.limit"
+              :max-buttons="4"
+              :total-pages="rangeSalesStore.totalPages"
+              :current-page="rangeSalesStore.page"
+              @on-change-page="onChangePage"
+            />
+          </div>
+          <div class="summary" v-if="!params">
+            <img :src="BetoImg" class="summary-beto" />
+            <Card>
+              <CardContent class="summary-content">
+                <div class="summary-title font-montserrat-bold">
+                  Este es un resumen de tu búsqueda:
+                </div>
+                <div class="summary-item">
+                  <span>Total ventas</span>
+                  <span>{{ numberToCurrency(summary.totalSales) }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Total productos</span>
+                  <span>{{ summary.totalProducts }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Total facturas</span>
+                  <span>{{ summary.invoiceQuantity }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Costo</span>
+                  <span>{{ numberToCurrency(summary.totalCosts) }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Total ventas | devoluciones</span>
+                  <span>{{ numberToCurrency(summary.salesMinusReturns) }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Utilidad</span>
+                  <span>{{ numberToCurrency(summary.profit) }}</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </CenterAndScroll>
-      <div class="summary" v-if="!params">
-        <img :src="BetoImg" class="summary-beto" />
-        <Card>
-          <CardContent class="summary-content">
-            <div class="summary-title font-montserrat-bold">
-              Este es un resumen de tu búsqueda:
-            </div>
-            <div class="summary-item">
-              <span>Total ventas</span>
-              <span>{{ numberToCurrency(summary.totalSales) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total productos</span>
-              <span>{{ summary.totalProducts }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total facturas</span>
-              <span>{{ summary.invoiceQuantity }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Costo</span>
-              <span>{{ numberToCurrency(summary.totalCosts) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Total ventas | devoluciones</span>
-              <span>{{ numberToCurrency(summary.salesMinusReturns) }}</span>
-            </div>
-            <div class="summary-item">
-              <span>Utilidad</span>
-              <span>{{ numberToCurrency(summary.profit) }}</span>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue-demi";
+import { computed, onMounted, ref, watch } from "vue-demi";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png";
 import BubbleMessage from "../../../../../../components/BubbleMessage.vue";
@@ -294,6 +294,22 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+const disableButton = computed(() => {
+  const noDates =
+    !rangeDates.value.init_date || !rangeDates.value.end_date;
+
+  const noWarehouseSelected =
+    !selectedWarehouse.value && !all_warehouses.value;
+
+  return noDates || noWarehouseSelected;
+});
+
+watch(all_warehouses, (val) => {
+  if (val) {
+    selectedWarehouse.value = null;
+  }
+});
+
 onMounted(() => {
   appStore.afterLoading(loadWarehouses);
 });
@@ -302,6 +318,10 @@ onMounted(() => {
 <style scoped>
 @import "../../../../../../styles/backgrounds.css";
 @import "../../../../../../styles/forms.css";
+
+:global(:root) {
+  --message-proportion: 1;
+}
 
 .container {
   display: grid;
@@ -347,6 +367,7 @@ onMounted(() => {
 }
 
 .form-container {
+  max-height: 500px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -384,12 +405,12 @@ onMounted(() => {
 }
 
 .table-container {
-  padding: 25px;
+  padding: 20px;
 }
 
 .summary {
   display: flex;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   gap: 1rem;
 }
@@ -418,7 +439,7 @@ onMounted(() => {
 }
 
 .summary-beto {
-  width: calc(130px * var(--message-proportion));
+  width: calc(100px * var(--message-proportion));
 }
 
 .result-container {
@@ -427,6 +448,22 @@ onMounted(() => {
 }
 
 .font-size {
-  font-size: calc(15px* var(--message-proportion));
+  font-size: calc(15px * var(--message-proportion));
 }
+
+.pagination {
+  padding-top: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+
+.radios-container {
+  height: 500px;
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
 </style>

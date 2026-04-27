@@ -11,9 +11,9 @@
         <span>Regresar</span>
       </div>
       <div class="title-container">
-        <h3 class="font-montserrat-bold text-contrast">Informe de arqueo</h3>
+        <h3 class="font-montserrat-bold text-contrast">Informe de arqueos</h3>
         <div class="date-field">
-          <label for="fecha">Fecha de inicio</label>
+          <label for="fecha">Selecciona una fecha</label>
           <input
             type="date"
             id="fecha"
@@ -37,9 +37,9 @@
             class="bubble bubble-a bubble-left"
             v-if="beto_state == BetoState.WELCOME"
           >
-            <span>Bienvenido al modulo de</span>
+            <span>Bienvenido al módulo de</span>
             <h2 class="web-reporter-title">Arqueos de caja</h2>
-            <span>Selecciona un alamacen para generar un</span>
+            <span>Selecciona un almacén para generar un</span>
             <span class="font-montserrat-bold text-contrast"
               >informe de arqueos</span
             >
@@ -48,13 +48,13 @@
             <span>{{ messageNotFound.split(" p")[0] }}</span>
             <span>p{{ messageNotFound.split(" p")[1] }}</span>
             <span class="font-montserrat-bold text-contrast"
-              >Selecciona otro almacen y/o fecha</span
+              >Selecciona otro almacén y/o fecha</span
             >
           </div>
         </div>
         <div class="warehouses-container scrollable-y" v-if="params">
           <span class="font-montserrat-medium text-contrast"
-            >Selecciona un almacen para generar un informe de arqueos</span
+            >Selecciona un almacén para generar un informe de arqueos</span
           >
           <!-- <div class="checkbox-container">
             <input
@@ -99,17 +99,17 @@
               <tr>
                 <th class="font-montserrat-bold text-left">Almacén</th>
                 <th class="font-montserrat-bold text-center">
-                  Apertura / cierre
+                  Apertura / Cierre
                 </th>
                 <th class="font-montserrat-bold text-center">Facturas</th>
                 <th class="font-montserrat-bold text-center">Pedidos</th>
                 <th class="font-montserrat-bold text-center">Salidas</th>
-                <th class="font-montserrat-bold text-right">Total en pagos</th>
+                <th class="font-montserrat-bold text-right">Total efectivo</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for="cashCount in cashCounts" :key="cashCount.id">
-                <td>{{ cashCount.nomalmacen }}</td>
+                <td class="reduce-width"> {{ cashCount.nomalmacen }}</td>
                 <td class="text-center">
                   <div>
                     <span class="font-montserrat-bold">Desde: </span>
@@ -121,25 +121,25 @@
                   </div>
                 </td>
                 <td class="text-center">
-                  <div class="font-montserrat-bold">
-                    {{ numberToCurrency(cashCount.total_facturas) }}
-                  </div>
                   <div>
                     <span>Cantidad: </span>
                     <span class="font-montserrat-bold">
                       {{ cashCount.cant_facturas }}
                     </span>
                   </div>
+                  <div class="font-montserrat-bold">
+                    {{ numberToCurrency(cashCount.total_facturas) }}
+                  </div>
                 </td>
                 <td class="text-center">
-                  <div class="font-montserrat-bold">
-                    {{ numberToCurrency(cashCount.total_pedidos) }}
-                  </div>
                   <div>
                     <span>Cantidad: </span>
                     <span class="font-montserrat-bold">
                       {{ cashCount.cant_pedidos }}
                     </span>
+                  </div>
+                  <div class="font-montserrat-bold">
+                    {{ numberToCurrency(cashCount.total_pedidos) }}
                   </div>
                 </td>
                 <td class="text-center">
@@ -148,7 +148,7 @@
                   </div>
                 </td>
                 <td class="text-right">
-                  {{ numberToCurrency(cashCount.total_pagos) }}
+                  {{ numberToCurrency(cashCount.total_cierre) }}
                 </td>
               </tr>
             </tbody>
@@ -351,5 +351,9 @@ label {
 .back-icon {
   fill: var(--color-contrast);
   width: 20px;
+}
+
+.reduce-width {
+  width: 20%;
 }
 </style>

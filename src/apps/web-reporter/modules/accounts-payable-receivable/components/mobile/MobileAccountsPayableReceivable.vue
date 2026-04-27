@@ -37,10 +37,10 @@
         >
           <span>Bienvenido al módulo de</span>
           <h3 class="web-reporter-title">
-            Cuentas por {{ selectedAccount ? "pagar" : "cobrar" }}
+            Cuentas por {{ selectedAccount ? "pagar." : "cobrar." }}
           </h3>
           <span
-            >por favor selecciona una fecha y uno o varios almacenes para
+            >Por favor selecciona una fecha y uno o varios almacenes para
             continuar</span
           >
         </div>
@@ -48,7 +48,7 @@
           <span>{{ messageNotFound }}</span>
           <span>por favor selecciona</span>
           <span class="font-montserrat-bold text-contrast"
-            >otro almacen y/o fecha</span
+            >otro almacén y/o fecha</span
           >
         </div>
       </div>
@@ -77,7 +77,7 @@
       <div class="warehouses-container scrollable-y" v-if="params">
         <div class="checkbox-container">
           <span class="font-montserrat-medium text-contrast"
-            >Selecciona un almacen para continuar</span
+            >Selecciona un almacén para continuar</span
           >
         </div>
         <div class="scrollable-y flex flex-column">
@@ -92,8 +92,8 @@
         <div class="flex flex-justify-center">
           <button
             class="form-button-2"
-            :class="{ disabled: !selectedWarehouse && !all_warehouses }"
-            :disabled="!selectedWarehouse && !all_warehouses"
+            :class="{ 'disabled': disabledButton }"
+            :disabled="disabledButton"
             @click="
               selectedAccount ? loadAccountsPayable() : loadAccountsReceivable()
             "
@@ -221,7 +221,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
 import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
@@ -334,12 +334,23 @@ const onBack = () => {
   accountReceivableResult.value = [];
 };
 
+const disabledButton = computed(() => {
+  return (
+    !selectedWarehouse.value ||
+    rangeDates.value.init_date == "" ||
+    rangeDates.value.end_date == ""
+  );
+});
+
+
 const onChangePage = (emmited: any) => {
   if (accountsPayableReceivableStore.page !== emmited.data.page) {
     accountsPayableReceivableStore.page = emmited.data.page;
-    appStore.afterLoading(
-      selectedAccount ? loadAccountsReceivable : loadAccountsPayable
-    );
+    if (!selectedAccount.value) {
+      loadAccountsReceivable();
+    } else {
+      loadAccountsPayable();
+    }
   }
 };
 
@@ -695,6 +706,10 @@ li {
   [data-theme="dark"] & {
     color: var(--color-contrast);
   }
+}
+
+.disabled {
+ opacity: 0.5;
 }
 
 @media (min-width: 360px) {

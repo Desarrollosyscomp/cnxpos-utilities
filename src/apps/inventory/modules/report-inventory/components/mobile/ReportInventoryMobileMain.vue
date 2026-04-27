@@ -13,9 +13,9 @@
       <div class="beto-message-container" v-if="params">
         <img class="beto-avatar" :src="BetoImg" />
         <div class="bubble bubble-a bubble-left">
-          <span>Bienvenido al modulo de</span>
+          <span>Bienvenido al módulo de</span>
           <h3 class="web-reporter-title">Inventario</h3>
-          <span>Selecciona un alamacen para generar un</span>
+          <span>Selecciona un almacén para generar un</span>
           <span class="font-montserrat-bold">informe de inventario</span>
         </div>
       </div>
@@ -268,7 +268,7 @@
 </template>
 <script setup lang="ts">
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useAppStore } from "../../../../../../store/app.store";
 import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
 import RadioLabels, {
@@ -344,6 +344,12 @@ const onOpenModal = (item: any) => {
 const closeModal = () => {
   return (modal.value = false);
 };
+
+watch(all_warehouses, (val) => {
+  if (val) {
+    selectedWarehouse.value = null;
+  }
+});
 
 onMounted(() => {
   appStore.afterLoading(loadWarehouses);

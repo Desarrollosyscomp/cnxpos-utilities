@@ -172,6 +172,7 @@ const logout = () => {
 }
 
 .icon {
+  
   fill: var(--color-contrast);
   transform: translateX(-2px);
 }

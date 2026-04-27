@@ -11,15 +11,17 @@ export const parseDate = (date: string) => {
 
 export const parseDateWhitHour = (date: string) => {
   if (!date) return;
-  const fecha = new Date(date);
-  const fechaFormateada = fecha.toLocaleDateString("es-ES", {
+
+  const cleanDate = date.replace("Z", "");
+  const fecha = new Date(cleanDate);
+  return fecha.toLocaleString("es-ES", {
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: true,
   });
-  return fechaFormateada;
 };
 
 export const formatDateWithHyphen = (date: string) => {

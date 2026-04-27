@@ -51,7 +51,7 @@ function animateProgress() {
   progress.value = (timeLeft.value / props.time) * 100;
 
   // Cambiar color según el tiempo restante
-  progressColor.value = "darkblue";
+  progressColor.value = "red";
 
   // changeColorTitle();
 

@@ -6,7 +6,7 @@
       <div class="bubble bubble-a bubble-left">
         <span class="font-montserrat-bold"
           >Aquí puedes editar algunos detalles de tu cuenta, como correo,
-          contraseña, y ver algunos datos mas</span
+          contraseña y ver algunos datos mas</span
         >
       </div>
     </div>

@@ -101,12 +101,12 @@
         >
           <CenterAndScroll v-if="beto_state === BetoState.WELCOME">
             <div class="font-montserrat-medium text-contrast text-center">
-              Bienvenido al modulo de
+              Bienvenido al módulo de
               <br />
               <h2 class="font-montserrat-bold text-contrast">Inventario</h2>
             </div>
             <div class="font-montserrat-medium text-contrast text-center">
-              Por favor selecciona un almacen para generar un
+              Por favor selecciona un almacén para generar un
               <br />
               <span class="font-montserrat-bold text-contrast">
                 informe de inventario
@@ -163,13 +163,13 @@
               </div>
               <div class="item">
                 <span class="font-montserrat-bold text-contrast"
-                  >Costo (ultima compra)</span
+                  >Costo (última compra)</span
                 >
                 <span>{{ numberToCurrency(inventoryItem.costo_total) }}</span>
               </div>
               <div class="item">
                 <span class="font-montserrat-bold text-contrast"
-                  >Costo inventario (Ultima compra)</span
+                  >Costo inventario (última compra)</span
                 >
                 <span>{{ numberToCurrency(inventoryItem.ultimo_costo) }}</span>
               </div>
@@ -202,7 +202,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from "vue-demi";
+import { onMounted, ref, watch } from "vue-demi";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png";
 import BubbleMessage from "../../../../../../components/BubbleMessage.vue";
@@ -281,6 +281,12 @@ const onChangePage = (emmited: any) => {
     appStore.afterLoading(searchSales);
   }
 };
+
+watch(all_warehouses, (val) => {
+  if (val) {
+    selectedWarehouse.value = null;
+  }
+});
 
 onMounted(() => {
   loadWarehouses();

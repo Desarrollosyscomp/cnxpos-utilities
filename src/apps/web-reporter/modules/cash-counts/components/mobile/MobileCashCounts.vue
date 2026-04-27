@@ -19,9 +19,9 @@
           class="bubble bubble-a bubble-left"
           v-if="beto_state == BetoState.WELCOME"
         >
-          <span>Bienvenido al modulo de</span>
+          <span>Bienvenido al módulo de</span>
           <h4 class="web-reporter-title">Arqueos de caja</h4>
-          <span>Selecciona un alamacen para generar un</span>
+          <span>Selecciona un almacén para generar un</span>
           <span class="font-montserrat-bold text-contrast"
             >informe de arqueos</span
           >
@@ -30,13 +30,13 @@
           <span>{{ messageNotFound.split(" p")[0] }}</span>
           <span>p{{ messageNotFound.split(" p")[1] }}</span>
           <span class="font-montserrat-bold text-contrast"
-            >Selecciona otro almacen y/o fecha</span
+            >Selecciona otro almacén y/o fecha</span
           >
         </div>
       </div>
       <div class="search-container" v-if="params">
         <div class="date-field">
-          <label for="fecha">Fecha de inicio</label>
+          <label for="fecha">Selecciona una fecha</label>
           <input
             v-model="date"
             type="date"
@@ -48,7 +48,7 @@
       </div>
       <div class="warehouses-container scrollable-y" v-if="params">
         <span class="font-montserrat-medium text-contrast text-center"
-          >Selecciona un almacen para generar un informe de arqueos</span
+          >Selecciona un almacén para generar un informe de arqueos</span
         >
         <!-- <div class="checkbox-container">
           <input
@@ -95,8 +95,8 @@
                   >Arqueo #{{ item.idarqueo }}</span
                 >
                 <span class="font-montserrat-medium font-size-title"
-                  >{{ parseDate(item.fechaap) }} al
-                  {{ parseDate(item.fechacie) || "2026/02/20" }}</span
+                  >{{ parseDateWhitHour(item.fechaap) }} al
+                  {{ parseDateWhitHour(item.fechacie) || "N/A" }}</span
                 >
                 <span class="font-montserrat-bold font-size-title">{{
                   item.nomalmacen
@@ -164,8 +164,8 @@
           >Arqueo #{{ selectedItem.idarqueo }}</span
         >
         <span class="font-montserrat-medium font-size-title"
-          >{{ parseDate(selectedItem.fechaap) }} al
-          {{ parseDate(selectedItem.fechacie) || "2026/02/20" }}</span
+          >{{ parseDateWhitHour(selectedItem.fechaap) }} al
+          {{ parseDateWhitHour(selectedItem.fechacie) || "N/A" }}</span
         >
         <span class="font-montserrat-bold font-size-title">{{
           selectedItem.nomalmacen
@@ -261,7 +261,7 @@ import CardContent from "../../../../../web-reporter/modules/daily-sales/compone
 import Modal from "../../../../../../components/Modal.vue";
 import { mdiArrowLeftCircle } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
-import { parseDate } from "../../../../../../utils/parsers/parse-date";
+import { parseDateWhitHour } from "../../../../../../utils/parsers/parse-date";
 // import type { TSummaryCashCounts } from "../../interfaces/summary-cash-counts.type";
 enum BetoState {
   WELCOME = 0,
@@ -274,18 +274,18 @@ const cashCountStore = useCashCountsStore();
 const all_warehouses = ref(false);
 const selectedWarehouse = ref<any>(null);
 const cashCounts = ref<any[]>([]);
-const date = ref<string | undefined>(new Date().toISOString().split("T")[0]);
+const date = ref<string>("");
 const warehouses_array = ref<TOptionsType[]>([]);
 const params = ref<boolean>(true);
 const modal = ref<boolean>(false);
 const selectedItem = ref<any>(null);
 const messageNotFound = ref<string>("");
 
-const searchCashCounts = async () => {
+  const searchCashCounts = async () => {
   appStore.showLoadingScreen = true;
-  const newDate = new Date().toISOString().split("T")[0];
+  console.log(date.value);
   const response = await cashCountStore.cashCounts(
-    newDate,
+    date.value,
     selectedWarehouse.value?.idalmacen ?? 0
   );
   if (response.data.cash_balance) {
