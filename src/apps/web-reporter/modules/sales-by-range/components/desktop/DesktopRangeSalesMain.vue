@@ -181,7 +181,7 @@
                   <span>{{ numberToCurrency(summary.totalCosts) }}</span>
                 </div>
                 <div class="summary-item">
-                  <span>devoluciones</span>
+                  <span>Devoluciones</span>
                   <span>{{ numberToCurrency(summary.returns) }}</span>
                 </div>
                 <div class="summary-item">
