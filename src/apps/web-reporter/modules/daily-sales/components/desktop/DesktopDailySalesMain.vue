@@ -109,10 +109,6 @@
                 Este es un resumen de tu búsqueda:
               </div>
               <div class="summary-item">
-                <span>Total ventas</span>
-                <span>{{ numberToCurrency(summary.totalSales) }}</span>
-              </div>
-              <div class="summary-item">
                 <span>Total productos</span>
                 <span>{{ summary.totalProducts }}</span>
               </div>
@@ -125,8 +121,16 @@
                 <span>{{ numberToCurrency(summary.totalCost) }}</span>
               </div>
               <div class="summary-item">
+                <span>Total devoluciones</span>
+                <span>{{ numberToCurrency(summary.totalReturns || 0) }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Total ventas - devoluciones </span>
+                <span class="font-montserrat-bold color-accent">{{ numberToCurrency(summary.totalSales) }}</span>
+              </div>
+              <div class="summary-item">
                 <span>Utilidad</span>
-                <span>{{ numberToCurrency(summary.totalProfit) }}</span>
+                <span class="font-montserrat-bold color-accent">{{ numberToCurrency(summary.totalProfit) }}</span>
               </div>
             </CardContent>
             <CardContent
@@ -178,6 +182,12 @@
                         Este es un resumen del almacen:
                       </div>
                       <div class="summary-item-2">
+                        <span class="font-montserrat-bold">Impuestos:</span>
+                        <span>{{
+                          numberToCurrency(summaryInvoices.totalTaxes)
+                        }}</span>
+                      </div>
+                      <div class="summary-item-2">
                         <span class="font-montserrat-bold">Subtotal:</span>
                         <span>{{
                           numberToCurrency(summaryInvoices.subtotal)
@@ -187,12 +197,6 @@
                         <span class="font-montserrat-bold">Total ventas:</span>
                         <span>{{
                           numberToCurrency(summaryInvoices.totalSales)
-                        }}</span>
-                      </div>
-                      <div class="summary-item-2">
-                        <span class="font-montserrat-bold">Impuestos:</span>
-                        <span>{{
-                          numberToCurrency(summaryInvoices.totalTaxes)
                         }}</span>
                       </div>
                       <div class="summary-item-2">
@@ -364,6 +368,7 @@ const summary = ref<TSummary>({
   totalInvoices: 0,
   totalCost: 0,
   totalProfit: 0,
+  totalReturns: 0,
 });
 
 const summaryInvoices = ref<TSummaryInvoices>({
@@ -726,11 +731,19 @@ const onChangePage = (emmited: any) => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 5px;
+  gap: 25px;
+}
+
+.summary-item-2 > :nth-child(5) {
+  width: 10%;
 }
 
 .size-input {
   width: 100%;
+}
+
+.color-accent {
+  color: var(--color-accent);
 }
 
 label {

@@ -161,16 +161,12 @@
               @on-change-page="onChangePage"
             />
           </div>
-          <div class="summary" v-if="!params">
+          <div :class="sales.length == 1 ? 'summary-list-zero' : 'summary'" v-if="!params">
             <img :src="BetoImg" class="summary-beto" />
             <Card>
               <CardContent class="summary-content">
                 <div class="summary-title font-montserrat-bold">
                   Este es un resumen de tu búsqueda:
-                </div>
-                <div class="summary-item">
-                  <span>Total ventas</span>
-                  <span>{{ numberToCurrency(summary.totalSales) }}</span>
                 </div>
                 <div class="summary-item">
                   <span>Total productos</span>
@@ -185,12 +181,20 @@
                   <span>{{ numberToCurrency(summary.totalCosts) }}</span>
                 </div>
                 <div class="summary-item">
-                  <span>Total ventas | devoluciones</span>
-                  <span>{{ numberToCurrency(summary.salesMinusReturns) }}</span>
+                  <span>devoluciones</span>
+                  <span>{{ numberToCurrency(summary.returns) }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Total ventas</span>
+                  <span>{{ numberToCurrency(summary.totalSales) }}</span>
+                </div>
+                <div class="summary-item">
+                  <span>Total ventas - devoluciones</span>
+                  <span class="font-montserrat-bold  color-accent">{{ numberToCurrency(summary.salesMinusReturns) }}</span>
                 </div>
                 <div class="summary-item">
                   <span>Utilidad</span>
-                  <span>{{ numberToCurrency(summary.profit) }}</span>
+                  <span class="font-montserrat-bold color-accent">{{ numberToCurrency(summary.profit) }}</span>
                 </div>
               </CardContent>
             </Card>
@@ -264,33 +268,70 @@ const loadWarehouses = async () => {
   });
 };
 
-const searchSales = async () => {
+// const searchSales = async () => {
+//   appStore.showLoadingScreen = true;
+//   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
+//   const parseEndDate = rangeDates.value.end_date.replace(/-/g, "");
+//   const response = await rangeSalesStore.rangeSales(
+//     parseInitialDate,
+//     parseEndDate,
+//     selectedWarehouse.value?.idalmacen ?? 0
+//   );
+//   if (response.data.list.length === 0) {
+//     appStore.showLoadingScreen = false;
+//     beto_state.value = BetoState.NOT_FOUND;
+//     params.value = true;
+//     sales.value = [];
+//     return;
+//   } else {
+//     appStore.showLoadingScreen = false;
+//     sales.value = response.data.list;
+//     summary.value = response.data.summary;
+//     params.value = false;
+//   }
+// };
+
+// const onChangePage = (emmited: any) => {
+//   if (rangeSalesStore.page !== emmited.data.page) {
+//     rangeSalesStore.page = emmited.data.page;
+//     appStore.afterLoading(searchSales);
+//   }
+// };
+
+const getSales = async () => {
   appStore.showLoadingScreen = true;
+
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
   const parseEndDate = rangeDates.value.end_date.replace(/-/g, "");
+
   const response = await rangeSalesStore.rangeSales(
     parseInitialDate,
     parseEndDate,
     selectedWarehouse.value?.idalmacen ?? 0
   );
+
   if (response.data.list.length === 0) {
-    appStore.showLoadingScreen = false;
     beto_state.value = BetoState.NOT_FOUND;
     params.value = true;
     sales.value = [];
-    return;
   } else {
-    appStore.showLoadingScreen = false;
     sales.value = response.data.list;
     summary.value = response.data.summary;
     params.value = false;
   }
+
+  appStore.showLoadingScreen = false;
+};
+
+const searchSales = async () => {
+  rangeSalesStore.page = 1;
+  await getSales();
 };
 
 const onChangePage = (emmited: any) => {
   if (rangeSalesStore.page !== emmited.data.page) {
     rangeSalesStore.page = emmited.data.page;
-    appStore.afterLoading(searchSales);
+    appStore.afterLoading(getSales);
   }
 };
 
@@ -414,6 +455,13 @@ onMounted(() => {
   align-items: center;
   gap: 1rem;
 }
+.summary-list-zero {
+  padding-top: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
 .summary-content {
   color: var(--color-contrast);
 }
@@ -466,4 +514,10 @@ onMounted(() => {
   opacity: 0.5;
 }
 
+.color-accent {
+  color: var(--color-accent);
+}
+.color-contrast {
+  color: var(--color-contrast);
+}
 </style>

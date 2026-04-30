@@ -65,6 +65,34 @@
   }
 }
 
+.form-button-layout {
+  --button-size: 1;
+  --button-font-size: 1;
+  --button-padding: 1;
+  display: flex;
+  gap: 5px;
+  background-color: transparent;
+  border-radius: calc(30px * var(--button-size));
+  border: calc(2px * var(--button-size)) solid white;
+  border-color: white;
+  color: white;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: calc(12px * var(--button-font-size));
+  font-weight: 900;
+  min-width: calc(70px * var(--button-size));
+  min-height: calc(35px * var(--button-size));
+  height: 30px;
+  padding: calc(18px * var(--button-size));
+  padding-top: calc(5px * var(--button-padding));
+  padding-bottom: calc(12px * var(--button-size));
+  [data-theme="light"] & {
+    background-color: transparent;
+    color: #541811;
+    border-color: #541811;
+  }
+}
+
 .date-field {
   display: flex;
   position: relative;
@@ -115,14 +143,17 @@
 }
 
 .checkbox-container{
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .input-checkbox{
     width: 20px;
     height: 20px;
     accent-color: var(--color-contrast);
+    [data-theme="dark"] & {
+      accent-color: var(--color-accent);
+    }
 }
 
 @media (min-width: 375px) {

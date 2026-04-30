@@ -218,6 +218,7 @@ const summary = ref<TSummary>({
   totalInvoices: 0,
   totalCost: 0,
   totalProfit: 0,
+  totalReturns: 0,
 });
 
 enum BetoState {

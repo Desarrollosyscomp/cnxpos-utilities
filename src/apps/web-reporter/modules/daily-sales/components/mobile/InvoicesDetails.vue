@@ -67,6 +67,11 @@
               }}</span>
               <div class="text-container">
                 <div class="item-3">
+                  <span class="item-bold">Total costo</span>
+                  <span>{{ numberToCurrency(invoice.total_costo) }}</span>
+                </div>
+                <hr />
+                <div class="item-3">
                   <span class="item-bold">Valor</span>
                   <span>{{ numberToCurrency(invoice.valorprod) }}</span>
                 </div>

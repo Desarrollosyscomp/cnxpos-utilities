@@ -4,6 +4,7 @@ export type TSummary = {
   totalInvoices: number;
   totalCost: number;
   totalProfit: number;
+  totalReturns: number;
 };
 
 export type TSummaryInvoices = {

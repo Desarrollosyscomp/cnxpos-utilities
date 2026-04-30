@@ -49,7 +49,6 @@ watch(
           labels: labels,
           datasets: [
             {
-              label: "Facturado ultimos 7 dias",
               data: data,
               backgroundColor: [
                 "#541811",
@@ -66,6 +65,22 @@ watch(
         options: {
           responsive: true,
           maintainAspectRatio: false,
+          plugins: {
+            title: {
+              display: true,
+              text: "Facturado ultimos 7 dias",
+              padding: {
+                top: 5,
+                bottom: 10,
+              },
+              font: {
+                weight: 'bold'
+              },
+            },
+            legend: {
+              display: false,
+            },
+          },
         },
       });
 

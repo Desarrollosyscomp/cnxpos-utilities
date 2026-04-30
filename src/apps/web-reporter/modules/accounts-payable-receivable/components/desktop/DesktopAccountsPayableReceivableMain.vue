@@ -400,6 +400,7 @@ const loadAccountsReceivable = async () => {
 };
 
 const onBack = () => {
+  accountsPayableReceivableStore.page = 1
   params.value = true;
   selectedWarehouse.value = null;
   accountsPayableResult.value = [];

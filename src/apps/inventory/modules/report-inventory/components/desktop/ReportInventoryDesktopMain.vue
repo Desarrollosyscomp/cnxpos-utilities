@@ -126,66 +126,80 @@
       </div>
     </div>
     <div class="result-container" v-if="!params">
-      <h3 class="main-title text-contrast">Informe de inventario</h3>
-      <div class="cards">
-        <Card v-for="(inventoryItem, index) in inventory" :key="index">
-          <CardContent>
-            <div class="main-title-table">
-              <span class="font-montserrat-bold">{{ inventoryItem.descripcion }}</span>
-              <span class="font-size-title font-montserrat-medium">{{
-                inventoryItem.nombre_almacen
-              }}</span>
-            </div>
-            <div class="items">
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast">Cantidad</span>
-                <span>{{ inventoryItem.cantidad }}</span>
+      <div class="title-result">
+        <h3 class="main-title text-contrast">Informe de inventario</h3>
+        <div class="date-field">
+          <input
+            placeholder="Buscar"
+            class="form-input size-input"
+            v-model="reportInventoryStore.search"
+            @keyup.enter="searchSales()"
+          />
+        </div>
+      </div>
+        <div class="cards">
+          <Card v-for="(inventoryItem, index) in inventory" :key="index">
+            <CardContent>
+              <div class="main-title-table">
+                <span class="font-montserrat-bold">{{
+                  inventoryItem.descripcion
+                }}</span>
+                <span class="font-size-title font-montserrat-medium">{{
+                  inventoryItem.nombre_almacen
+                }}</span>
               </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast">Código</span>
-                <span>{{ inventoryItem.codigo || "N/A" }}</span>
+              <div class="items">
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast">Cantidad</span>
+                  <span>{{ inventoryItem.cantidad }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast">Código</span>
+                  <span>{{ inventoryItem.codigo || "N/A" }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast">Barras</span>
+                  <span>{{ inventoryItem.barcode || "N/A" }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast"
+                    >Costo ponderado</span
+                  >
+                  <span>{{ numberToCurrency(inventoryItem.costo) }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast"
+                    >Costo inventario (ponderado)</span
+                  >
+                  <span>{{
+                    numberToCurrency(inventoryItem.costo_ponderado)
+                  }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast"
+                    >Costo (última compra)</span
+                  >
+                  <span>{{ numberToCurrency(inventoryItem.costo_total) }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast"
+                    >Costo inventario (última compra)</span
+                  >
+                  <span>{{ numberToCurrency(inventoryItem.ultimo_costo) }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast">Precio</span>
+                  <span>{{ numberToCurrency(inventoryItem.precio_venta) }}</span>
+                </div>
+                <div class="item">
+                  <span class="font-montserrat-bold text-contrast"
+                    >Valorizado</span
+                  >
+                  <span>{{ numberToCurrency(inventoryItem.valorizado) }}</span>
+                </div>
               </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast">Barras</span>
-                <span>{{ inventoryItem.barcode || "N/A" }}</span>
-              </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast"
-                  >Costo ponderado</span
-                >
-                <span>{{ numberToCurrency(inventoryItem.costo) }}</span>
-              </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast"
-                  >Costo inventario (ponderado)</span
-                >
-                <span>{{ numberToCurrency(inventoryItem.costo_ponderado) }}</span>
-              </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast"
-                  >Costo (última compra)</span
-                >
-                <span>{{ numberToCurrency(inventoryItem.costo_total) }}</span>
-              </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast"
-                  >Costo inventario (última compra)</span
-                >
-                <span>{{ numberToCurrency(inventoryItem.ultimo_costo) }}</span>
-              </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast">Precio</span>
-                <span>{{ numberToCurrency(inventoryItem.precio_venta) }}</span>
-              </div>
-              <div class="item">
-                <span class="font-montserrat-bold text-contrast"
-                  >Valorizado</span
-                >
-                <span>{{ numberToCurrency(inventoryItem.valorizado) }}</span>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
       </div>
       <div align="center" class="pagination">
         <Paginator
@@ -235,12 +249,12 @@ let all_warehouses = ref<boolean>(false);
 let selectedWarehouse = ref<any>(null);
 let inventory = ref<any[]>([]);
 let summary = ref<TSummaryInventory>({
-    warehouseName: "",
-    inventoryStock: 0,
-    averageInventoryCost: 0,
-    inventoryCost: 0,
-    inventoryPrice: 0,
-    profit: 0,
+  warehouseName: "",
+  inventoryStock: 0,
+  averageInventoryCost: 0,
+  inventoryCost: 0,
+  inventoryPrice: 0,
+  profit: 0,
 });
 let params = ref<boolean>(true);
 const reportInventoryStore = useReportInventoryStore();
@@ -289,6 +303,7 @@ watch(all_warehouses, (val) => {
 });
 
 onMounted(() => {
+  reportInventoryStore.search = ""
   loadWarehouses();
 });
 </script>
@@ -334,6 +349,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 100%;
 }
 
 .container-background {
@@ -348,7 +364,7 @@ onMounted(() => {
 }
 
 .helper-container {
-  max-height: 30vh;
+  max-height: 400px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -360,7 +376,7 @@ onMounted(() => {
 }
 
 .main-title {
-  font-size: 25px;
+  font-size: 20px;
   margin-bottom: 20px;
   text-align: start;
   padding-left: 5%;
@@ -383,7 +399,6 @@ onMounted(() => {
 
 .table-container {
   padding: 25px;
-  background-color: red;
 }
 
 .summary {
@@ -421,6 +436,7 @@ onMounted(() => {
 }
 
 .result-container {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -454,6 +470,12 @@ onMounted(() => {
 .item span:last-child {
   white-space: nowrap;
 }
+/* .container-cards {
+  width: 90%;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+} */
 .cards {
   width: 90%;
   display: grid;
@@ -467,10 +489,6 @@ onMounted(() => {
   padding-bottom: 10px;
 }
 
-.pagination {
-  margin-top: 20px;
-}
-
 .items {
   display: flex;
   flex-direction: column;
@@ -480,5 +498,20 @@ onMounted(() => {
 .disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+.title-result {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  padding-left: 2%;
+  padding-bottom: 10px ;
+  width: 93%;
+}
+
+.size-input {
+  width: 100%;
+}
+
+.pagination {
+  margin-top: 10px;
 }
 </style>

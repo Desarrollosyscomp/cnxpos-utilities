@@ -324,6 +324,7 @@ const loadAccountsReceivable = async () => {
 };
 
 const onBack = () => {
+  accountsPayableReceivableStore.page = 1
   params.value = true;
   rangeDates.value = {
     init_date: "",

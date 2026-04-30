@@ -29,5 +29,6 @@ export const useRangeSalesStore = defineStore("range-sales", {
         data: response?.data.response,
       };
     },
+
   },
 });

@@ -178,10 +178,10 @@
             <h3 class="web-reporter-title text-contrast">UPS!</h3>
             <span
               >No se encontraron <br />
-              ventas en esa fecha <br />
-              ¡Intenta con otra!</span
+              ventas en esa fecha. <br />
+              <b>¡Intenta con otra!</b></span
             >
-            <div align="center">
+            <div align="center" class="padding-button">
               <button class="form-button-2" @click="onBack()">Regresar</button>
             </div>
           </div>
@@ -404,6 +404,7 @@ const onChangePage = (emmited: any) => {
 };
 
 const onBack = () => {
+  rangeSalesStore.page = 1
   params.value = true;
   rangeDates.value = {
     init_date: "",
@@ -610,11 +611,11 @@ li {
   --border-color: var(--color-contrast);
   --background: var(--color-primary-light);
   --triangle-size: 1;
-  --triangle-x: 50px;
+  --triangle-x: 80px;
 
   color: var(--color-contrast);
-  font-size: calc(12px * var(--font-size-proportion));
-  width: 50%;
+  font-size: calc(15px * var(--font-size-proportion));
+  width: 60%;
   line-height: calc(24px * var(--line-height-proportion));
   text-align: center;
 }
@@ -631,6 +632,10 @@ li {
   justify-content: end;
   width: 100%;
   padding-top: 5px;
+}
+
+.padding-button{
+  padding-top: 10px;
 }
 
 .card-container {

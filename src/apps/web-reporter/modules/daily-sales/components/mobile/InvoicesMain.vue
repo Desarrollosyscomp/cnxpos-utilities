@@ -4,10 +4,10 @@
     <div class="invoice-container">
       <div
         class="back-button clickable"
-        @click="router.push('/web-report-v2/daily-sales')"
+        @click="back()"
       >
         <Icon :path="mdiArrowLeftCircle" class="back-icon" />
-        <span>Informe de ventas por día</span>
+        <span>Regresar</span>
       </div>
       <div class="invoice-title">
         <h3>Facturas del día</h3>
@@ -42,11 +42,11 @@
           </p>
         </div>
       </div> -->
-      <div class="search-container">
+      <!-- <div class="search-container">
         <div class="date-field">
           <input placeholder="Buscar" class="form-input size-input" />
         </div>
-      </div>
+      </div> -->
       <div class="daily-sales-container">
         <div class="cards-container">
           <Card dark>
@@ -203,7 +203,7 @@ const setInvoices = async () => {
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;
-    setInvoices();
+    appStore.afterLoading(setInvoices);
   }
 };
 
@@ -213,6 +213,11 @@ const openModalPaymentMethods = () => {
 
 const closeModal = () => {
   openModal.value = false;
+};
+
+const back = () => {
+  router.push('/web-report-v2/daily-sales');
+  dailySalesStore.page = 1;
 };
 
 onMounted(() => {

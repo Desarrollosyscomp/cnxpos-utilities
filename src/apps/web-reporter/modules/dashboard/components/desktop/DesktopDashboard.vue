@@ -24,7 +24,7 @@
           </div>
           <div class="value">
             <span>{{
-              numberToCurrency(summaryDashboard?.salesDay?.totalSales)
+              numberToCurrency(summaryDashboard?.salesDay?.totalSales || 0)
             }}</span>
           </div>
         </div>
@@ -35,7 +35,7 @@
           </div>
           <div class="value">
             <span>{{
-              numberToCurrency(summaryDashboard?.payablePortfolio?.pendingPaid)
+              numberToCurrency(summaryDashboard?.payablePortfolio?.pendingPaid || 0)
             }}</span>
           </div>
         </div>
@@ -47,7 +47,7 @@
           <div class="value">
             <span>{{
               numberToCurrency(
-                summaryDashboard?.receivablePortfolio?.pendingPaid
+                summaryDashboard?.receivablePortfolio?.pendingPaid || 0
               )
             }}</span>
           </div>
@@ -94,18 +94,32 @@ const setDashboardSummary = async () => {
   extractDatesOfCumulativeSales();
   extractValuesOfCumulativeSales();
 };
-const extractDatesOfCumulativeSales = async () => {
-  dates.value = cumulativeSales.value.map((item: any) => {
-    const date = item.date.toString();
-    const formatted = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(
-      6,
-      8
-    )}`;
-    return formatted;
-  });
+const extractDatesOfCumulativeSales = () => {
+  const uniqueDates = [
+    ...new Set(
+      cumulativeSales.value.map((item: any) => {
+        const date = item.date.toString();
+
+        return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
+      })
+    ),
+  ];
+
+  dates.value = uniqueDates;
 };
 const extractValuesOfCumulativeSales = () => {
-  values.value = cumulativeSales.value.map((item: any) => item.totalSales);
+  const grouped = cumulativeSales.value.reduce(
+    (acc: Record<string, number>, item: any) => {
+      if (item.date) {
+        acc[item.date] = (acc[item.date] || 0) + item.totalSales;
+      }
+
+      return acc;
+    },
+    {}
+  );
+
+  values.value = Object.values(grouped);
 };
 
 onMounted(async () => {

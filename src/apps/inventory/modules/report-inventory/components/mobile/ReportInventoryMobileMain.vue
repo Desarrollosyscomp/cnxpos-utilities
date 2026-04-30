@@ -10,6 +10,16 @@
         <Icon :path="mdiArrowLeftCircle" class="back-icon" />
         <span>Regresar</span>
       </div>
+      <div class="search-container" v-if="inventory.length > 0">
+        <div class="date-field">
+          <input
+            placeholder="Buscar"
+            class="form-input size-input"
+            v-model="inventoryStore.search"
+            @keyup.enter="searchSales()"
+          />
+        </div>
+      </div>
       <div class="beto-message-container" v-if="params">
         <img class="beto-avatar" :src="BetoImg" />
         <div class="bubble bubble-a bubble-left">
@@ -43,7 +53,14 @@
           </CenterAndScroll>
         </div>
         <div class="flex flex-justify-center">
-          <button class="form-button-2" :class="{ disabled: !selectedWarehouse && !all_warehouses }" :disabled="!selectedWarehouse && !all_warehouses" @click="searchSales()">Buscar</button>
+          <button
+            class="form-button-2"
+            :class="{ disabled: !selectedWarehouse && !all_warehouses }"
+            :disabled="!selectedWarehouse && !all_warehouses"
+            @click="searchSales()"
+          >
+            Buscar
+          </button>
         </div>
       </div>
       <div v-if="inventory.length > 0" class="scrollable-y card-container">
@@ -207,9 +224,7 @@
         <hr />
         <div class="item">
           <span class="font-montserrat-bold">Costo inventario (ponderado)</span>
-          <span>{{
-            numberToCurrency(selectedItem.costo_ponderado)
-          }}</span>
+          <span>{{ numberToCurrency(selectedItem.costo_ponderado) }}</span>
         </div>
         <hr />
         <div class="item">
@@ -217,8 +232,10 @@
           <span>{{ numberToCurrency(selectedItem.ultimo_costo) }}</span>
         </div>
         <hr />
-        <div class="item">                                                                                     
-          <span class="font-montserrat-bold">Costo inventario (última compra)</span>
+        <div class="item">
+          <span class="font-montserrat-bold"
+            >Costo inventario (última compra)</span
+          >
           <span>{{ numberToCurrency(selectedItem.costo_total) }}</span>
         </div>
         <hr />
@@ -290,12 +307,12 @@ const all_warehouses = ref(false);
 const selectedWarehouse = ref<any>(null);
 const inventory = ref<any[]>([]);
 const summary = ref<TSummaryInventory>({
-    warehouseName: "",
-    inventoryStock: 0,
-    averageInventoryCost: 0,
-    inventoryCost: 0,
-    inventoryPrice: 0,
-    profit: 0,
+  warehouseName: "",
+  inventoryStock: 0,
+  averageInventoryCost: 0,
+  inventoryCost: 0,
+  inventoryPrice: 0,
+  profit: 0,
 });
 const warehouses_array = ref<TOptionsType[]>([]);
 const params = ref<boolean>(true);
@@ -333,6 +350,7 @@ const onChangePage = (emmited: any) => {
 const onBack = () => {
   params.value = true;
   selectedWarehouse.value = null;
+  inventoryStore.search = "";
   inventory.value = [];
 };
 
@@ -587,7 +605,9 @@ onMounted(() => {
 .disabled {
   opacity: 0.5;
 }
-
+.size-input {
+  width: 100%;
+}
 @media (min-width: 360px) {
   .font-size-title {
     --font-size: 1.1;
