@@ -23,7 +23,7 @@
           <span>Web Reporter</span>
         </div>
         <div class="menu-item" @click="router.push('/inventory/report-inventory')">
-          <Icon :path="mdiCurrencyUsd" :class="'icon'" />
+          <Icon :path="mdiTextBoxSearchOutline" :class="'icon'" />
           <span>Inventario</span>
         </div>
       </div>
@@ -55,7 +55,7 @@ import {
   mdiPencil,
   mdiHome,
   mdiExitToApp,
-  mdiCurrencyUsd,
+  mdiTextBoxSearchOutline,
 } from "@mdi/js";
 import { toggleTheme } from "../../../utils/theme-transitions";
 import { useRoute, useRouter } from "vue-router";

@@ -30,7 +30,7 @@
             class="menu-item"
             @click="router.push('/inventory/report-inventory')"
           >
-            <Icon :path="mdiCurrencyUsd" :class="'icon'" />
+            <Icon :path="mdiTextBoxSearchOutline" :class="'icon'" />
             <span>Inventario</span>
           </div>
         </div>
@@ -57,6 +57,7 @@ import {
   mdiHome,
   mdiDotsCircle,
   mdiExitToApp,
+  mdiTextBoxSearchOutline,
 } from "@mdi/js";
 import { toggleTheme, visible } from "../utils/theme-transitions";
 import ThemeModeIcon from "../assets/general/icons/ThemeModeIcon.vue";

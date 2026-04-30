@@ -16,7 +16,7 @@
           <span>Web Reporter</span>
         </div>
         <div class="item" @click="router.push('/inventory/report-inventory')">
-          <Icon :path="mdiCurrencyUsd" :class="'icon'" />
+          <Icon :path="mdiTextBoxSearchOutline" :class="'icon'" />
           <span>Reporte de inventario</span>
         </div>
       </div>
@@ -25,7 +25,7 @@
 
 </template>
 <script setup>
-import { mdiFileChart, mdiChartBar, mdiCurrencyUsd } from "@mdi/js";
+import { mdiFileChart, mdiChartBar, mdiCurrencyUsd, mdiTextBoxSearchOutline } from "@mdi/js";
 import Icon from "../../../../components/Icon.vue";
 import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue";
 import { useRoute, useRouter } from "vue-router";
