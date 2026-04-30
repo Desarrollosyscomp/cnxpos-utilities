@@ -17,7 +17,7 @@
           <span class="item-label font-montserrat-medium">Web Reporter</span>
         </div>      
         <div class="item" @click="router.push('/inventory/report-inventory')">
-          <Icon :path="mdiCurrencyUsd" class="icon" />
+          <Icon :path="mdiTextBoxSearchOutline" class="icon" />
           <span class="item-label font-montserrat-medium">Inventario</span>
         </div>
       </div>
@@ -29,6 +29,10 @@ import {
   mdiFileChart,
   mdiChartBar,
   mdiCurrencyUsd,
+  mdiClipboard,
+  mdiClipboardList,
+  mdiClipboardListOutline,
+  mdiTextBoxSearchOutline,
 } from "@mdi/js";
 import Icon from "../../../../components/Icon.vue";
 import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue"
