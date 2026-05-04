@@ -2,10 +2,11 @@ export type TSummaryRangeSales = {
   subtotal: number;
   totalSales: number;
   totalProducts: number;
-  invoiceQuantity: number;
+  totalInvoices: number;
   totalTaxes: number;
-  totalCosts: number;
-  returns: number;
+  totalCost: number;
+  totalReturns: number;
   salesMinusReturns: number;
-  profit: number;
+  discounts: number;
+  totalProfit: number;
 };

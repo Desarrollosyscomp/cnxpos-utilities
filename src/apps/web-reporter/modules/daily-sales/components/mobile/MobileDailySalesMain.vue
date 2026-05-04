@@ -48,6 +48,11 @@
               <div class="text-container">
                 <span class="title">Resumen</span>
                 <div class="item">
+                  <span class="item-bold">Utilidad</span>
+                  <span class="color-accent">{{ numberToCurrency(summary.totalProfit) }}</span>
+                </div>
+                <hr />
+                <div class="item">
                   <span class="item-bold">Total ventas</span>
                   <span>{{ numberToCurrency(summary.totalSales) }}</span>
                 </div>
@@ -68,9 +73,15 @@
                 </div>
                 <hr />
                 <div class="item">
-                  <span class="item-bold">Utilidad</span>
-                  <span>{{ numberToCurrency(summary.totalProfit) }}</span>
+                  <span class="item-bold">Descuentos</span>
+                  <span>{{ numberToCurrency(summary.discounts) }}</span>
                 </div>
+                <hr />
+                <div class="item">
+                  <span class="item-bold">Devoluciones</span>
+                  <span>{{ numberToCurrency(summary.totalReturns) }}</span>
+                </div>
+                <hr />
                 <!-- <hr>
                 <div class="item">
                   <span class="item-bold">Metodos de pago</span>
@@ -91,7 +102,7 @@
               <div class="text-align">
                 <div class="item-2">
                   <span> <b>Subtotal</b></span>
-                  <span>{{ numberToCurrency(item.subtot) }}</span>
+                  <span>{{ numberToCurrency(item.subtotal) }}</span>
                 </div>
                 <hr />
                 <div class="item-2">
@@ -143,9 +154,26 @@
               </div>
               <hr />
               <div class="item-3">
+                <span class="item-3-bold">Facturas</span>
+                <span class="item3-value">{{ selectedItem?.cantfact }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Productos vendidos</span>
+                <span class="item3-value">{{ selectedItem?.prodvendid }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
                 <span class="item-3-bold">Subtotal</span>
                 <span class="item3-value">{{
-                  numberToCurrency(selectedItem?.subtot || 0)
+                  numberToCurrency(selectedItem?.subtotal || 0)
+                }}</span>
+              </div>
+              <hr />
+              <div class="item-3">
+                <span class="item-3-bold">Descuentos</span>
+                <span class="item3-value">{{
+                  numberToCurrency(selectedItem?.discounts || 0)
                 }}</span>
               </div>
               <hr />
@@ -157,18 +185,8 @@
               </div>
               <hr />
               <div class="item-3">
-                <span class="item-3-bold">Facturas</span>
-                <span class="item3-value">{{ selectedItem?.cantfact }}</span>
-              </div>
-              <hr />
-              <div class="item-3">
-                <span class="item-3-bold">Productos vendidos</span>
-                <span class="item3-value">{{ selectedItem?.prodvendid }}</span>
-              </div>
-              <hr />
-              <div class="item-3">
                 <span class="item-3-bold">Total</span>
-                <span class="item3-value">{{
+                <span class="item3-value color-accent font-monserrat-bold">{{
                   numberToCurrency(selectedItem?.total || 0)
                 }}</span>
               </div>
@@ -219,6 +237,7 @@ const summary = ref<TSummary>({
   totalCost: 0,
   totalProfit: 0,
   totalReturns: 0,
+  discounts: 0,
 });
 
 enum BetoState {
@@ -472,6 +491,11 @@ onMounted(async () => {
 .clean {
   font-size: calc(12px * var(--font-size));
   font-weight: bold;
+}
+
+.color-accent {
+  font-weight: bold;
+  color: var(--color-accent);
 }
 @media (min-width: 375px) {
   .item {

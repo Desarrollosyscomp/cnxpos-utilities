@@ -79,32 +79,48 @@ const setDashboardSummary = async () => {
   extractDatesOfCumulativeSales();
   extractValuesOfCumulativeSales();
 };
-const extractDatesOfCumulativeSales = () => {
-  const uniqueDates = [
-    ...new Set(
-      cumulativeSales.value.map((item: any) => {
-        const date = item.date.toString();
+// const extractDatesOfCumulativeSales = () => {
+//   const uniqueDates = [
+//     ...new Set(
+//       cumulativeSales.value.map((item: any) => {
+//         const date = item.date.toString();
 
-        return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
-      })
-    ),
-  ];
+//         return `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(6, 8)}`;
+//       })
+//     ),
+//   ];
 
-  dates.value = uniqueDates;
+//   dates.value = uniqueDates;
+// };
+// const extractValuesOfCumulativeSales = () => {
+//   const grouped = cumulativeSales.value.reduce(
+//     (acc: Record<string, number>, item: any) => {
+//       if (item.date) {
+//         acc[item.date] = (acc[item.date] || 0) + item.totalSales;
+//       }
+
+//       return acc;
+//     },
+//     {}
+//   );
+
+//   values.value = Object.values(grouped);
+// };
+
+const extractDatesOfCumulativeSales = async () => {
+  dates.value = cumulativeSales.value.map((item: any) => {
+    const date = item.date.toString();
+    const formatted = `${date.slice(0, 4)}-${date.slice(4, 6)}-${date.slice(
+      6,
+      8
+    )}`;
+    return formatted;
+  });
 };
 const extractValuesOfCumulativeSales = () => {
-  const grouped = cumulativeSales.value.reduce(
-    (acc: Record<string, number>, item: any) => {
-      if (item.date) {
-        acc[item.date] = (acc[item.date] || 0) + item.totalSales;
-      }
-
-      return acc;
-    },
-    {}
-  );
-
-  values.value = Object.values(grouped);
+  values.value = cumulativeSales.value.map((item: any) => {
+    if (item.date) return item.totalSales;
+  });
 };
 onMounted(async () => {
   appStore.afterLoading(setDashboardSummary);

@@ -4,7 +4,7 @@ export type TWarehouseDaySale = {
   fecha: string ;
   idalmacen: number;
   prodvendid: number;
-  subtot: number;
+  subtotal: number;
   ivaimp: number;
   costoacum: number;
   sumdesc: number;
@@ -24,7 +24,8 @@ export type TDetailModal = {
     fecha: string;
     idalmacen: number;
     prodvendid: number;
-    subtot: number;
+    subtotal: number;
+    discounts: number;
     costoacum: number;
     total: number;
     cantfact: number;

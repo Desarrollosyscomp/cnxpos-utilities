@@ -193,6 +193,19 @@
           />
         </div>
       </div>
+      <div
+        class="beto-message-container"
+        v-if="beto_state === BetoState.NOT_FOUND"
+      >
+        <img class="beto-avatar" :src="BetoImgSad" />
+        <div>
+          <h3 class="web-reporter-title">UPS!</h3>
+          <span
+            >No se encontraron <br />
+            registros de inventario <br />
+          </span>
+        </div>
+      </div>
     </div>
   </div>
   <Modal :openModal="modal" @close-modal="closeModal()" width="80vw">
@@ -285,6 +298,7 @@
 </template>
 <script setup lang="ts">
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
+import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
 import { onMounted, ref, watch } from "vue";
 import { useAppStore } from "../../../../../../store/app.store";
 import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
@@ -301,6 +315,12 @@ import { mdiArrowLeftCircle } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
 import type { TSummaryInventory } from "../../interfaces/summary-inventory.type";
 
+enum BetoState {
+  WELCOME = 0,
+  NOT_FOUND = 1,
+}
+
+const beto_state = ref(BetoState.WELCOME);
 const appStore = useAppStore();
 const inventoryStore = useReportInventoryStore();
 const all_warehouses = ref(false);
@@ -324,9 +344,16 @@ const searchSales = async () => {
   const response = await inventoryStore.reportInventory(
     selectedWarehouse.value?.idalmacen ?? 0
   );
+  if (response.data.list.length == 0) {
+    console.log("No se encontraron registros");
+    appStore.showLoadingScreen = false;
+    beto_state.value = BetoState.NOT_FOUND;
+    return;
+  }
   inventory.value = response.data.list;
   summary.value = response.data.summary;
   params.value = false;
+  beto_state.value = BetoState.WELCOME;
   appStore.showLoadingScreen = false;
 };
 
@@ -352,6 +379,7 @@ const onBack = () => {
   selectedWarehouse.value = null;
   inventoryStore.search = "";
   inventory.value = [];
+  beto_state.value = BetoState.WELCOME;
 };
 
 const onOpenModal = (item: any) => {

@@ -265,7 +265,7 @@
                       Este es un resumen de tu búsqueda:
                     </div>
                     <div class="summary-item">
-                      <span>Total ventas</span>
+                      <span>Total {{ selectedAccount ? "por pagar:" : "por cobrar:" }}</span>
                       <span>{{
                         selectedAccount
                           ? numberToCurrency(summaryAccountsPayable.pendingPaid)
@@ -275,7 +275,7 @@
                       }}</span>
                     </div>
                     <div class="summary-item">
-                      <span>Total productos</span>
+                      <span>Total abonos:</span>
                       <span>{{
                         selectedAccount
                           ? numberToCurrency(summaryAccountsPayable.totalPayed)

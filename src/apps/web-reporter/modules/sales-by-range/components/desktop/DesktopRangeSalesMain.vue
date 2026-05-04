@@ -174,16 +174,20 @@
                 </div>
                 <div class="summary-item">
                   <span>Total facturas</span>
-                  <span>{{ summary.invoiceQuantity }}</span>
+                  <span>{{ summary.totalInvoices }}</span>
                 </div>
                 <div class="summary-item">
                   <span>Costo</span>
-                  <span>{{ numberToCurrency(summary.totalCosts) }}</span>
+                  <span>{{ numberToCurrency(summary.totalCost) }}</span>
                 </div>
                 <div class="summary-item">
                   <span>Devoluciones</span>
-                  <span>{{ numberToCurrency(summary.returns) }}</span>
+                  <span>{{ numberToCurrency(summary.totalReturns) }}</span>
                 </div>
+                <!-- <div class="summary-item">
+                  <span>Total descuentos</span>
+                  <span>{{ numberToCurrency(summary.discounts) }}</span>
+                </div> -->
                 <div class="summary-item">
                   <span>Total ventas</span>
                   <span>{{ numberToCurrency(summary.totalSales) }}</span>
@@ -194,7 +198,7 @@
                 </div>
                 <div class="summary-item">
                   <span>Utilidad</span>
-                  <span class="font-montserrat-bold color-accent">{{ numberToCurrency(summary.profit) }}</span>
+                  <span class="font-montserrat-bold color-accent">{{ numberToCurrency(summary.totalProfit) }}</span>
                 </div>
               </CardContent>
             </Card>
@@ -243,12 +247,13 @@ let summary = ref<TSummaryRangeSales>({
   subtotal: 0,
   totalSales: 0,
   totalProducts: 0,
-  invoiceQuantity: 0,
+  totalInvoices: 0,
   totalTaxes: 0,
-  totalCosts: 0,
-  returns: 0,
+  totalCost: 0,
+  totalReturns: 0,
   salesMinusReturns: 0,
-  profit: 0,
+  totalProfit: 0,
+  discounts: 0,
 });
 let params = ref<boolean>(true);
 const rangeSalesStore = useRangeSalesStore();

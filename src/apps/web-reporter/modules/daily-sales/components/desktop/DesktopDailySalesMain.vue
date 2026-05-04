@@ -56,6 +56,7 @@
                   <th class="text-center">Facturas</th>
                   <th class="text-center">Productos vendidos</th>
                   <th class="text-center">Costo</th>
+                  <!-- <th class="text-center">Descuentos</th> -->
                   <th class="text-center">Subtotal</th>
                   <th class="text-right">Total</th>
                 </tr>
@@ -71,11 +72,14 @@
                   <td class="text-center">
                     {{ numberToCurrency(sale.costoacum) }}
                   </td>
+                  <!-- <td class="text-center">
+                    {{ numberToCurrency(sale.sumdesc) }}
+                  </td> -->
                   <td class="text-center">
-                    {{ numberToCurrency(sale.subtot) }}
+                    {{ numberToCurrency(sale.subtotal || 0) }}
                   </td>
                   <td class="text-center">
-                    {{ numberToCurrency(sale.total) }}
+                    {{ numberToCurrency(sale.total || 0) }}
                   </td>
                 </tr>
               </tbody>
@@ -123,6 +127,10 @@
               <div class="summary-item">
                 <span>Total devoluciones</span>
                 <span>{{ numberToCurrency(summary.totalReturns || 0) }}</span>
+              </div>
+              <div class="summary-item">
+                <span>Total descuentos</span>
+                <span>{{ numberToCurrency(summary.discounts || 0) }}</span>
               </div>
               <div class="summary-item">
                 <span>Total ventas - devoluciones </span>
@@ -224,6 +232,7 @@
                     <th class="text-center">Fecha</th>
                     <th class="text-center">Subtotal</th>
                     <th class="text-center">Impuesto</th>
+                    <th class="text-center">Descuentos</th>
                     <th class="text-center">Valor total</th>
                   </tr>
                 </thead>
@@ -245,6 +254,9 @@
                     </td>
                     <td class="text-center">
                       {{ numberToCurrency(invoice.valimpuesto) }}
+                    </td>
+                    <td class="text-center">
+                      {{ numberToCurrency(invoice.valdescuentos || 0) }}
                     </td>
                     <td class="text-center">
                       {{ numberToCurrency(invoice.valortotal) }}
@@ -369,6 +381,7 @@ const summary = ref<TSummary>({
   totalCost: 0,
   totalProfit: 0,
   totalReturns: 0,
+  discounts: 0,
 });
 
 const summaryInvoices = ref<TSummaryInvoices>({

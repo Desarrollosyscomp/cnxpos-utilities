@@ -79,13 +79,23 @@
               </div>
               <hr />
               <div class="item">
-                <span class="font-montserrat-bold">Subtotal</span>
-                <span>{{ numberToCurrency(summary?.subtotal) }}</span>
+                <span class="font-montserrat-bold">Productos vendidos</span>
+                <span>{{ summary.totalProducts }}</span>
+              </div>
+              <hr />
+              <div class="item">
+                <span class="font-montserrat-bold">Total facturas</span>
+                <span>{{ summary.totalInvoices }}</span>
               </div>
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold">IVA</span>
                 <span>{{ numberToCurrency(summary?.totalTaxes) }}</span>
+              </div>
+              <hr />
+              <div class="item">
+                <span class="font-montserrat-bold">Subtotal</span>
+                <span>{{ numberToCurrency(summary?.subtotal) }}</span>
               </div>
               <hr />
               <div class="item">
@@ -95,7 +105,12 @@
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold">Total en devoluciones</span>
-                <span>{{ numberToCurrency(summary.returns) }}</span>
+                <span>{{ numberToCurrency(summary.totalReturns) }}</span>
+              </div>
+              <hr />
+              <div class="item">
+                <span class="font-montserrat-bold">Total costos</span>
+                <span>{{ numberToCurrency(summary.totalCost) }}</span>
               </div>
               <hr />
               <div class="item">
@@ -106,23 +121,8 @@
               </div>
               <hr />
               <div class="item">
-                <span class="font-montserrat-bold">Total costos</span>
-                <span>{{ numberToCurrency(summary.totalCosts) }}</span>
-              </div>
-              <hr />
-              <div class="item">
-                <span class="font-montserrat-bold">Productos vendidos</span>
-                <span>{{ summary.totalProducts }}</span>
-              </div>
-              <hr />
-              <div class="item">
-                <span class="font-montserrat-bold">Total facturas</span>
-                <span>{{ summary.invoiceQuantity }}</span>
-              </div>
-              <hr />
-              <div class="item">
                 <span class="font-montserrat-bold">Utilidad</span>
-                <span>{{ numberToCurrency(summary.profit) }}</span>
+                <span>{{ numberToCurrency(summary.totalProfit) }}</span>
               </div>
               <hr />
             </div>
@@ -348,12 +348,13 @@ let summary = ref<TSummaryRangeSales>({
   subtotal: 0,
   totalSales: 0,
   totalProducts: 0,
-  invoiceQuantity: 0,
+  totalInvoices: 0,
   totalTaxes: 0,
-  totalCosts: 0,
-  returns: 0,
+  totalCost: 0,
+  totalReturns: 0,
   salesMinusReturns: 0,
-  profit: 0,
+  totalProfit: 0,
+  discounts: 0,
 });
 let params = ref<boolean>(true);
 const rangeSalesStore = useRangeSalesStore();
