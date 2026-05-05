@@ -4,12 +4,16 @@ import type { Chart } from "chart.js";
 
 export function useChartTheme(chartRef: () => Chart | null) {
   const appStore = useAppStore();
-
   const applyTheme = (chart: Chart, isDark: boolean) => {
+    // title
+    if (chart.options.plugins?.title) {
+      chart.options.plugins.title.color = isDark ? "#ffffff" : "#541811";
+    }
     // legend
     if (chart.options.plugins?.legend?.labels) {
-      chart.options.plugins.legend.labels.color =
-        isDark ? "#ffffff" : "#000000";
+      chart.options.plugins.legend.labels.color = isDark
+        ? "#ffffff"
+        : "#000000";
     }
 
     // scales
