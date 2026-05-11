@@ -14,15 +14,24 @@
     </span>
 
     <!-- PASSWORD -->
+    <div class="password-input">
     <input
-      class="form-input"
+      class="form-input size-input"
       :type="showPassword ? 'text' : 'password'"
       placeholder="Contraseña"
       v-model="authForm.password"
       @blur="handleBlur('password')"
       @input="validateField('password')"
       @keyup.enter="onSubmit"
-    />
+      />
+      <div class="eye-icon-container">
+        <Icon
+        :path="showPassword ? mdiEyeOff : mdiEye"
+        class="eye-icon clickable"
+        @click="showPassword = !showPassword"
+        />
+      </div>
+    </div>
     <span v-if="touched.password && errors.password" class="error-text">
       {{ errors.password }}
     </span>
@@ -49,6 +58,11 @@ import { createAlertCore } from "../../../../components/beauty-alert/factory";
 // import { vanillaAdapters as adapters} from "../../../../components/beauty-alert/adapters/vanilla";
 import { vueAdapters as vueAdapters } from "../../../../components/beauty-alert/adapters/vue";
 import { useAppStore } from "../../../../store/app.store";
+import Icon from "../../../../components/Icon.vue";
+import {
+  mdiEye,
+  mdiEyeOff,
+} from "@mdi/js";
 
 // estado
 const showPassword = ref(false);
@@ -119,7 +133,7 @@ const onSubmit = async () => {
         title: "Error",
         message: response.data,
         time: 5,
-      }); 
+      });
       console.log(r);
     }
   } catch (e: any) {
@@ -164,6 +178,36 @@ const onSubmit = async () => {
   font-size: 12px;
 }
 
+.eye-icon-container{
+  width: 22px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 50px;
+}
+
+.eye-icon {
+  width: 22px;
+  fill: var(--color-contrast);
+  cursor: pointer;
+}
+
+.eye-icon:focus,
+.eye-icon:active {
+  outline: none;
+  box-shadow: none;
+  outline: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.password-input {
+  display: flex;
+}
+.size-input{
+  width: 100%;
+}
 /* opcional: borde rojo si hay error */
 /* .form-input {
   border: 1px solid #ccc;

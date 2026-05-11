@@ -90,7 +90,7 @@
           <Card v-for="(invoice, index) in invoices" :key="index">
             <CardContent>
               <div class="text-container">
-                <span>Factura #{{ invoice.idfactura }}</span>
+                <span>Factura #{{ invoice.numero }}</span>
                 <div class="item">
                   <span class="item-bold">Fecha</span>
                   <span>{{ formatDateWithHyphen(invoice.fecha) }}</span>
@@ -216,7 +216,8 @@ const closeModal = () => {
 };
 
 const back = () => {
-  router.push('/web-report-v2/daily-sales');
+  // router.push('/web-report-v2/daily-sales');
+  router.go(-1);
   dailySalesStore.page = 1;
 };
 

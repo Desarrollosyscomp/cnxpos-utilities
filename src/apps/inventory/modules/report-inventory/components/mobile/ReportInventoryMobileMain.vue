@@ -105,7 +105,7 @@
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold font-size-title"
-                  >Precio inventario</span
+                  >Inventario valorizado (Incluido IVA)</span
                 >
                 <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
               </div>

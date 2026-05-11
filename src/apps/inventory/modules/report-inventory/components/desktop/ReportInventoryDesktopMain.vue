@@ -193,7 +193,7 @@
                 </div>
                 <div class="item">
                   <span class="font-montserrat-bold text-contrast"
-                    >Valorizado</span
+                    >Valorizado (Incluido IVA)</span
                   >
                   <span>{{ numberToCurrency(inventoryItem.valorizado) }}</span>
                 </div>
