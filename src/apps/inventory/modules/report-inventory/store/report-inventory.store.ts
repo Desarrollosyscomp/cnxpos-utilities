@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { reportInventoryService } from "../services/report-inventory.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
 
-export const useReportInventoryStore = defineStore("daily-sales", {
+export const useReportInventoryStore = defineStore("report-inventory", {
   state: () => ({
     page: 1,
     limit: 6,

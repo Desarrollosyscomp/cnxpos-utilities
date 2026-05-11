@@ -321,8 +321,8 @@ enum BetoState {
 }
 
 const beto_state = ref(BetoState.WELCOME);
-const appStore = useAppStore();
 const inventoryStore = useReportInventoryStore();
+const appStore = useAppStore();
 const all_warehouses = ref(false);
 const selectedWarehouse = ref<any>(null);
 const inventory = ref<any[]>([]);
@@ -398,7 +398,10 @@ watch(all_warehouses, (val) => {
 });
 
 onMounted(() => {
-  appStore.afterLoading(loadWarehouses);
+  appStore.showLoadingScreen = true;
+  loadWarehouses();
+  appStore.showLoadingScreen = false;
+  // searchSales();
 });
 </script>
 <style scoped>
