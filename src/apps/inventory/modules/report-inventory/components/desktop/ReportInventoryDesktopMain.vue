@@ -62,23 +62,28 @@
           <hr />
           <div class="item">
             <span class="font-montserrat-bold font-size-title"
-              >Costo inventario (pond)</span
+              >Costo inventario (pond) antes de impuestos</span
             >
             <span>{{ numberToCurrency(summary?.averageInventoryCost) }}</span>
           </div>
           <hr />
           <div class="item">
             <span class="font-montserrat-bold font-size-title"
-              >Costo inventario (UC)</span
+              >Costo inventario (UC) antes de impuestos</span
             >
             <span>{{ numberToCurrency(summary?.inventoryCost) }}</span>
           </div>
           <hr />
           <div class="item">
             <span class="font-montserrat-bold font-size-title"
-              >Precio inventario</span
+              >Inventario Valorizado (incluido IVA)</span
             >
             <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
+          </div>
+          <hr />
+          <div class="item">
+            <span class="font-montserrat-bold font-size-title">Utilidad</span>
+            <span>{{ numberToCurrency(summary?.profit) }}</span>
           </div>
           <hr />
         </div>
@@ -135,71 +140,82 @@
             v-model="reportInventoryStore.search"
             @keyup.enter="searchSales()"
           />
+          <div class="eye-icon-container">
+            <Icon
+              :path="mdiMagnify"
+              class="eye-icon clickable"
+              @click="searchSales()"
+            />
+          </div>
         </div>
       </div>
-        <div class="cards">
-          <Card v-for="(inventoryItem, index) in inventory" :key="index">
-            <CardContent>
-              <div class="main-title-table">
-                <span class="font-montserrat-bold">{{
-                  inventoryItem.descripcion
-                }}</span>
-                <span class="font-size-title font-montserrat-medium">{{
-                  inventoryItem.nombre_almacen
+      <div class="cards">
+        <Card v-for="(inventoryItem, index) in inventory" :key="index">
+          <CardContent>
+            <div class="main-title-table">
+              <span class="font-montserrat-bold">{{
+                inventoryItem.descripcion
+              }}</span>
+              <span class="font-size-title font-montserrat-medium">{{
+                inventoryItem.nombre_almacen
+              }}</span>
+            </div>
+            <div class="items">
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast">Cantidad</span>
+                <span>{{ inventoryItem.cantidad }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast">Código</span>
+                <span>{{ inventoryItem.codigo || "N/A" }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast">Barras</span>
+                <span>{{ inventoryItem.barcode || "N/A" }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast"
+                  >Costo ponderado</span
+                >
+                <span>{{ numberToCurrency(inventoryItem.costo) }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast"
+                  >Costo inventario (ponderado)</span
+                >
+                <span>{{
+                  numberToCurrency(inventoryItem.costo_ponderado)
                 }}</span>
               </div>
-              <div class="items">
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast">Cantidad</span>
-                  <span>{{ inventoryItem.cantidad }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast">Código</span>
-                  <span>{{ inventoryItem.codigo || "N/A" }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast">Barras</span>
-                  <span>{{ inventoryItem.barcode || "N/A" }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast"
-                    >Costo ponderado</span
-                  >
-                  <span>{{ numberToCurrency(inventoryItem.costo) }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast"
-                    >Costo inventario (ponderado)</span
-                  >
-                  <span>{{
-                    numberToCurrency(inventoryItem.costo_ponderado)
-                  }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast"
-                    >Costo (última compra)</span
-                  >
-                  <span>{{ numberToCurrency(inventoryItem.costo_total) }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast"
-                    >Costo inventario (última compra)</span
-                  >
-                  <span>{{ numberToCurrency(inventoryItem.ultimo_costo) }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast">Precio</span>
-                  <span>{{ numberToCurrency(inventoryItem.precio_venta) }}</span>
-                </div>
-                <div class="item">
-                  <span class="font-montserrat-bold text-contrast"
-                    >Valorizado (Incluido IVA)</span
-                  >
-                  <span>{{ numberToCurrency(inventoryItem.valorizado) }}</span>
-                </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast"
+                  >Costo (última compra)</span
+                >
+                <span>{{ numberToCurrency(inventoryItem.ultimo_costo) }}</span>
               </div>
-            </CardContent>
-          </Card>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast"
+                  >Costo inventario (última compra)</span
+                >
+                <span>{{ numberToCurrency(inventoryItem.costo_total) }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast">Precio</span>
+                <span>{{ numberToCurrency(inventoryItem.precio_venta) }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast">Valor IVA</span>
+                <span>{{ numberToCurrency(inventoryItem.valor_iva) }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast"
+                  >Valorizado (Antes de IVA)</span
+                >
+                <span>{{ numberToCurrency(inventoryItem.valorizado) }}</span>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
       <div align="center" class="pagination">
         <Paginator
@@ -231,6 +247,8 @@ import CardContent from "../../../../../web-reporter/modules/daily-sales/compone
 import Paginator from "../../../../../../components/Paginator.vue";
 import { useReportInventoryStore } from "../../store/report-inventory.store";
 import type { TSummaryInventory } from "../../interfaces/summary-inventory.type";
+import Icon from "../../../../../../components/Icon.vue";
+import { mdiMagnify } from "@mdi/js";
 
 // enum PageState {
 //   BETO_MESSAGE = 0,
@@ -303,7 +321,7 @@ watch(all_warehouses, (val) => {
 });
 
 onMounted(() => {
-  reportInventoryStore.search = ""
+  reportInventoryStore.search = "";
   loadWarehouses();
 });
 </script>
@@ -503,7 +521,7 @@ onMounted(() => {
   display: grid;
   grid-template-columns: 2fr 1fr;
   padding-left: 2%;
-  padding-bottom: 10px ;
+  padding-bottom: 10px;
   width: 93%;
 }
 
@@ -513,5 +531,20 @@ onMounted(() => {
 
 .pagination {
   margin-top: 10px;
+}
+
+.eye-icon-container {
+  width: 25px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 10px;
+}
+
+.eye-icon {
+  width: 22px;
+  fill: var(--color-contrast);
+  cursor: pointer;
 }
 </style>

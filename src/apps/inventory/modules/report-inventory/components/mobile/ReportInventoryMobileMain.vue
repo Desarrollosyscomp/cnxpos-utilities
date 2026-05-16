@@ -89,7 +89,7 @@
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold font-size-title"
-                  >Costo inventario (pond)</span
+                  >Costo inventario (pond) antes de IVA</span
                 >
                 <span>{{
                   numberToCurrency(summary?.averageInventoryCost)
@@ -98,14 +98,14 @@
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold font-size-title"
-                  >Costo inventario (UC)</span
+                  >Costo inventario (UC) antes de IVA</span
                 >
                 <span>{{ numberToCurrency(summary?.inventoryCost) }}</span>
               </div>
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold font-size-title"
-                  >Inventario valorizado (Incluido IVA)</span
+                  >Inventario valorizado (antes de IVA)</span
                 >
                 <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
               </div>
@@ -147,7 +147,7 @@
                   </div>
                   <div class="row-down">
                     <div class="item-box">
-                      <span class="font-montserrat-medium">Precio venta</span>
+                      <span class="font-montserrat-medium">Precio venta (Incluido IVA)</span>
                       <span class="subtitle font-montserrat-bold">{{
                         numberToCurrency(item.precio_venta)
                       }}</span>
@@ -155,19 +155,25 @@
                   </div>
                 </div>
                 <div class="box-right">
-                  <div class="row-up">
+                  <div class="row-down">
                     <div class="item-box">
-                      <span class="font-montserrat-medium">Valorizado</span>
+                      <span class="font-montserrat-medium">Costo (Sin IVA)</span>
                       <span class="subtitle font-montserrat-bold">{{
-                        numberToCurrency(item.valorizado)
+                        numberToCurrency(item.costo)
+                      }}</span>
+                    </div>
+                    <div class="item-box">
+                      <span class="font-montserrat-medium">Valor IVA</span>
+                      <span class="subtitle font-montserrat-bold">{{
+                        numberToCurrency(item.valor_iva)
                       }}</span>
                     </div>
                   </div>
-                  <div class="row-down">
+                  <div class="row-up">
                     <div class="item-box">
-                      <span class="font-montserrat-medium">Costo</span>
+                      <span class="font-montserrat-medium">Valorizado (Antes de IVA)</span>
                       <span class="subtitle font-montserrat-bold">{{
-                        numberToCurrency(item.costo)
+                        numberToCurrency(item.valorizado)
                       }}</span>
                     </div>
                   </div>
