@@ -609,7 +609,7 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  max-height: 300px;
+  max-height: 70vh;
 } 
 
 </style>
