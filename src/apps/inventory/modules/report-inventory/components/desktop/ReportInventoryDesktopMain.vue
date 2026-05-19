@@ -5,45 +5,47 @@
       <div
         class="form-container corners spaces-padding container-background scrollable-y"
       >
-        <div class="font-montserrat-bold text-contrast">
-          Generar nuevo reporte
-        </div>
-        <div class="checkbox-container">
-          <input
-            class="input-checkbox"
-            type="checkbox"
-            id="all-warehouses"
-            v-model="all_warehouses"
-          />
-          <label
-            class="text-contrast font-montserrat-medium"
-            @click="all_warehouses = !all_warehouses"
-            >Todos los almacenes</label
-          >
-        </div>
-        <div class="flex flex-column">
-          <CenterAndScroll>
-            <RadioLabels
-              :options="warehouses_array"
-              :disabled="all_warehouses"
-              @checked-option="
-                (meta) => {
-                  selectedWarehouse = meta;
-                }
-              "
+      <div class="font-montserrat-bold text-contrast">
+        Generar nuevo reporte
+      </div>
+        <div class="warehouses-container scrollable-y">
+          <div class="checkbox-container">
+            <input
+              class="input-checkbox"
+              type="checkbox"
+              id="all-warehouses"
+              v-model="all_warehouses"
             />
-          </CenterAndScroll>
+            <label
+              class="text-contrast font-montserrat-medium"
+              @click="all_warehouses = !all_warehouses"
+              >Todos los almacenes</label
+            >
+          </div>
+          <div class="flex flex-column">
+            <CenterAndScroll>
+              <RadioLabels
+                :options="warehouses_array"
+                :disabled="all_warehouses"
+                @checked-option="
+                  (meta) => {
+                    selectedWarehouse = meta;
+                  }
+                "
+              />
+            </CenterAndScroll>
+          </div>
         </div>
-        <div class="flex flex-justify-center">
-          <button
-            class="form-button"
-            @click="searchSales()"
-            :class="{ disabled: !selectedWarehouse && !all_warehouses }"
-            :disabled="!selectedWarehouse && !all_warehouses"
-          >
-            Buscar
-          </button>
-        </div>
+          <div class="flex flex-justify-center ">
+            <button
+              class="form-button"
+              @click="searchSales()"
+              :class="{ disabled: !selectedWarehouse && !all_warehouses }"
+              :disabled="!selectedWarehouse && !all_warehouses"
+            >
+              Buscar
+            </button>
+          </div>
       </div>
       <div class="helper-container corners spaces-padding container-background">
         <div class="font-montserrat-bold text-contrast">Resumen</div>
@@ -53,28 +55,28 @@
           >
         </div>
         <div class="summary-items" v-else>
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title"
               >Existencias de inventario</span
             >
             <span>{{ summary?.inventoryStock }}</span>
           </div>
           <hr />
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title"
               >Costo inventario (pond) antes de impuestos</span
             >
             <span>{{ numberToCurrency(summary?.averageInventoryCost) }}</span>
           </div>
           <hr />
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title"
               >Costo inventario (UC) antes de impuestos</span
             >
             <span>{{ numberToCurrency(summary?.inventoryCost) }}</span>
           </div>
           <hr />
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title"
               >Total IVA compras</span
             >
@@ -83,21 +85,23 @@
             }}</span>
           </div>
           <hr />
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title"
               >Total IVA ventas</span
             >
-            <span class="clickable">{{ numberToCurrency(summary?.totalSalesIva) }}</span>
+            <span class="clickable">{{
+              numberToCurrency(summary?.totalSalesIva)
+            }}</span>
           </div>
           <hr />
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title"
               >Inventario Valorizado (antes de IVA)</span
             >
             <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
           </div>
           <hr />
-          <div class="item">
+          <div class="item-2">
             <span class="font-montserrat-bold font-size-title">Utilidad</span>
             <span>{{ numberToCurrency(summary?.profit) }}</span>
           </div>
@@ -418,7 +422,7 @@ onMounted(() => {
   max-height: 70vh;
   display: flex;
   flex-direction: column;
-  gap: 25px;
+  gap: 10px;
 }
 
 .helper-container {
@@ -509,7 +513,12 @@ onMounted(() => {
   color: var(--color-contrast);
   font-size: calc(12px * var(--font-size));
   display: flex;
-  align-items: center;
+}
+.item-2 {
+  color: var(--color-contrast);
+  font-size: calc(12px * var(--font-size));
+  display: flex;
+  justify-content: space-between;
 }
 
 .item span:first-child {
@@ -595,4 +604,12 @@ onMounted(() => {
   fill: var(--color-contrast);
   cursor: pointer;
 }
+
+.warehouses-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-height: 300px;
+} 
+
 </style>
