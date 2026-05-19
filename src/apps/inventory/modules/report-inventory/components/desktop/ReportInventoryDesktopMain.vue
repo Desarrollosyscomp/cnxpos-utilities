@@ -21,7 +21,7 @@
             >Todos los almacenes</label
           >
         </div>
-        <div class="scrollable-y flex flex-column">
+        <div class="flex flex-column">
           <CenterAndScroll>
             <RadioLabels
               :options="warehouses_array"
@@ -76,7 +76,23 @@
           <hr />
           <div class="item">
             <span class="font-montserrat-bold font-size-title"
-              >Inventario Valorizado (incluido IVA)</span
+              >Total IVA compras</span
+            >
+            <span class="clickable">{{
+              numberToCurrency(summary?.totalPurchasesIva)
+            }}</span>
+          </div>
+          <hr />
+          <div class="item">
+            <span class="font-montserrat-bold font-size-title"
+              >Total IVA ventas</span
+            >
+            <span class="clickable">{{ numberToCurrency(summary?.totalSalesIva) }}</span>
+          </div>
+          <hr />
+          <div class="item">
+            <span class="font-montserrat-bold font-size-title"
+              >Inventario Valorizado (antes de IVA)</span
             >
             <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
           </div>
@@ -149,7 +165,7 @@
           </div>
         </div>
       </div>
-      <div class="cards">
+      <div :class="'cards'">
         <Card v-for="(inventoryItem, index) in inventory" :key="index">
           <CardContent>
             <div class="main-title-table">
@@ -204,8 +220,16 @@
                 <span>{{ numberToCurrency(inventoryItem.precio_venta) }}</span>
               </div>
               <div class="item">
-                <span class="font-montserrat-bold text-contrast">Valor IVA</span>
+                <span class="font-montserrat-bold text-contrast"
+                  >Valor IVA ventas</span
+                >
                 <span>{{ numberToCurrency(inventoryItem.valor_iva) }}</span>
+              </div>
+              <div class="item">
+                <span class="font-montserrat-bold text-contrast"
+                  >Valor IVA compras</span
+                >
+                <span>{{ numberToCurrency(inventoryItem.iva_compras) }}</span>
               </div>
               <div class="item">
                 <span class="font-montserrat-bold text-contrast"
@@ -230,6 +254,9 @@
       </div>
     </div>
   </div>
+  <!-- <Modal :openModal="isOpenModal" @close-modal="closeModal" width="50%">
+    detalles iva
+  </Modal> -->
 </template>
 <script setup lang="ts">
 import { onMounted, ref, watch } from "vue-demi";
@@ -249,6 +276,7 @@ import { useReportInventoryStore } from "../../store/report-inventory.store";
 import type { TSummaryInventory } from "../../interfaces/summary-inventory.type";
 import Icon from "../../../../../../components/Icon.vue";
 import { mdiMagnify } from "@mdi/js";
+// import Modal from "../../../../../../components/Modal.vue";
 
 // enum PageState {
 //   BETO_MESSAGE = 0,
@@ -273,8 +301,11 @@ let summary = ref<TSummaryInventory>({
   inventoryCost: 0,
   inventoryPrice: 0,
   profit: 0,
+  totalPurchasesIva: 0,
+  totalSalesIva: 0,
 });
 let params = ref<boolean>(true);
+// let isOpenModal = ref<boolean>(false);
 const reportInventoryStore = useReportInventoryStore();
 
 const appStore = useAppStore();
@@ -314,6 +345,15 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+// const openModal = () => {
+//   console.log("open modal");
+//   isOpenModal.value = true;
+// };
+
+// const closeModal = () => {
+//   isOpenModal.value = false;
+// };
+
 watch(all_warehouses, (val) => {
   if (val) {
     selectedWarehouse.value = null;
@@ -322,7 +362,7 @@ watch(all_warehouses, (val) => {
 
 onMounted(() => {
   reportInventoryStore.search = "";
-  loadWarehouses();
+  appStore.afterLoading(loadWarehouses);
 });
 </script>
 
@@ -363,11 +403,11 @@ onMounted(() => {
 
 .left-bar {
   margin: 10px;
-  margin-right: 5px;
+  margin-right: 15px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 100%;
+  gap: 15px;
+  width: 110%;
 }
 
 .container-background {
@@ -382,7 +422,7 @@ onMounted(() => {
 }
 
 .helper-container {
-  max-height: 400px;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -501,6 +541,13 @@ onMounted(() => {
   gap: 15px;
   padding-left: 5%;
 }
+.cards-2 {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  padding-left: 5%;
+}
 
 .font-size-title {
   font-size: calc(13px * var(--font-size));
@@ -531,6 +578,7 @@ onMounted(() => {
 
 .pagination {
   margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .eye-icon-container {

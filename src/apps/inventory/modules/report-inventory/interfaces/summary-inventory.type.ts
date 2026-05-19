@@ -5,5 +5,7 @@ export type TSummaryInventory = {
     inventoryCost: number;
     inventoryPrice: number;
     profit: number;
+    totalSalesIva: number;
+    totalPurchasesIva: number;
 }
     

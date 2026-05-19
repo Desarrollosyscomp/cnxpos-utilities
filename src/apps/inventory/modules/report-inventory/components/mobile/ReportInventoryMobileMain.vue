@@ -19,6 +19,13 @@
             @keyup.enter="searchSales()"
           />
         </div>
+        <div class="eye-icon-container">
+            <Icon
+              :path="mdiMagnify"
+              class="eye-icon clickable"
+              @click="searchSales()"
+            />
+          </div>
       </div>
       <div class="beto-message-container" v-if="params">
         <img class="beto-avatar" :src="BetoImg" />
@@ -105,6 +112,20 @@
               <hr />
               <div class="item">
                 <span class="font-montserrat-bold font-size-title"
+                  >Total IVA compras</span
+                >
+                <span>{{ numberToCurrency(summary?.totalPurchasesIva) }}</span>
+              </div>
+              <hr />
+              <div class="item">
+                <span class="font-montserrat-bold font-size-title"
+                  >Total IVA ventas</span
+                >
+                <span>{{ numberToCurrency(summary?.totalSalesIva) }}</span>
+              </div>
+              <hr />
+              <div class="item">
+                <span class="font-montserrat-bold font-size-title"
                   >Inventario valorizado (antes de IVA)</span
                 >
                 <span>{{ numberToCurrency(summary?.inventoryPrice) }}</span>
@@ -152,6 +173,12 @@
                         numberToCurrency(item.precio_venta)
                       }}</span>
                     </div>
+                    <div class="item-box">
+                      <span class="font-montserrat-medium">IVA ventas</span>
+                      <span class="subtitle font-montserrat-bold">{{
+                        numberToCurrency(item.valor_iva)
+                      }}</span>
+                    </div>
                   </div>
                 </div>
                 <div class="box-right">
@@ -163,9 +190,9 @@
                       }}</span>
                     </div>
                     <div class="item-box">
-                      <span class="font-montserrat-medium">Valor IVA</span>
+                      <span class="font-montserrat-medium">IVA compras</span>
                       <span class="subtitle font-montserrat-bold">{{
-                        numberToCurrency(item.valor_iva)
+                        numberToCurrency(item.iva_compras)
                       }}</span>
                     </div>
                   </div>
@@ -237,34 +264,34 @@
         </div>
         <hr />
         <div class="item">
-          <span class="font-montserrat-bold">Costo ponderado</span>
+          <span class="font-montserrat-bold">Costo ponderado (antes de IVA)</span>
           <span>{{ numberToCurrency(selectedItem.costo) }}</span>
         </div>
         <hr />
         <div class="item">
-          <span class="font-montserrat-bold">Costo inventario (ponderado)</span>
+          <span class="font-montserrat-bold">Costo inventario (ponderado) antes de IVA</span>
           <span>{{ numberToCurrency(selectedItem.costo_ponderado) }}</span>
         </div>
         <hr />
         <div class="item">
-          <span class="font-montserrat-bold">Costo (última compra)</span>
+          <span class="font-montserrat-bold">Costo (última compra) antes de IVA</span>
           <span>{{ numberToCurrency(selectedItem.ultimo_costo) }}</span>
         </div>
         <hr />
         <div class="item">
           <span class="font-montserrat-bold"
-            >Costo inventario (última compra)</span
+            >Costo inventario (última compra) antes de IVA</span
           >
           <span>{{ numberToCurrency(selectedItem.costo_total) }}</span>
         </div>
         <hr />
         <div class="item">
-          <span class="font-montserrat-bold">Precio</span>
+          <span class="font-montserrat-bold">Precio (Incluido IVA)</span>
           <span>{{ numberToCurrency(selectedItem.precio_venta) }}</span>
         </div>
         <hr />
         <div class="item">
-          <span class="font-montserrat-bold">Valorizado</span>
+          <span class="font-montserrat-bold">Valorizado (antes de IVA)</span>
           <span>{{ numberToCurrency(selectedItem.valorizado) }}</span>
         </div>
         <hr />
@@ -317,7 +344,7 @@ import { numberToCurrency } from "../../../../../../utils/parsers/number-currenc
 import Card from "../../../../../web-reporter/modules/daily-sales/components/Card.vue";
 import CardContent from "../../../../../web-reporter/modules/daily-sales/components/CardContent.vue";
 import Modal from "../../../../../../components/Modal.vue";
-import { mdiArrowLeftCircle } from "@mdi/js";
+import { mdiArrowLeftCircle, mdiMagnify } from "@mdi/js";
 import Icon from "../../../../../../components/Icon.vue";
 import type { TSummaryInventory } from "../../interfaces/summary-inventory.type";
 
@@ -339,6 +366,8 @@ const summary = ref<TSummaryInventory>({
   inventoryCost: 0,
   inventoryPrice: 0,
   profit: 0,
+  totalPurchasesIva: 0,
+  totalSalesIva: 0,
 });
 const warehouses_array = ref<TOptionsType[]>([]);
 const params = ref<boolean>(true);
@@ -420,6 +449,7 @@ onMounted(() => {
   --item-title-font-size: 1;
   --margin-title-bottom: 1;
   --font-size: 1;
+  --eye-icon-right: 1;
 }
 
 .container {
@@ -645,6 +675,21 @@ onMounted(() => {
 .size-input {
   width: 100%;
 }
+.eye-icon-container {
+  width: 25px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: calc(32px * var(--eye-icon-right));
+  top: 14%;
+}
+
+.eye-icon {
+  width: 22px;
+  fill: var(--color-contrast);
+  cursor: pointer;
+}
 @media (min-width: 360px) {
   .font-size-title {
     --font-size: 1.1;
@@ -653,11 +698,19 @@ onMounted(() => {
     --font-size: 1.2;
   }
 }
+@media (min-width: 430px) {
+  .eye-icon-container {
+  --eye-icon-right: 1.5;
+}
+}
 @media (min-width: 768px) {
   .title-details {
     display: flex;
     justify-content: space-between;
     padding-bottom: 10px;
+  }
+  .eye-icon-container {
+    --eye-icon-right: 2;
   }
 }
 </style>
