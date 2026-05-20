@@ -169,7 +169,7 @@
           </div>
         </div>
       </div>
-      <div :class="'cards'">
+      <div :class="inventory.length > 3 ? 'cards' : 'cards-2'">
         <Card v-for="(inventoryItem, index) in inventory" :key="index">
           <CardContent>
             <div class="main-title-table">
