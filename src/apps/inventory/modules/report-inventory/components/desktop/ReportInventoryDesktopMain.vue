@@ -439,8 +439,8 @@ onMounted(() => {
 
 .main-title {
   font-size: 20px;
-  margin-bottom: 20px;
-  text-align: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
   padding-left: 5%;
 }
 
@@ -578,6 +578,7 @@ onMounted(() => {
   grid-template-columns: 2fr 1fr;
   padding-left: 2%;
   padding-bottom: 10px;
+  padding-top: 10px;
   width: 93%;
 }
 
