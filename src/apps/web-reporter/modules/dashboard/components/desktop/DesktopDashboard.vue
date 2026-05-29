@@ -68,7 +68,7 @@
 <script setup lang="ts">
 import BarChart from "../utils/BarChart.vue";
 import { useDashboardStore } from "../../store/dashboard.store";
-import { onMounted, ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { useAppStore } from "../../../../../../store/app.store";
 const dashboardStore = useDashboardStore();
@@ -91,8 +91,8 @@ const setDashboardSummary = async () => {
     parsedInitDate,
     parsedEndDate
   );
-  summaryDashboard.value = response.data;
-  cumulativeSales.value = response.data.cumulativeSales;
+  summaryDashboard.value = response.data ?? {};
+  cumulativeSales.value = response.data?.cumulativeSales ?? [];
   extractDatesOfCumulativeSales();
   extractValuesOfCumulativeSales();
 };
@@ -141,7 +141,12 @@ const extractValuesOfCumulativeSales = () => {
 // };
 
 onMounted(async () => {
+  console.log("Mounted");
   appStore.afterLoading(setDashboardSummary);
+});
+
+onUnmounted(() => {
+  console.log("UNMOUNTED");
 });
 </script>
 <style scoped>

@@ -1,15 +1,25 @@
 <template>
-    <div class="hide-on-mobile">
-        <DesktopAccountsPayableReceivableMain />
-    </div>
-    <div class="hide-on-desktop">
-        <MobileAccountsPayableReceivableMain />
-    </div>
+    <DesktopAccountsPayableReceivableMain v-if="!isMobile"/>
+    <MobileAccountsPayableReceivableMain v-else/>
 </template>
-<script setup>
+<script setup lang="ts">
 import DesktopAccountsPayableReceivableMain from "../components/desktop/DesktopAccountsPayableReceivableMain.vue";
 import MobileAccountsPayableReceivableMain from "../components/mobile/MobileAccountsPayableReceivable.vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
+const isMobile = ref(window.innerWidth <= 768);
+
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", updateIsMobile);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateIsMobile);
+});
 </script>
 <style scoped>
 </style>

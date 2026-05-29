@@ -1,16 +1,26 @@
 <script setup lang="ts">
 // @ts-ignore
-import InventoryLayoutDesktop from './InventoryLayoutDesktop.vue';
+import { onMounted, onUnmounted, ref } from "vue";
+import InventoryLayoutDesktop from "./InventoryLayoutDesktop.vue";
 // @ts-ignore
-import InventoryLayoutMobile from './InventoryLayoutMobile.vue';
+import InventoryLayoutMobile from "./InventoryLayoutMobile.vue";
 
+const isMobile = ref(window.innerWidth <= 768);
+
+const updateIsMobile = () => {
+  isMobile.value = window.innerWidth <= 768;
+};
+
+onMounted(() => {
+  window.addEventListener("resize", updateIsMobile);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("resize", updateIsMobile);
+});
 </script>
 
 <template>
-  <span class="hide-on-desktop">
-    <InventoryLayoutMobile></InventoryLayoutMobile>
-  </span>
-  <span class="hide-on-mobile">
-    <InventoryLayoutDesktop></InventoryLayoutDesktop>
-  </span>
+  <InventoryLayoutMobile v-if="isMobile" />
+  <InventoryLayoutDesktop v-else />
 </template>

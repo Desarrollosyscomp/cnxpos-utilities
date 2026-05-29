@@ -134,6 +134,7 @@
                   )
                 }}</span>
               </div>
+              <hr>
               <div class="item-liquidation">
                 <span class="font-montserrat-medium text-contrast">Abono</span>
                 <span class="font-montserrat-bold text-contrast">{{
@@ -406,7 +407,7 @@ onMounted(() => {
   color: var(--color-contrast);
   transition: color 0.3s ease;
   transition: color 0.3s ease;
-  z-index: 999;
+  z-index: 0;
 }
 
 .tab-slider {
@@ -415,7 +416,7 @@ onMounted(() => {
   height: calc(100%);
 
   background: var(--color-accent);
-  border-radius: 10px;
+  border-radius: 7px;
 
   transition: transform 0.3s ease;
   z-index: 0;
@@ -607,6 +608,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid var(--color-contrast);
 }
 
 .item-liquidation {
