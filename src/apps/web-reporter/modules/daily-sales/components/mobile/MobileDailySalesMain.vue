@@ -53,7 +53,7 @@
                 </div>
                 <hr />
                 <div class="item">
-                  <span class="item-bold">Total ventas</span>
+                  <span class="item-bold">Total ventas - DEV</span>
                   <span>{{ numberToCurrency(summary.totalSales) }}</span>
                 </div>
                 <hr />

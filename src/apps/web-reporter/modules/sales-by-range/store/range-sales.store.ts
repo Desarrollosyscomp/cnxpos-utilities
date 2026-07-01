@@ -5,7 +5,7 @@ import type { IStoreResponse } from "../../../../../interfaces/store-response.in
 export const useRangeSalesStore = defineStore("range-sales", {
   state: () => ({
     page: 1,
-    limit: 5,
+    limit: 6,
     itemsCount: 0,
     totalPages: 0,
   }),

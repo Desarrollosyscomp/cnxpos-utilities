@@ -40,7 +40,7 @@
         <span class="font-montserrat-bold text-contrast"
           >Seleccione uno o varios almacenes</span
         >
-        <div class="checkbox-container">
+        <div class="checkbox-container" v-if="warehouses_array.length > 1">
           <input
             class="input-checkbox"
             type="checkbox"
@@ -133,6 +133,11 @@
             <span class="title">Almacén</span> <br />
             <span class="warehouse">{{ item.nomalmacen }}</span>
             <div class="text-align">
+              <div class="item-2">
+                <span> <b>Fecha</b></span>
+                <span>{{ formatDateWithHyphen(item.fecha) }}</span>
+              </div>
+              <hr />
               <div class="item-2">
                 <span> <b>Subtotal</b></span>
                 <span>{{ numberToCurrency(item.subtot) }}</span>

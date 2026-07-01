@@ -37,7 +37,7 @@
             class="text-contrast"
           />
         </fieldset>
-        <div class="checkbox-container">
+        <div class="checkbox-container" v-if="warehouses_array.length > 1">
           <input
             class="input-checkbox"
             type="checkbox"
@@ -48,6 +48,12 @@
             class="text-contrast font-montserrat-medium"
             @click="all_warehouses = !all_warehouses"
             >Todos los almacenes</label
+          >
+        </div>
+        <div class="checkbox-container" v-else>
+          <label
+            class="text-contrast font-montserrat-medium"
+            >Selecciona un almacén</label
           >
         </div>
         <div class="scrollable-y radios-container">
