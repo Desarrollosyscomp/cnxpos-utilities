@@ -5,7 +5,7 @@
   <div class="toolbar" data-tooltip="Ventas diarias" style="--tooltip-left: -110px;">
     <Icon :path="mdiCurrencyUsd" :class="isActive('daily-sales')" @click="redirect('daily-sales')"/>
   </div>
-  <div class="toolbar" data-tooltip="Resumen" style="--tooltip-left: -95px; --tooltip-top: -30px;">
+  <div class="toolbar" data-tooltip="Resumen" style="--tooltip-left: -85px; --tooltip-top: -30px;">
     <DashboardIcon :class="isActive('dashboard')" @click="redirect('dashboard')"/>
   </div>
   <div class="toolbar" data-tooltip="Arqueos" style="--tooltip-left: -75px; --tooltip-top: -30px;">
