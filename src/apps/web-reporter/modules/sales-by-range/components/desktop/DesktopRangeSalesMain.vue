@@ -167,7 +167,7 @@
               @on-change-page="onChangePage"
             />
           </div>
-          <div :class="sales.length == 1 ? 'summary-list-zero' : 'summary'" v-if="!params">
+          <div :class="sales.length <= 3 ? 'summary-list-zero' : 'summary'" v-if="!params">
             <img :src="BetoImg" class="summary-beto" />
             <Card>
               <CardContent class="summary-content">
