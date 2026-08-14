@@ -232,10 +232,11 @@
       >
         <img class="beto-avatar" :src="BetoImgSad" />
         <div>
-          <h3 class="web-reporter-title">UPS!</h3>
-          <span
+          <h3 class="web-reporter-title text-contrast">UPS!</h3>
+          <span class="text-contrast"
             >No se encontraron <br />
-            registros de inventario <br />
+            registros de inventario. <br />
+            Intenta con otro producto.
           </span>
         </div>
       </div>
@@ -450,6 +451,7 @@ onMounted(() => {
   --margin-title-bottom: 1;
   --font-size: 1;
   --eye-icon-right: 1;
+  --eye-icon-top: 1;
 }
 
 .container {
@@ -682,7 +684,7 @@ onMounted(() => {
   align-items: center;
   position: absolute;
   right: calc(32px * var(--eye-icon-right));
-  top: 14%;
+  top: calc(80px * var(--eye-icon-top));
 }
 
 .eye-icon {
@@ -690,6 +692,13 @@ onMounted(() => {
   fill: var(--color-contrast);
   cursor: pointer;
 }
+
+@media (min-width: 320px) and (min-height: 568px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.1;
+}
+}
+
 @media (min-width: 360px) {
   .font-size-title {
     --font-size: 1.1;
@@ -697,10 +706,44 @@ onMounted(() => {
   .back-button {
     --font-size: 1.2;
   }
-}
-@media (min-width: 430px) {
   .eye-icon-container {
-  --eye-icon-right: 1.5;
+  --eye-icon-top: 1.37;
+}
+}
+@media (min-width: 375px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.8;
+}
+}
+
+@media (min-width: 375px) and (min-height: 667px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.22;
+}
+}
+
+@media (min-width: 375px) and (min-height: 812px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.38;
+}
+}
+
+@media (min-width: 390px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.43;
+}
+}
+
+@media (min-width: 414px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.5;
+  --eye-icon-right: 1.1;
+}
+}
+
+@media (min-width: 428px) {
+  .eye-icon-container {
+  --eye-icon-top: 1.53;
 }
 }
 @media (min-width: 768px) {
@@ -711,6 +754,7 @@ onMounted(() => {
   }
   .eye-icon-container {
     --eye-icon-right: 2;
+    --eye-icon-top: 1.63;
   }
 }
 </style>
