@@ -381,7 +381,6 @@ const searchSales = async () => {
     selectedWarehouse.value?.idalmacen ?? 0
   );
   if (response.data.list.length == 0) {
-    console.log("No se encontraron registros");
     appStore.showLoadingScreen = false;
     beto_state.value = BetoState.NOT_FOUND;
     return;

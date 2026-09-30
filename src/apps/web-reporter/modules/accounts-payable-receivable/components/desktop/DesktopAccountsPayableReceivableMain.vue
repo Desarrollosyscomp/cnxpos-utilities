@@ -431,7 +431,6 @@ const toogleAccounts = () => {
 const onChangePage = (emmited: any) => {
   if (accountsPayableReceivableStore.page !== emmited.data.page) {
     accountsPayableReceivableStore.page = emmited.data.page;
-    console.log(selectedAccount.value);
     if (!selectedAccount.value) {
       loadAccountsReceivable();
     } else {

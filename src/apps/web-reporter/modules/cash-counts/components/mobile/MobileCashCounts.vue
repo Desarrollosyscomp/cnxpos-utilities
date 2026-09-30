@@ -278,7 +278,6 @@ const messageNotFound = ref<string>("");
 
   const searchCashCounts = async () => {
   appStore.showLoadingScreen = true;
-  console.log(date.value);
   const response = await cashCountStore.cashCounts(
     date.value,
     selectedWarehouse.value?.idalmacen ?? 0
