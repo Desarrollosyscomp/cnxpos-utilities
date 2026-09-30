@@ -22,6 +22,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  block: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const emit = defineEmits(['closeModal']);
@@ -33,6 +37,7 @@ watch(() => props.openModal, (newVal) => {
 });
 
 function closeModal() {
+  if (props.block) return;
   open_modal.value = false;
   emit('closeModal');
 }

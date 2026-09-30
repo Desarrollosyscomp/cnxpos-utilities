@@ -46,6 +46,13 @@
       </div>
     </div>
   </div>
+    <Modal :openModal="openModal" :width="'70vw'" :block="true">
+    <div align="center" class="modal-content">
+      <h1 class="title-licence">Su licencia expiro!</h1>
+      <p class="subtitle">Por favor contacte con soporte para renovarla</p>
+      <a class="subtitle"> <b>soporte@conexionpos.com</b></a>
+    </div>
+  </Modal>
 </template>
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
@@ -53,9 +60,11 @@ import BarChart2 from "../utils/BarChart2.vue";
 import { useAppStore } from "../../../../../../store/app.store";
 import { useDashboardStore } from "../../store/dashboard.store";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
+import Modal from "../../../../../../components/Modal.vue";
 
 const appStore = useAppStore();
 const dashboardStore = useDashboardStore();
+const openModal = ref(false);
 
 const formDates = ref({
   init_date: new Date().toISOString().split("T")[0],
@@ -74,6 +83,7 @@ const setDashboardSummary = async () => {
     parsedInitDate,
     parsedEndDate
   );
+  if (response.error) return (openModal.value = true);
   summaryDashboard.value = response.data ?? {};
   cumulativeSales.value = response.data?.cumulativeSales ?? [];
   extractDatesOfCumulativeSales();
@@ -210,6 +220,14 @@ onMounted(async () => {
   flex-direction: column;
 }
 
+.modal-content {
+  padding: 10px;
+}
+.title-licence {
+  margin-bottom: 10px;
+  font-size: calc(20px * var(--item-title-font-size));
+}
+
 .subtitle {
   font-size: calc(12px * var(--item-subtitle-font-size));
   font-weight: 500;
@@ -327,6 +345,10 @@ onMounted(async () => {
 
   .value {
     --item-value-font-size: 2;
+  }
+
+  .title-licence {
+    --item-title-font-size: 1.5;
   }
 }
 </style>

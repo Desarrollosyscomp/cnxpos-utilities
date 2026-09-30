@@ -64,6 +64,13 @@
       </div>
     </div>
   </div>
+  <Modal :openModal="openModal" :width="'70vw'" :block="true">
+    <div align="center" class="modal-content">
+      <h1 class="title-licence">Su licencia expiro!</h1>
+      <p >Por favor contacte con soporte para renovarla</p>
+      <a > <b>soporte@conexionpos.com</b></a>
+    </div>
+  </Modal>
 </template>
 <script setup lang="ts">
 import BarChart from "../utils/BarChart.vue";
@@ -71,9 +78,9 @@ import { useDashboardStore } from "../../store/dashboard.store";
 import { onMounted, ref } from "vue";
 import { numberToCurrency } from "../../../../../../utils/parsers/number-currency";
 import { useAppStore } from "../../../../../../store/app.store";
+import Modal from "../../../../../../components/Modal.vue";
 const dashboardStore = useDashboardStore();
 const appStore = useAppStore();
-
 const formDates = ref({
   init_date: new Date().toISOString().split("T")[0],
   end_date: new Date().toISOString().split("T")[0],
@@ -83,16 +90,19 @@ const summaryDashboard = ref({} as any);
 const cumulativeSales = ref([] as any);
 const dates = ref([] as any);
 const values = ref([] as any);
+const openModal = ref(false);
 const setDashboardSummary = async () => {
   const parsedInitDate = formDates.value.init_date?.replace(/-/g, "");
   const parsedEndDate = formDates.value.end_date?.replace(/-/g, "");
   if (!parsedInitDate || !parsedEndDate) return;
-  const response = await dashboardStore.getDashboardSummary(
+  const { error, data } = await dashboardStore.getDashboardSummary(
     parsedInitDate,
     parsedEndDate
   );
-  summaryDashboard.value = response.data ?? {};
-  cumulativeSales.value = response.data?.cumulativeSales ?? [];
+  console.log(error);
+  if (error) return (openModal.value = true);
+  summaryDashboard.value = data ?? {};
+  cumulativeSales.value = data?.cumulativeSales ?? [];
   extractDatesOfCumulativeSales();
   extractValuesOfCumulativeSales();
 };
@@ -125,6 +135,8 @@ const extractValuesOfCumulativeSales = () => {
     if (item.date) return item.totalSales;
   });
 };
+
+
 // const extractValuesOfCumulativeSales = () => {
 //   const grouped = cumulativeSales.value.reduce(
 //     (acc: Record<string, number>, item: any) => {
@@ -305,6 +317,9 @@ onMounted(async () => {
   gap: 10px;
 }
 
+.modal-content {
+  padding: 10px;
+}
 @media (min-width: 1024px) {
   @media (min-height: 1366px) {
     .container {

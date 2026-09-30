@@ -13,10 +13,11 @@ export const useDashboardStore = defineStore("dashboard", {
         init_date,
         end_date
       );
+      console.log(response?.data);
       if (response?.status !== 200) {
         return {
           error: true,
-          data: response?.data?.response,
+          data: response?.data?.message,
         };
       }
       return {
