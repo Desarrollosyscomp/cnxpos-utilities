@@ -40,6 +40,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== LAYOUT: DesktopLayout ====================
+// Estructura de escritorio de home y perfil: encabezado, menú, cambio de tema y cierre de sesión.
 import {
   mdiWhiteBalanceSunny,
   mdiDotsVertical,
@@ -64,10 +66,12 @@ const Header = computed(() => {
 });
 console.log(Header.value);
 let menuOpen = ref(false);
+// -------------------- Abre o cierra el menú --------------------
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
+// -------------------- Cierra sesión: limpia el token en localStorage y va a /auth/login --------------------
 const logout = () => {
   authStore.auth = {
     isLogged: false,

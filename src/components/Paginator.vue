@@ -1,4 +1,6 @@
 <script setup>
+// ==================== COMPONENTE: Paginator ====================
+// Botones de paginación; emite la página elegida para que el store vuelva a consultar.
 import { computed, onMounted, reactive, ref, watch } from "vue-demi";
 import Icon from "./Icon.vue";
 import { mdiChevronLeft, mdiChevronRight } from "@mdi/js";
@@ -41,6 +43,7 @@ let side_buttons = reactive({
 });
 
 let table_results_num = ref(10);
+// -------------------- Arma los botones a cada lado de la página actual --------------------
 const createSideButtonArray = (buttons_count, invert) => {
   let arr = [];
   if (invert) {
@@ -63,6 +66,7 @@ const createSideButtonArray = (buttons_count, invert) => {
   return arr;
 };
 
+// -------------------- Recalcula los botones visibles --------------------
 const calculateSideButtons = () => {
   let more_pages_than_buttons = props.maxButtons < props.totalPages;
   if (more_pages_than_buttons) {
@@ -94,6 +98,7 @@ const calculateSideButtons = () => {
   }
 };
 
+// -------------------- Emite el cambio de página --------------------
 const onChangePage = (page) => {
   emit("onChangePage", {
     name: "Paginator.onChangePage",

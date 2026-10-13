@@ -1,3 +1,6 @@
+// ==================== ROUTER MÓVIL (VITE_TARGET=mobile) ====================
+// Registra solo rutas de reportes, inventario y perfil (auth y home están comentadas).
+// El guard redirige '/' a /home/welcome y no valida sesión.
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../components/HelloWorld.vue";
@@ -72,6 +75,7 @@ const router = createRouter({
   // appStore.loadSettings();
   // }
 
+  // -------------------- Guard móvil: solo redirige la raíz --------------------
   router.beforeEach((to, from, next) => {
     from;
     // const authStore = useAuthStore();

@@ -1,0 +1,53 @@
+%% ==================== MAPA DE FUNCIONES DEL FRONT CNXPOS-UTILITIES ====================
+%% Proyecto: cnxpos-utilities
+%% Para cada ruta: vista → acción del store → endpoint de web-reporter-v2 que se invoca.
+
+flowchart TB
+
+    %% ==================== AUTH ====================
+    subgraph AUTH["Autenticación (/auth)"]
+        direction LR
+        R_LOGIN["/auth/login<br/>Login.vue"] --> A_LOGIN["authStore.login"] --> E_LOGIN["POST /login/auth"]
+        R_REC["/auth/forgot-password, check-email,<br/>enter-code, reset-password, process-finished"] --> A_REC["sin store"] --> E_REC["sin llamada a la API"]
+        A_LOGOUT["logout() en los layouts"] --> E_LOGOUT["borra auth en localStorage<br/>y va a /auth/login"]
+    end
+
+    %% ==================== HOME Y PERFIL ====================
+    subgraph HOME["Inicio y perfil"]
+        direction LR
+        R_HOME["/home/welcome<br/>DesktopHome / MobileHome"] --> H_NAV["accesos a dashboard e inventario"]
+        R_PROF["/account/profile<br/>DesktopProfile / MobileProfile"] --> P_NONE["maqueta: guardar contraseña sin acción"]
+    end
+
+    %% ==================== DASHBOARD Y VENTAS ====================
+    subgraph SALES["Web reporter: dashboard y ventas"]
+        direction LR
+        R_DASH["/web-report-v2/dashboard<br/>DesktopDashboard"] --> S_DASH["dashboardStore.getDashboardSummary"] --> E_DASH["GET /reports/dashboard/summary"]
+        R_DAY["/web-report-v2/daily-sales<br/>DesktopDailySalesMain"] --> S_DAY["dailySalesStore.dailySales"] --> E_DAY["GET /reports/sales-day"]
+        R_DAY --> S_INV["dailyInvoices"] --> E_INV["GET /reports/sales-day/:date/:warehouse_id"]
+        R_DAY --> S_DET["dailyInvoiceDetails"] --> E_DET["GET /reports/invoice-detail/:warehouse_id/:invoice_id"]
+        R_RANGE["/web-report-v2/range-sales<br/>DesktopRangeSalesMain"] --> S_RANGE["rangeSalesStore.rangeSales"] --> E_RANGE["GET /reports/cumulative-sales"]
+    end
+
+    %% ==================== CAJA Y CARTERA ====================
+    subgraph CASH["Web reporter: arqueos y cartera"]
+        direction LR
+        R_REG["/web-report-v2/registers<br/>DesktopCashCounts"] --> S_REG["cashCountsStore.cashCounts"] --> E_REG["GET /reports/cash-counts"]
+        R_ACC["/web-report-v2/accounts-payable-receivable<br/>DesktopAccountsPayableReceivableMain"] --> S_PAY["accountsPayable"] --> E_PAY["GET /reports/payable-portfolio"]
+        R_ACC --> S_REC["accountsReceivable"] --> E_REC2["GET /reports/receivable-portfolio"]
+    end
+
+    %% ==================== INVENTARIO ====================
+    subgraph INV["Inventario"]
+        direction LR
+        R_INV["/inventory/report-inventory<br/>ReportInventoryDesktopMain"] --> S_INV2["reportInventoryStore.reportInventory"] --> E_INV2["GET /reports/inventory"]
+    end
+
+    %% ==================== COMPARTIDO ====================
+    subgraph SHARED["Compartido por los reportes"]
+        direction LR
+        C_WH["filtro de almacén<br/>(range-sales, registers, cartera, inventario)"] --> S_WH["appStore.getWarehouses"] --> E_WH["GET /warehouses"]
+    end
+
+    %% Enlaces invisibles: apilan los grupos en vertical
+    AUTH ~~~ HOME ~~~ SALES ~~~ CASH ~~~ INV ~~~ SHARED

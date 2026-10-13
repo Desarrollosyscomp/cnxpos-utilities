@@ -204,6 +204,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: MobileDailySalesMain ====================
+// Ventas del día en móvil: fecha, resumen y tarjetas por almacén que llevan a sus facturas.
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
 import ConexionPosLogo from "../../../../../../assets/logos/ConexionPosLogo.vue";
@@ -247,6 +249,7 @@ enum BetoState {
 
 let beto_state = ref(BetoState.WELCOME);
 
+// -------------------- Carga el resumen del día --------------------
 const setArray = async () => {
   warehousesArray.value = [];
 
@@ -265,20 +268,24 @@ const setArray = async () => {
   warehousesArray.value = response.data.sales;
 };
 
+// -------------------- Recarga al cambiar la fecha --------------------
 watch(date, () => {
   setArray();
 });
 
+// -------------------- Abre el detalle de un almacén --------------------
 const openDetail = (item: any) => {
   selectedItem.value = item;
   openModal.value = true;
 };
 
+// -------------------- Cierra el detalle --------------------
 const closeModal = () => {
   openModal.value = false;
   selectedItem.value = null;
 };
 
+// -------------------- Limpia la fecha y los datos --------------------
 const clean = () => {
   date.value = "";
 };

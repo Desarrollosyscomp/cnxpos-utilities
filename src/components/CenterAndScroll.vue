@@ -1,3 +1,5 @@
+<!-- ==================== COMPONENTE: CenterAndScroll ==================== -->
+<!-- Centra verticalmente el contenido del slot y permite desplazamiento. -->
 <template>
   <div class="parent scrollable-y">
     <div class="child">

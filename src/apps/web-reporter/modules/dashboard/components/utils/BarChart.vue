@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+// ==================== GRÁFICA: BarChart ====================
+// Gráfica de barras del dashboard de escritorio (Chart.js) con colores según el tema.
 import { ref, onBeforeUnmount, watch } from "vue";
 import Chart from "chart.js/auto";
 import { useAppStore } from "../../../../../../store/app.store";

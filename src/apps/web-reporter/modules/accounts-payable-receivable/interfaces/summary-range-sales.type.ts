@@ -1,3 +1,5 @@
+// ==================== TIPO: TSummaryRangeSales (copia) ====================
+// Tipo copiado del módulo de ventas acumuladas.
 export type TSummaryRangeSales = {
   subtotal: number;
   totalSales: number;

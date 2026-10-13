@@ -1,3 +1,5 @@
+// ==================== TIPO: TSummaryRangeSales ====================
+// Resumen del rango: ventas, costo, devoluciones, utilidad.
 export type TSummaryRangeSales = {
   subtotal: number;
   totalSales: number;

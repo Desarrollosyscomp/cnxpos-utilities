@@ -1,3 +1,5 @@
+// ==================== SERVICIO: cartera ====================
+// Endpoints de cartera; el token se lee de authStore al importar el archivo.
 import { Http as axios } from "../../../../../utils/http/http";
 import { getApiUrl } from "../../../../../utils/http/get-api-url";
 import { useAuthStore } from "../../../../../modules/auth/store/auth.store";
@@ -7,6 +9,7 @@ const URL_API = getApiUrl();
 const authStore = useAuthStore();
 
 export const accountsPayableReceivableService = {
+  // -------------------- GET /reports/payable-portfolio --------------------
   accountsPayable: async (
     init_date: string,
     end_date: string,
@@ -30,6 +33,7 @@ export const accountsPayableReceivableService = {
       },
     });
   },
+  // -------------------- GET /reports/receivable-portfolio --------------------
   accountsReceivable: async (
     init_date: string,
     end_date: string,

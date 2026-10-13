@@ -1,0 +1,38 @@
+%% ==================== ESTRUCTURA DEL PROYECTO ====================
+%% Proyecto: cnxpos-utilities
+%% Carpetas principales y su responsabilidad. Cada módulo de reportes repite el patrón:
+%% router → page(s) → components (desktop / mobile) → store → services → interfaces
+
+flowchart LR
+    ROOT["cnxpos-utilities/"]
+
+    %% ==================== RAÍZ ====================
+    ROOT --> SRC["src/<br/>código de la aplicación"]
+    ROOT --> AND["android/<br/>proyecto nativo de Capacitor"]
+    ROOT --> PUB["public/<br/>archivos estáticos"]
+    ROOT --> DOCS["docs/<br/>documentación y diagramas"]
+    ROOT --> CFG["index.html, vite.config.ts,<br/>capacitor.config.ts, tsconfig*.json,<br/>.env, .env.mobile"]
+
+    %% ==================== SRC ====================
+    SRC --> BOOT["main.ts, App.vue"]
+    SRC --> ROUTER["router/<br/>index.ts (web), index.mobile.ts"]
+    SRC --> MODS["modules/<br/>auth, home, profile, pages"]
+    SRC --> APPS["apps/"]
+    SRC --> COMP["components/<br/>Paginator, Modal, menús,<br/>radio-label, beauty-alert"]
+    SRC --> LAY["layouts/<br/>DesktopLayout, MobileLayout, LayoutOne"]
+    SRC --> STORE["store/ y services/<br/>app.store (tema, carga, almacenes),<br/>app.services (GET /warehouses)"]
+    SRC --> UTILS["utils/<br/>http (axios, URL de API),<br/>parsers, faker, tema"]
+    SRC --> MISC["interfaces/, styles/, assets/,<br/>responsive-switcher/"]
+
+    %% ==================== APPS ====================
+    APPS --> WR["web-reporter/<br/>router, layouts, components"]
+    APPS --> INVA["inventory/<br/>layouts, components,<br/>modules/report-inventory"]
+    WR --> WRM["modules/<br/>dashboard, daily-sales, sales-by-range,<br/>cash-counts, accounts-payable-receivable"]
+
+    %% ==================== PATRÓN DE MÓDULO ====================
+    WRM --> P_ROUTER["router/<br/>ruta web y ruta móvil"]
+    WRM --> P_PAGE["pages/ o page/<br/>elige escritorio o móvil"]
+    WRM --> P_COMP["components/<br/>desktop/ y mobile/"]
+    WRM --> P_STORE["store/<br/>filtros, paginación, { error, data }"]
+    WRM --> P_SVC["services/<br/>endpoint + Bearer token"]
+    WRM --> P_INT["interfaces/<br/>tipos de la respuesta"]

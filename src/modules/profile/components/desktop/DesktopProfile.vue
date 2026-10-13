@@ -71,6 +71,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: DesktopProfile ====================
+// Maqueta del perfil: elección de avatar y cambio de contraseña sin acción.
 import { mdiContentSaveOutline } from "@mdi/js";
 import Card from "../../../../apps/web-reporter/modules/daily-sales/components/Card.vue";
 import CardContent from "../../../../apps/web-reporter/modules/daily-sales/components/CardContent.vue";

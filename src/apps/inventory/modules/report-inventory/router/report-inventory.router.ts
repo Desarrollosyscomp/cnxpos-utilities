@@ -1,3 +1,5 @@
+// ==================== RUTAS: inventario (/inventory/report-inventory) ====================
+// Página de inventario dentro de InventoryLayout.
 export const ReportInventoryRouterDesktop = [
   {
     path: "/inventory",

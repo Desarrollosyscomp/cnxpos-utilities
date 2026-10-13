@@ -263,6 +263,8 @@
   </Modal> -->
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: ReportInventoryDesktopMain ====================
+// Inventario en escritorio: almacén (o todos), búsqueda, resumen de existencias/costos y tabla.
 import { onMounted, ref, watch } from "vue-demi";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png";
@@ -313,6 +315,7 @@ let params = ref<boolean>(true);
 const reportInventoryStore = useReportInventoryStore();
 
 const appStore = useAppStore();
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -323,6 +326,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Consulta el inventario con los filtros --------------------
 const searchSales = async () => {
   appStore.showLoadingScreen = true;
   const response = await reportInventoryStore.reportInventory(
@@ -342,6 +346,7 @@ const searchSales = async () => {
   }
 };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (reportInventoryStore.page !== emmited.data.page) {
     reportInventoryStore.page = emmited.data.page;
@@ -358,6 +363,7 @@ const onChangePage = (emmited: any) => {
 //   isOpenModal.value = false;
 // };
 
+// -------------------- Al elegir 'todos' se limpia el almacén seleccionado --------------------
 watch(all_warehouses, (val) => {
   if (val) {
     selectedWarehouse.value = null;

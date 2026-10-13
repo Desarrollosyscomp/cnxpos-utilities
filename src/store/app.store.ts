@@ -1,3 +1,6 @@
+// ==================== STORE: app ====================
+// Estado global: pantallas de carga/splash, tema persistido en localStorage ('theme')
+// y carga de almacenes para los filtros de los reportes.
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
 import { AppService } from "../services/app.services";
@@ -12,9 +15,11 @@ export const useAppStore = defineStore("app", {
     }),
   }),
   actions: {
+    // -------------------- Guarda el tema claro/oscuro --------------------
     async changeTheme(theme: string) {
       this.theme["dataTheme"] = theme;
     },
+    // -------------------- Almacenes activos (GET /warehouses) --------------------
     async getWarehouses(): Promise<IStoreResponse> {
       const res = await AppService.getWarehouses()
       return {
@@ -23,6 +28,7 @@ export const useAppStore = defineStore("app", {
       }
     },
 
+    // -------------------- Ejecuta una función mostrando la pantalla de carga --------------------
     async afterLoading(f: Function) {
       this.showLoadingScreen = true;
       await f();

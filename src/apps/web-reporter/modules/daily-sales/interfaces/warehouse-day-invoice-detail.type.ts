@@ -1,3 +1,5 @@
+// ==================== TIPO: TWarehouseDayInvoiceDetail ====================
+// Línea de producto del detalle de una factura.
 export type TWarehouseDayInvoiceDetail = {
   numero: number;
   valimpuesto: number;

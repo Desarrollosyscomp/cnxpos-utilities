@@ -11,6 +11,8 @@
 </template>
 
 <script setup>
+// ==================== GRÁFICA: BarChart2 ====================
+// Gráfica de barras del dashboard móvil (Chart.js) con colores según el tema.
 import { ref, watch, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
 import { useChartTheme } from "./graphic-helpers/ChangeOfGraphicFeatures";

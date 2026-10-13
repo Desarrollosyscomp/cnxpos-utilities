@@ -1,3 +1,5 @@
+// ==================== UTILIDAD DE DESARROLLO: GeneratorFactory ====================
+// Devuelve el generador correspondiente a un tipo (int, string, date...).
 import { BoolGenerator, CharGenerator, CurrencyGenerator, DateGenerator, DecimalGenerator, IntGenerator, StringGenerator, WordGenerator, type FakerGenerator } from "./Generators";
 
 export class GeneratorFactory {

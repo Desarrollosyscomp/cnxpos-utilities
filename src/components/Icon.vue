@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+// ==================== COMPONENTE: Icon ====================
+// Dibuja un icono MDI a partir de su path SVG.
 defineProps({
   path: String,
   size: {

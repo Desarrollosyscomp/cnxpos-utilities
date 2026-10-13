@@ -1,3 +1,5 @@
+// ==================== RUTAS: auth (/auth) ====================
+// Login y pantallas de recuperación de contraseña; cada hija define el mensaje del asistente (headerComponent).
 export const AuthRouter = [
     {
         path: '/auth',

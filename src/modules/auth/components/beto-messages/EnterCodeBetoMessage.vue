@@ -1,3 +1,5 @@
+<!-- ==================== MENSAJE DEL ASISTENTE: EnterCode ==================== -->
+<!-- Texto del asistente para la pantalla de ingresar el código (meta.headerComponent). -->
 <template>
     <span class="text-title">¡Genial!</span>
     <span class="text-content">Ingresa el código que has recibido en tu bandeja de correo</span>

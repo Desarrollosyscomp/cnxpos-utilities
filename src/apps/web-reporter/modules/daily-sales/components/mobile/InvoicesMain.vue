@@ -160,6 +160,8 @@
   </Modal>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: InvoicesMain ====================
+// Facturas de un almacén en una fecha (ruta invoices/:date/:warehouse_id), paginadas.
 import { onMounted, ref } from "vue-demi";
 //@ts-ignore
 import Card from "../Card.vue";
@@ -189,6 +191,7 @@ let summary = ref<TSummaryInvoices>({
 const warehouseName = ref<string | undefined>("");
 const dailySalesStore = useDailySalesStore();
 const openModal = ref<boolean>(false);
+// -------------------- Carga las facturas desde los parámetros de la ruta --------------------
 const setInvoices = async () => {
   let { date, warehouse_id } = route.params;
   let response = await dailySalesStore.dailyInvoices(
@@ -200,6 +203,7 @@ const setInvoices = async () => {
   warehouseName.value = invoices.value[0]?.nomalmacen;
 };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;
@@ -207,14 +211,17 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+// -------------------- Muestra los medios de pago --------------------
 const openModalPaymentMethods = () => {
   openModal.value = true;
 };
 
+// -------------------- Cierra el modal --------------------
 const closeModal = () => {
   openModal.value = false;
 };
 
+// -------------------- Vuelve a la vista anterior --------------------
 const back = () => {
   // router.push('/web-report-v2/daily-sales');
   router.go(-1);

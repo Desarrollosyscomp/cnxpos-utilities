@@ -12,6 +12,8 @@
   </div>
 </template>
 <script setup>
+// ==================== FORMULARIO: Ingresar código ====================
+// Solo interfaz del código de recuperación: no llama a ninguna API.
 import { ref } from "vue";
 let showPassword = ref(false);
 </script>

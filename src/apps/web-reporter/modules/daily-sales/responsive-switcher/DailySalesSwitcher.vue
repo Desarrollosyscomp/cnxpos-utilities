@@ -11,6 +11,8 @@
     </div> -->
 </template>
 <script setup>
+// ==================== SWITCHER: DailySalesSwitcher ====================
+// Plantilla comentada; las rutas hijas de /web-report-v2/ no muestran contenido aquí.
 // import WebReporterLayoutMobile from "../../../layouts/WebReporterLayoutMobile.vue";
 // import WebReporterLayout from "../../../layouts/WebReporterLayoutDesktop.vue";
 </script>

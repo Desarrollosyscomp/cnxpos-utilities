@@ -1,3 +1,5 @@
+// ==================== TIPO: TRangeSales (copia) ====================
+// Tipo copiado del módulo de ventas acumuladas.
 export type TRangeSales = {
   fecha: string;
   idalmacen: number;

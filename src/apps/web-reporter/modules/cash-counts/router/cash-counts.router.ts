@@ -1,3 +1,5 @@
+// ==================== RUTAS: arqueos (/web-report-v2/registers) ====================
+// Página de arqueos dentro de WebReporterLayout.
 export const CashCountsRouterDesktop = [
   {
     path: "/web-report-v2",

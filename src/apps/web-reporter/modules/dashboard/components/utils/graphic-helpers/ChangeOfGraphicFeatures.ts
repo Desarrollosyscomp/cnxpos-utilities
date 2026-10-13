@@ -1,7 +1,10 @@
+// ==================== UTILIDAD: useChartTheme ====================
+// Ajusta colores de título, leyenda y ejes de Chart.js al cambiar el tema.
 import { watch } from "vue";
 import { useAppStore } from "../../../../../../../store/app.store";
 import type { Chart } from "chart.js";
 
+// -------------------- Observa el tema y actualiza la gráfica --------------------
 export function useChartTheme(chartRef: () => Chart | null) {
   const appStore = useAppStore();
   const applyTheme = (chart: Chart, isDark: boolean) => {

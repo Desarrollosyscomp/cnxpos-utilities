@@ -159,6 +159,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: DesktopCashCounts ====================
+// Arqueos en escritorio: fecha y almacén, apertura, cierre, ventas, salidas y pagos de caja.
 import { onMounted, ref } from "vue";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
@@ -188,6 +190,7 @@ enum BetoState {
 let beto_state = ref(BetoState.WELCOME);
 
 const appStore = useAppStore();
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -198,6 +201,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Consulta el arqueo --------------------
 const searchCashCounts = async () => {
   appStore.showLoadingScreen = true;
   const response = await cashCountStore.cashCounts(
@@ -219,6 +223,7 @@ const searchCashCounts = async () => {
   return;
 };
 
+// -------------------- Vuelve a los filtros --------------------
 const onBack = () => {
   params.value = true;
   selectedWarehouse.value = null;

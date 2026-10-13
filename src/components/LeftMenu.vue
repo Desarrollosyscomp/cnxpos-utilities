@@ -10,6 +10,8 @@
 
 </template>
 <script setup>
+// ==================== COMPONENTE: LeftMenu ====================
+// Menú lateral deslizable; emite close-menu al cerrarse.
 import { defineEmits, watch } from 'vue';
 const emit = defineEmits(['close-menu'])
 const props = defineProps({
@@ -21,6 +23,7 @@ const props = defineProps({
 watch(()=>props.isOpen, ()=>{
     console.log(props.isOpen)
 })
+// -------------------- Pide al layout cerrar el menú --------------------
 const closeMenu = () => {
     emit('close-menu')
 }

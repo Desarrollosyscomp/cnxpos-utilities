@@ -1,3 +1,6 @@
+// ==================== UTILIDADES: formato de fechas ====================
+// Conversión de fechas para mostrar en tablas y de YYYYMMDD a YYYY-MM-DD.
+// -------------------- Fecha en formato dd/mm/aaaa --------------------
 export const parseDate = (date: string) => {
   if (!date) return;
   const fecha = new Date(date);
@@ -9,6 +12,7 @@ export const parseDate = (date: string) => {
   return fechaFormateada;
 };
 
+// -------------------- Fecha y hora (12 h) --------------------
 export const parseDateWhitHour = (date: string) => {
   if (!date) return;
 
@@ -24,6 +28,7 @@ export const parseDateWhitHour = (date: string) => {
   });
 };
 
+// -------------------- YYYYMMDD → YYYY-MM-DD --------------------
 export const formatDateWithHyphen = (date: string) => {
   if (!date || date.length !== 8) return date;
 

@@ -240,6 +240,8 @@
   </Modal> -->
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: MobileCashCounts ====================
+// Arqueos en móvil con filtros y detalle en modal.
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
 import { onMounted, ref } from "vue";
@@ -276,6 +278,7 @@ const modal = ref<boolean>(false);
 const selectedItem = ref<any>(null);
 const messageNotFound = ref<string>("");
 
+  // -------------------- Consulta el arqueo --------------------
   const searchCashCounts = async () => {
   appStore.showLoadingScreen = true;
   const response = await cashCountStore.cashCounts(
@@ -297,6 +300,7 @@ const messageNotFound = ref<string>("");
   return;
 };
 
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -307,6 +311,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (cashCountStore.page !== emmited.data.page) {
     cashCountStore.page = emmited.data.page;
@@ -314,6 +319,7 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+// -------------------- Vuelve a los filtros --------------------
 const onBack = () => {
   params.value = true;
   selectedWarehouse.value = null;
@@ -321,11 +327,13 @@ const onBack = () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Abre el detalle --------------------
 const onOpenModal = (item: any) => {
   selectedItem.value = item;
   modal.value = true;
 };
 
+// -------------------- Cierra el detalle --------------------
 const closeModal = () => {
   return (modal.value = false);
 };

@@ -1,3 +1,5 @@
+// ==================== RUTAS: ventas del día móvil (/daily-sales/daily-sales) ====================
+// Variante móvil con WebReporterLayoutMobile.
 export const DailySalesRouterMobile = [
   {
     path: "/daily-sales",

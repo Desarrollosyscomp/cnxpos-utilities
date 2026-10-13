@@ -7,6 +7,8 @@
     </div>
 </template>
 <script setup>
+// ==================== PÁGINA: Home ====================
+// Muestra DesktopHome o MobileHome según el ancho.
 import DesktopHome from '../components/desktop/DesktopHome.vue';
 import MobileHome from '../components/mobile/MobileHome.vue';
 </script>

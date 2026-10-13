@@ -331,6 +331,8 @@
   </Modal> -->
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: ReportInventoryMobileMain ====================
+// Inventario en móvil con filtros, tarjetas y detalle en modal.
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
 import { onMounted, ref, watch } from "vue";
@@ -375,6 +377,7 @@ const params = ref<boolean>(true);
 const modal = ref<boolean>(false);
 const selectedItem = ref<any>(null);
 
+// -------------------- Consulta el inventario con los filtros --------------------
 const searchSales = async () => {
   appStore.showLoadingScreen = true;
   const response = await inventoryStore.reportInventory(
@@ -392,6 +395,7 @@ const searchSales = async () => {
   appStore.showLoadingScreen = false;
 };
 
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -402,6 +406,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (inventoryStore.page !== emmited.data.page) {
     inventoryStore.page = emmited.data.page;
@@ -409,6 +414,7 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+// -------------------- Vuelve a los filtros --------------------
 const onBack = () => {
   params.value = true;
   selectedWarehouse.value = null;
@@ -417,15 +423,18 @@ const onBack = () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Abre el detalle de un producto --------------------
 const onOpenModal = (item: any) => {
   selectedItem.value = item;
   modal.value = true;
 };
 
+// -------------------- Cierra el detalle --------------------
 const closeModal = () => {
   return (modal.value = false);
 };
 
+// -------------------- Al elegir 'todos' se limpia el almacén seleccionado --------------------
 watch(all_warehouses, (val) => {
   if (val) {
     selectedWarehouse.value = null;

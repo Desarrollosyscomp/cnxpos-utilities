@@ -1,3 +1,5 @@
+// ==================== UTILIDAD DE DESARROLLO: DefinitionParser ====================
+// Interpreta definiciones como 'int(1,10)' o 'string[3]'.
 export type ParsedDefinition = {
   type: string;
   args: number[];

@@ -1,3 +1,5 @@
+// ==================== STORE: ventas del día ====================
+// Resumen por almacén, facturas paginadas de un almacén y detalle de una factura.
 import { defineStore } from "pinia";
 import { dailySalesService } from "../services/daily-sales.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
@@ -12,6 +14,7 @@ export const useDailySalesStore = defineStore("daily-sales", {
     selectedWarehouse: {} as TWarehouseDayInvoice,
   }),
   actions: {
+    // -------------------- Resumen del día por almacén --------------------
     async dailySales(date: string): Promise<IStoreResponse> {
       const response = await dailySalesService.dailySales(date);
       if (response?.status !== 200) {
@@ -25,6 +28,7 @@ export const useDailySalesStore = defineStore("daily-sales", {
         data: response?.data?.response,
       };
     },
+    // -------------------- Facturas del día y almacén (actualiza paginación) --------------------
     async dailyInvoices(
       date: string,
       warehouse_id: string
@@ -42,6 +46,7 @@ export const useDailySalesStore = defineStore("daily-sales", {
         data: response?.data.response,
       };
     },
+    // -------------------- Productos y resumen de una factura --------------------
     async dailyInvoiceDetails(
       warehouse_id: string,
       number_invoice: string

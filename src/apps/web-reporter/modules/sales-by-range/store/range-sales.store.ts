@@ -1,3 +1,5 @@
+// ==================== STORE: ventas acumuladas ====================
+// Ventas por fecha en un rango y almacén, con paginación.
 import { defineStore } from "pinia";
 import { rangeSalesService } from "../services/range-sales.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
@@ -10,6 +12,7 @@ export const useRangeSalesStore = defineStore("range-sales", {
     totalPages: 0,
   }),
   actions: {
+    // -------------------- Consulta el rango y actualiza la paginación --------------------
     async rangeSales(
       init_date: string,
       end_date: string,

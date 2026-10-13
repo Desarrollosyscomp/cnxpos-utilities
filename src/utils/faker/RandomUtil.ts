@@ -1,3 +1,5 @@
+// ==================== UTILIDAD DE DESARROLLO: RandomUtil ====================
+// Números, caracteres y palabras aleatorias para el generador de datos falsos.
 export class RandomUtil {
     static paragraphs: string[][] = [
         `

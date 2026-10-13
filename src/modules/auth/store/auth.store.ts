@@ -1,3 +1,5 @@
+// ==================== STORE: auth ====================
+// Sesión persistida en localStorage ('auth'): token JWT e isLogged.
 import { defineStore } from "pinia";
 import { loginService } from "../services/Auth.services";
 import type { TFormLogin } from "../interfaces/auth.type";
@@ -12,6 +14,7 @@ export const useAuthStore = defineStore("auth", {
     }),
   }),
   actions: {
+    // -------------------- POST /login/auth: guarda el token si la respuesta es 200 --------------------
     async login(data: TFormLogin): Promise<IStoreResponse> {
       const response = await loginService.logIn(data);
       if (response?.status != 200){

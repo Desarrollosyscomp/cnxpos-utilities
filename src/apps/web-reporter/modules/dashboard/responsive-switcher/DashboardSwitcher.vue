@@ -11,6 +11,8 @@
     </div> -->
 </template>
 <script setup>
+// ==================== SWITCHER: DashboardSwitcher ====================
+// Plantilla comentada; no renderiza contenido.
 import MobileLayout from "../../../../../layouts/MobileLayout.vue";
 import DesktopLayout from "../../../../../layouts/DesktopLayout.vue";
 </script>

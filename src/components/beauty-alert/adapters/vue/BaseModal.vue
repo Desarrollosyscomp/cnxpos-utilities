@@ -20,6 +20,8 @@
   </template>
   
   <script setup lang="ts">
+// ==================== BEAUTY-ALERT VUE: BaseModal ====================
+// Modal base de las alertas Vue: overlay, cierre con Escape y clic fuera.
   import { ref, onMounted, onBeforeUnmount } from "vue";
   
   const props = defineProps<{
@@ -40,6 +42,7 @@
     document.removeEventListener("keydown", onKeyDown);
   });
   
+  // -------------------- Cierra el modal con un motivo --------------------
   function close(reason?: any) {
     if (isClosing.value) return;
     isClosing.value = true;
@@ -49,10 +52,12 @@
     }, 200);
   }
   
+  // -------------------- Cierre al hacer clic en el fondo --------------------
   function handleOverlayClick() {
     close(null);
   }
   
+  // -------------------- Cierre con la tecla Escape --------------------
   function onKeyDown(e: KeyboardEvent) {
     if (e.key === "Escape") {
       close(null);

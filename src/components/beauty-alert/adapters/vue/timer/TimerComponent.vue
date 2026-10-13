@@ -20,6 +20,8 @@
 </template>
 
 <script setup lang="ts">
+// ==================== BEAUTY-ALERT VUE: TimerComponent ====================
+// Alerta con barra de progreso que se cierra sola al terminar el tiempo.
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import BaseModal from "../BaseModal.vue";
 
@@ -45,6 +47,7 @@ onBeforeUnmount(() => {
   cancelAnimationFrame(animationFrameId);
 });
 
+// -------------------- Actualiza la barra de progreso --------------------
 function animateProgress() {
   const elapsed = (Date.now() - startTime) / 1000; // Tiempo transcurrido en segundos
   timeLeft.value = Math.max(0, props.time - elapsed);
@@ -63,6 +66,7 @@ function animateProgress() {
   }
 }
 
+// -------------------- Cierre manual --------------------
 function onCancel() {
   cancelAnimationFrame(animationFrameId);
   props.onResolve(true); // Usuario cerró manualmente

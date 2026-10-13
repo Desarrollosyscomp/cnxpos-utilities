@@ -1,3 +1,5 @@
+// ==================== RUTAS: cartera (/web-report-v2/accounts-payable-receivable) ====================
+// Página de cartera dentro de WebReporterLayout.
 export const AccountsPayableReceivableRouterDesktop = [
   {
     path: "/web-report-v2",

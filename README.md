@@ -4,7 +4,7 @@ Aplicación de reportes y utilidades de CNXPOS. El cliente está construido con 
 
 ## Documentación
 
-La guía de arquitectura y funcionamiento está en [docs/arquitectura.md](docs/arquitectura.md). Describe el arranque, los modos web y móvil, módulos, flujo de datos, servicios HTTP, configuración y puntos de atención para desarrollo.
+La guía de arquitectura y funcionamiento está en [docs/FUNCIONAMIENTO.md](docs/FUNCIONAMIENTO.md). Describe el arranque, los modos web y móvil, módulos, flujo de datos, servicios HTTP, configuración y puntos de atención para desarrollo. El índice completo de la documentación, con diagramas, está en [docs/README.md](docs/README.md).
 
 ## Inicio rápido
 

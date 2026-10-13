@@ -1,3 +1,5 @@
+<!-- ==================== COMPONENTE: LoadingScreen ==================== -->
+<!-- Capa 'Cargando...' que se muestra con appStore.showLoadingScreen. -->
 <template>
   <div id="loading-screen-progress" align="center">
     <br />

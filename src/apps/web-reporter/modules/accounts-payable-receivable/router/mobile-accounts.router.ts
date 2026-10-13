@@ -1,3 +1,5 @@
+// ==================== RUTAS: cartera móvil ====================
+// Misma ruta con WebReporterLayoutMobile.
 export const AccountsPayableReceivableRouterMobile = [
   {
     path: "/web-report-v2",

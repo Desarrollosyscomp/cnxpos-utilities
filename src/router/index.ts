@@ -1,3 +1,6 @@
+// ==================== ROUTER WEB ====================
+// Reúne las rutas de auth, home, perfil, web reporter e inventario.
+// Guard: '/' siempre va a /auth/login; rutas con meta.requiresAuth exigen token en authStore.
 import { createRouter, createWebHistory } from "vue-router";
 
 import HomeView from "../components/HelloWorld.vue";
@@ -67,6 +70,7 @@ const router = createRouter({
 });
 
 
+// -------------------- Guard global: redirección inicial y protección por token --------------------
 router.beforeEach((to, from, next) => {
   from;
   to;

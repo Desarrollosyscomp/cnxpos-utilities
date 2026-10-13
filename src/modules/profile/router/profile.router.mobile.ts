@@ -1,3 +1,5 @@
+// ==================== RUTAS: perfil móvil (/account/profile) ====================
+// Pantalla de perfil dentro de MobileLayout.
 export const ProfileRouterMobile = [
   {
     path: "/account",

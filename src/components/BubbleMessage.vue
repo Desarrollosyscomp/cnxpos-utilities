@@ -17,6 +17,8 @@
     </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: BubbleMessage ====================
+// Burbuja de diálogo con flecha orientable (izquierda, derecha, arriba, abajo).
 import { onMounted, ref } from 'vue-demi';
 
 const props = defineProps({
@@ -69,6 +71,7 @@ const props = defineProps({
 
 let orientation = ref('')
 
+// -------------------- Calcula la clase de la flecha según las props --------------------
 const setArrowDirection = () => {
   if(props.left){
     orientation.value = 'bubble-left'

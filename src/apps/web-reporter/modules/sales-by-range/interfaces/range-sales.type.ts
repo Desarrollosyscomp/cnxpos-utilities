@@ -1,3 +1,5 @@
+// ==================== TIPO: TRangeSales ====================
+// Fila del reporte de ventas acumuladas (una fecha).
 export type TRangeSales = {
   fecha: string;
   idalmacen: number;

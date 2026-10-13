@@ -1,3 +1,5 @@
+// ==================== SERVICIO: arqueos de caja ====================
+// Endpoint de arqueos; el token se lee de authStore al importar el archivo.
 import { Http as axios } from "../../../../../utils/http/http";
 import { getApiUrl } from "../../../../../utils/http/get-api-url";
 // import { FakerService } from "../../../../../utils/faker/Faker";
@@ -8,6 +10,7 @@ const URL_API = getApiUrl();
 const authStore = useAuthStore();
 
 export const cashCountsService = {
+  // -------------------- GET /reports/cash-counts (date, warehouse_id) --------------------
   cashCounts: async (date: string, warehouse_id: string) => {
     return axios.get({
       url: `${URL_API}/reports/cash-counts`,

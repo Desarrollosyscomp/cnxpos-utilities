@@ -27,6 +27,8 @@
 
 </template>
 <script setup>
+// ==================== LAYOUT: MobileLoginLayout ====================
+// Marco del login en móvil: logo, mensaje del asistente y formulario.
 import ConexionPosLogo from "../../../../assets/logos/ConexionPosLogo.vue";
 import { toggleTheme, visible } from "../../../../utils/theme-transitions";
 import ThemeModeIcon from "../../../../assets/general/icons/ThemeModeIcon.vue";

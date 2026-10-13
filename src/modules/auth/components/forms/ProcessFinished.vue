@@ -4,6 +4,8 @@
   </div>
 </template>
 <script setup>
+// ==================== PANTALLA: Proceso terminado ====================
+// Último paso de la recuperación de contraseña; sin llamadas a la API.
 import { ref } from "vue";
 let showPassword = ref(false);
 </script>

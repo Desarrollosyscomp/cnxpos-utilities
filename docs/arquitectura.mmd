@@ -1,0 +1,61 @@
+%% ==================== ARQUITECTURA DEL FRONT CNXPOS-UTILITIES ====================
+%% Proyecto: cnxpos-utilities (Vue 3 + Vite + Pinia + Capacitor)
+%% Capas: Página/Layout → Componentes → Store (Pinia) → Servicio → Cliente HTTP (axios) → web-reporter-v2
+
+flowchart TB
+
+    USER(["Usuario del cliente<br/>navegador o app Android"])
+
+    subgraph FRONT["cnxpos-utilities (Vite)"]
+        direction TB
+
+        subgraph BOOT["1. Arranque"]
+            MAIN["main.ts<br/>estilos globales, Pinia<br/>router según VITE_TARGET"]
+            APP["App.vue<br/>router-view, splash y pantalla de carga"]
+        end
+
+        subgraph NAV["2. Navegación"]
+            RWEB["router/index.ts (web)<br/>auth, home, perfil, reportes, inventario<br/>guard: meta.requiresAuth + token"]
+            RMOB["router/index.mobile.ts (VITE_TARGET=mobile)<br/>reportes, inventario y perfil<br/>sin validación de sesión"]
+            LAY["Layouts<br/>WebReporterLayout, InventoryLayout,<br/>LayoutOne (home y perfil)<br/>escritorio o móvil según 768 px"]
+        end
+
+        subgraph VIEWS["3. Módulos (páginas y componentes)"]
+            V_AUTH["modules/auth<br/>login + recuperación (solo interfaz)"]
+            V_HOME["modules/home y profile<br/>accesos y perfil (maqueta)"]
+            V_WR["apps/web-reporter<br/>dashboard, ventas del día, ventas acumuladas,<br/>arqueos, cartera"]
+            V_INV["apps/inventory<br/>report-inventory"]
+            V_SHARED["components/<br/>Paginator, Modal, RadioLabels,<br/>menús, beauty-alert"]
+        end
+
+        subgraph STATE["4. Estado (Pinia)"]
+            S_AUTH["auth<br/>token e isLogged en localStorage 'auth'"]
+            S_APP["app<br/>carga, tema en localStorage 'theme',<br/>almacenes"]
+            S_REP["stores de reportes<br/>página, límite y totales"]
+        end
+
+        subgraph DATA["5. Acceso a la API"]
+            SVC["*/services/*.ts<br/>URL + params + Authorization: Bearer"]
+            URL["utils/http/get-api-url.ts<br/>DEV: VITE_NEST_API_URL<br/>PROD: VITE_QA_API_URL"]
+            HTTP["utils/http/http.ts<br/>axios; errores → { status, data }"]
+        end
+    end
+
+    API["web-reporter-v2<br/>POST /login/auth, GET /warehouses,<br/>GET /reports/*"]
+    STORAGE[("localStorage<br/>auth, theme")]
+    ANDROID["android/ (Capacitor)<br/>empaqueta dist/"]
+
+    %% ==================== RELACIONES ====================
+    USER --> MAIN --> APP
+    MAIN --> RWEB & RMOB
+    RWEB & RMOB --> LAY --> V_AUTH & V_HOME & V_WR & V_INV
+    V_WR & V_INV --> V_SHARED
+    V_AUTH --> S_AUTH
+    V_WR & V_INV --> S_REP
+    V_WR & V_INV --> S_APP
+    S_AUTH & S_APP & S_REP --> SVC
+    SVC --> URL
+    SVC --> HTTP --> API
+    S_AUTH & S_APP <--> STORAGE
+    RWEB -.->|"lee el token"| S_AUTH
+    FRONT -.->|"vite build"| ANDROID

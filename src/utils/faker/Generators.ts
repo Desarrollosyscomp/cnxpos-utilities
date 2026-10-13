@@ -1,3 +1,5 @@
+// ==================== UTILIDAD DE DESARROLLO: generadores de datos falsos ====================
+// Un generador por tipo de columna: char, word, string, date, int, decimal, bool y currency.
 import { RandomUtil } from "./RandomUtil";
 
 function requireArg(args: number[], index: number, name: string): number {

@@ -25,6 +25,8 @@
 
 </template>
 <script setup>
+// ==================== COMPONENTE: MobileHome ====================
+// Accesos móviles a Web Reporter e Inventario.
 import { mdiFileChart, mdiChartBar, mdiCurrencyUsd, mdiTextBoxSearchOutline } from "@mdi/js";
 import Icon from "../../../../components/Icon.vue";
 import WebReporterIcon from "../../../../assets/general/icons/WebReporterIcon.vue";

@@ -1,3 +1,5 @@
+// ==================== RUTAS: arqueos móvil ====================
+// En el router móvil la ruta registers apunta al componente de ventas acumuladas.
 export const CashCountsRouterMobile = [
   {
     path: "/web-report-v2",

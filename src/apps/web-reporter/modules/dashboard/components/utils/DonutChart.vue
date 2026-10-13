@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+// ==================== GRÁFICA: DonutChart ====================
+// Gráfica de dona (Chart.js) con colores según el tema; no se usa en las vistas actuales.
 import { ref, watch, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
 import { useAppStore } from "../../../../../../store/app.store";

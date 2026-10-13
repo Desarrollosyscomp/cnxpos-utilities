@@ -13,6 +13,8 @@
   </div>
 </template>
 <script setup>
+// ==================== LAYOUT: DesktopLoginLayout ====================
+// Marco del login en escritorio: asistente con el mensaje de la ruta, formulario y cambio de tema.
 import ConexionPosLogo from '../../../../assets/logos/ConexionPosLogo.vue';
 import { toggleTheme } from '../../../../utils/theme-transitions';
 import ThemeModeIcon from '../../../../assets/general/icons/ThemeModeIcon.vue';

@@ -1,3 +1,5 @@
+// ==================== TIPO: TSummaryInventory ====================
+// Resumen del inventario: existencias y costos.
 export type TSummaryInventory = {
     warehouseName: string;
     inventoryStock: number;

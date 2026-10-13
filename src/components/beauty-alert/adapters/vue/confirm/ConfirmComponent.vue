@@ -11,6 +11,8 @@
 </template>
 
 <script setup lang="ts">
+// ==================== BEAUTY-ALERT VUE: ConfirmComponent ====================
+// Diálogo de confirmación con botones aceptar y cancelar.
 import BaseModal from "../BaseModal.vue";
 
 const props = defineProps<{

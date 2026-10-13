@@ -7,6 +7,8 @@
     </div>
 </template>
 <script setup lang="ts">
+// ==================== PÁGINA: Perfil ====================
+// Muestra DesktopProfile o MobileProfile según el ancho.
 import DesktopProfile from '../components/desktop/DesktopProfile.vue';
 import MobileProfile from '../components/mobile/MobileProfile.vue';
 </script>

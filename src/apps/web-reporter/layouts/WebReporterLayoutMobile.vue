@@ -56,6 +56,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== LAYOUT: WebReporterLayoutMobile ====================
+// Marco móvil de los reportes con menú inferior y cierre de sesión.
 import {
   mdiDotsVertical,
   mdiPencil,
@@ -82,9 +84,11 @@ const Header = computed(() => {
 console.log(Header.value);
 let menuOpen = ref(false);
 const router = useRouter();
+// -------------------- Abre o cierra el menú --------------------
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
+// -------------------- Cierra sesión: limpia el token en localStorage y va a /auth/login --------------------
 const logout = () => {
   authStore.auth = {
     isLogged: false,

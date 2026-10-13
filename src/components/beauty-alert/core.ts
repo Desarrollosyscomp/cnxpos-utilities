@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT: AlertCore ====================
+// Registro de tipos de alerta y su manejador; show() abre la alerta pedida.
 export type Handler<TOptions, TResult> = (options: TOptions) => Promise<TResult>;
 
 export class AlertCore<

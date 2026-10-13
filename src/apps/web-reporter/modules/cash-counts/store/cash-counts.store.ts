@@ -1,3 +1,5 @@
+// ==================== STORE: arqueos de caja ====================
+// Consulta el arqueo de una fecha y almacén.
 import { defineStore } from "pinia";
 import { cashCountsService } from "../services/cash-counts.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
@@ -10,6 +12,7 @@ export const useCashCountsStore = defineStore("cash-counts", {
     totalPages: 0,
   }),
   actions: {
+    // -------------------- Devuelve { error, data } según el código HTTP --------------------
     async cashCounts(date: string | undefined, warehouse_id: string): Promise<IStoreResponse> {
       const response = await cashCountsService.cashCounts(date ?? "", warehouse_id);
       if (response?.status !== 200) {

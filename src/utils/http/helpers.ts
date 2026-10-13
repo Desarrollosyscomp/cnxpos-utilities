@@ -1,3 +1,5 @@
+// ==================== UTILIDAD: query string ====================
+// Convierte un objeto en ?clave=valor (los arrays se unen con comas).
 export const buildQueryString = (params: any = {}) => {
   if (Object.keys(params).length === 0) {
     return "";

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+// ==================== COMPONENTE: HelloWorld ====================
+// Plantilla inicial de Vite; el router lo usa como vista de '/' (se redirige al login).
 import { ref } from 'vue'
 
 defineProps<{ msg: string }>()

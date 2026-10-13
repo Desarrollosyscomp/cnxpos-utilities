@@ -1,3 +1,5 @@
+// ==================== STORE: inventario ====================
+// Inventario por almacén con búsqueda y paginación.
 import { defineStore } from "pinia";
 import { reportInventoryService } from "../services/report-inventory.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
@@ -11,6 +13,7 @@ export const useReportInventoryStore = defineStore("report-inventory", {
     totalPages: 0,
   }),
   actions: {
+    // -------------------- Consulta el inventario y actualiza la paginación --------------------
     async reportInventory(
       warehouse_id: number
     ): Promise<IStoreResponse> {

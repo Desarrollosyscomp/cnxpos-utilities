@@ -1,3 +1,5 @@
+// ==================== RUTAS: auth móvil (sin uso) ====================
+// Variante móvil de /auth; no está registrada en router/index.mobile.ts.
 export const AuthRouter = [
     {
         path: '/auth',

@@ -7,6 +7,8 @@
     </div>
 </template>
 <script setup>
+// ==================== COMPONENTE: BetoMessage (auth) ====================
+// Asistente 'Beto' con burbuja de mensaje en las pantallas de acceso.
 import BetoImg from "../../../../assets/avatars/beto.svg"
 
 </script>

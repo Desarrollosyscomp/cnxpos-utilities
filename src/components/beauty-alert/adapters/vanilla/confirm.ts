@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT VANILLA: confirm ====================
+// Alerta de confirmación con HTML plano; resuelve true/false.
 import {
     createOverlay,
     createModal,

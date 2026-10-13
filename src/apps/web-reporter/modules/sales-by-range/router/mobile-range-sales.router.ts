@@ -1,3 +1,5 @@
+// ==================== RUTAS: ventas acumuladas móvil ====================
+// Misma ruta en el router móvil; apunta al componente de escritorio.
 export const RangeSalesRouterMobile = [
   {
     path: "/web-report-v2",

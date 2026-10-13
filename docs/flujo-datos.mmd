@@ -1,0 +1,80 @@
+%% ==================== FLUJO DE DATOS DEL FRONT CNXPOS-UTILITIES ====================
+%% Proyecto: cnxpos-utilities
+%% Tres recorridos representativos:
+%% 1) inicio de sesión, 2) petición autenticada (almacenes) resuelta por la API con el tenant y MySQL,
+%% 3) un reporte: ventas del día con facturas y detalle.
+
+sequenceDiagram
+    autonumber
+    actor U as Usuario
+    participant V as Vista (componente)
+    participant R as Router (guard)
+    participant S as Store (Pinia)
+    participant SV as Servicio + Http
+    participant LS as localStorage
+    participant A as web-reporter-v2
+    participant DB as PostgreSQL y MySQL del cliente
+
+    %% -------------------- 1. INICIO DE SESIÓN --------------------
+    rect rgba(120, 160, 220, 0.12)
+    Note over U,A: 1. /auth/login (Login.vue)
+    U->>V: usuario y contraseña
+    V->>V: validación con Yup
+    V->>S: authStore.login(form)
+    S->>SV: loginService.logIn
+    SV->>A: POST /login/auth
+    A->>DB: conxpos_utilities_auth (PostgreSQL)
+    alt credenciales válidas
+        A-->>SV: 200 { response: { token } }
+        S->>LS: auth = { token, isLogged: true }
+        V->>R: router.push('/home/welcome')
+    else credenciales inválidas
+        A-->>SV: 500 { response: { message } }
+        SV-->>S: { status, data } (Http no lanza la excepción)
+        S-->>V: { error: true, data: mensaje }
+        V->>U: alerta temporizada con el mensaje
+    end
+    end
+
+    %% -------------------- 2. PETICIÓN AUTENTICADA --------------------
+    rect rgba(120, 200, 140, 0.12)
+    Note over U,DB: 2. Carga de almacenes al abrir un reporte
+    U->>R: navega a /web-report-v2/range-sales
+    R->>LS: lee auth.token (solo si la ruta tiene meta.requiresAuth)
+    R->>V: monta la página dentro de WebReporterLayout
+    V->>S: appStore.getWarehouses()
+    S->>SV: AppService.getWarehouses
+    SV->>A: GET /warehouses + Authorization: Bearer token
+    A->>A: middleware: verifica el JWT y obtiene client_id
+    A->>DB: credenciales del tenant (PostgreSQL) y SELECT almacenes (MySQL)
+    DB-->>A: almacenes activos
+    A-->>SV: 200 { response: { warehouses } }
+    S-->>V: { error: false, data: warehouses }
+    V->>U: opciones del filtro de almacén
+    end
+
+    %% -------------------- 3. REPORTE: VENTAS DEL DÍA --------------------
+    rect rgba(230, 170, 90, 0.12)
+    Note over U,DB: 3. /web-report-v2/daily-sales (DesktopDailySalesMain)
+    U->>V: elige la fecha
+    V->>S: dailySalesStore.dailySales(YYYYMMDD)
+    S->>SV: GET /reports/sales-day?init_date
+    SV->>A: petición con token
+    A->>DB: facturas, devoluciones y costos del día (MySQL)
+    alt hay ventas
+        A-->>S: 200 { sales, summary }
+        S-->>V: tabla por almacén y resumen
+    else sin ventas
+        A-->>S: 404
+        S-->>V: { error: true } y mensaje del asistente
+    end
+    U->>V: abre un almacén
+    V->>S: dailyInvoices(fecha, almacén) con page y limit
+    S->>SV: GET /reports/sales-day/:date/:warehouse_id
+    SV-->>S: { list, count, totalPages, summary }
+    U->>V: elige una factura
+    V->>S: dailyInvoiceDetails(almacén, factura)
+    S->>SV: GET /reports/invoice-detail/:warehouse_id/:invoice_id
+    SV-->>S: { invoice, summary }
+    S-->>V: productos y medios de pago
+    end

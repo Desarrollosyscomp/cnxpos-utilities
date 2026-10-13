@@ -1,3 +1,5 @@
+// ==================== RUTAS: dashboard móvil ====================
+// Misma ruta /web-report-v2/dashboard para el router móvil.
 export const DashboardRouterMobile = [
     {
         path: "/web-report-v2",

@@ -1,3 +1,5 @@
+// ==================== TIPOS: errores HTTP ====================
+// Mensajes personalizados por código y excepciones para el cliente Http.
 export interface HttpErrors {
   code: number;
   message: string;

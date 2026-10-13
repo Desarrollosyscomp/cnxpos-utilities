@@ -327,6 +327,9 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: DesktopDailySalesMain ====================
+// Ventas del día en escritorio: selector de fecha, resumen y tabla por almacén;
+// modal con las facturas del almacén y el detalle de la factura elegida.
 import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png";
@@ -390,6 +393,7 @@ const summaryInvoices = ref<TSummaryInvoices>({
   subtotal: 0,
   paymentMethods: [],
 });
+// -------------------- Carga el resumen del día (fecha sin guiones) --------------------
 const loadDailySales = async () => {
   const sendDateParsed = date.value.replace(/-/g, "");
   let response = await dailySalesStore.dailySales(sendDateParsed);
@@ -403,11 +407,13 @@ const loadDailySales = async () => {
   summary.value = response.data.summary;
 };
 
+// -------------------- Recarga al cambiar la fecha --------------------
 watch(date, () => {
   appStore.afterLoading(loadDailySales);
 });
 
 const invoicesArray = ref<TWarehouseDayInvoice[]>([]);
+// -------------------- Carga las facturas de un almacén --------------------
 const loadInvoices = async (date: string, warehouse_id: string) => {
   appStore.showLoadingScreen = true;
   let response = await dailySalesStore.dailyInvoices(date, warehouse_id);
@@ -417,6 +423,7 @@ const loadInvoices = async (date: string, warehouse_id: string) => {
 };
 const invoiceDetailsArray = ref<TWarehouseDayInvoiceDetail[]>([]);
 const invoice_id = ref<string>("");
+// -------------------- Carga el detalle de una factura --------------------
 const loadInvoiceDetails = async (
   warehouse_id: string,
   _invoice_id: string
@@ -432,6 +439,7 @@ const loadInvoiceDetails = async (
 
 const sale_date = ref<string>("");
 let warehouse_name = ref<string>("");
+// -------------------- Abre el modal de facturas del almacén --------------------
 const openModal = (sale: TWarehouseDaySale) => {
   open_modal.value = true;
   sale_date.value = sale.fecha;
@@ -440,6 +448,7 @@ const openModal = (sale: TWarehouseDaySale) => {
   loadInvoices(sale.fecha, sale.idalmacen.toString());
 };
 
+// -------------------- Cierra el modal y reinicia la paginación --------------------
 const closeModal = () => {
   open_modal.value = false;
   sale_date.value = "";
@@ -450,6 +459,7 @@ const closeModal = () => {
   dailySalesStore.page = 1;
 };
 
+// -------------------- Cambia de página de facturas --------------------
 const onChangePage = (emmited: any) => {
   if (dailySalesStore.page !== emmited.data.page) {
     dailySalesStore.page = emmited.data.page;

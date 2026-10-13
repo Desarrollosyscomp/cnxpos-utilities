@@ -1,3 +1,5 @@
+// ==================== RUTAS: dashboard (/web-report-v2/dashboard) ====================
+// Requiere sesión (meta.requiresAuth).
 export const DashboardRouter = [
   {
     path: "/web-report-v2",

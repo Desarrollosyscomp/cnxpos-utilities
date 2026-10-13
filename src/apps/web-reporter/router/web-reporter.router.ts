@@ -1,3 +1,5 @@
+// ==================== RUTAS: web reporter (/web-report-v2/) ====================
+// Agrupa dashboard y ventas del día bajo un switcher; las rutas efectivas vienen de cada módulo.
 import { DashboardRouter } from "../modules/dashboard/router/dashboard.router";
 import { DailySalesRouter } from "../modules/daily-sales/router/daily-sales.router";
 

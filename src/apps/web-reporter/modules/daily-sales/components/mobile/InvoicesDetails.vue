@@ -114,6 +114,8 @@
   </Modal>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: InvoicesDetails ====================
+// Detalle de una factura (ruta invoice-details/:warehouse_id/:invoice_id).
 //@ts-ignore
 import Card from "../Card.vue";
 //@ts-ignore
@@ -146,6 +148,7 @@ let sumary = ref<TSummaryInvoiceDetails>({
 
 const openModal = ref<boolean>(false);
 
+// -------------------- Carga productos y resumen de la factura --------------------
 const loadInvoiceDetails = async () => {
   let { warehouse_id, invoice_id } = route.params;
   const response = await dailySalesStore.dailyInvoiceDetails(
@@ -158,10 +161,12 @@ const loadInvoiceDetails = async () => {
   }
 };
 
+// -------------------- Muestra los medios de pago --------------------
 const openModalPaymentMethods = () => {
   openModal.value = true;
 };
 
+// -------------------- Cierra el modal --------------------
 const closeModal = () => {
   openModal.value = false;
 };

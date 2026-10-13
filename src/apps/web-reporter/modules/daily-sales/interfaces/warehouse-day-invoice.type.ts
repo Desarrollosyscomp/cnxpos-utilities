@@ -1,3 +1,5 @@
+// ==================== TIPO: TWarehouseDayInvoice ====================
+// Factura del listado de un almacén en un día.
 export type TWarehouseDayInvoice = {
   idalmacen: number;
   idfactura: number;

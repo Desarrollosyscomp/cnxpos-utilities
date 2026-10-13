@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+// ==================== COMPONENTE: CardContent ====================
+// Contenido (valor) de una tarjeta del resumen.
 import Card from "./Card.vue";
 </script>
 

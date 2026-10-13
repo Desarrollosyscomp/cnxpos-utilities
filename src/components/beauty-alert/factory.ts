@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT: createAlertCore ====================
+// Crea un AlertCore y registra los adaptadores recibidos (vanilla o Vue).
 import { AlertCore, type Handler } from "./core";
 import type { AlertMap, ResultMap } from "./interfaces";
 
@@ -17,6 +19,7 @@ function registerAdapters<M extends Record<string, any>, R extends { [K in keyof
   });
 }
 
+// -------------------- Fábrica pública de alertas --------------------
 export function createAlertCore<
   TCustom extends Record<string, any> = {},
   TCustomResults extends { [K in keyof TCustom]: any } = {

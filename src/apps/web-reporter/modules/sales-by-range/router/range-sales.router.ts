@@ -1,3 +1,5 @@
+// ==================== RUTAS: ventas acumuladas (/web-report-v2/range-sales) ====================
+// Página de escritorio dentro de WebReporterLayout (sin meta.requiresAuth).
 export const RangeSalesRouterDesktop = [
   {
     path: "/web-report-v2",

@@ -304,6 +304,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: DesktopAccountsPayableReceivableMain ====================
+// Cartera en escritorio: tipo (por pagar / por cobrar), rango, almacén, resumen y tabla de documentos.
 import { computed, onMounted, ref } from "vue";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
@@ -347,6 +349,7 @@ const summaryAccountsReceivable = ref({
   totalPayed: 0,
 });
 const appStore = useAppStore();
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -357,6 +360,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Consulta cuentas por pagar --------------------
 const loadAccountsPayable = async () => {
   appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
@@ -378,6 +382,7 @@ const loadAccountsPayable = async () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Consulta cuentas por cobrar --------------------
 const loadAccountsReceivable = async () => {
   appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
@@ -399,6 +404,7 @@ const loadAccountsReceivable = async () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Vuelve a los filtros --------------------
 const onBack = () => {
   accountsPayableReceivableStore.page = 1
   params.value = true;
@@ -408,6 +414,7 @@ const onBack = () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Alterna entre por pagar y por cobrar --------------------
 const toogleAccounts = () => {
   beto_state.value = BetoState.WELCOME;
   selectedWarehouse.value = null;
@@ -428,6 +435,7 @@ const toogleAccounts = () => {
 //   }
 // };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (accountsPayableReceivableStore.page !== emmited.data.page) {
     accountsPayableReceivableStore.page = emmited.data.page;
@@ -451,6 +459,7 @@ const open = ref(false);
 const selected = ref("");
 const options = ["Cuentas por pagar", "Cuentas por cobrar"];
 
+// -------------------- Elige el tipo de cartera --------------------
 const select = (item: string) => {
   selectedAccount.value = item === "Cuentas por pagar";
   selected.value = item;

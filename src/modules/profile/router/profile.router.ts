@@ -1,3 +1,5 @@
+// ==================== RUTAS: perfil (/account/profile) ====================
+// Pantalla de perfil dentro de LayoutOne.
 export const ProfileRouterDesktop = [
   {
     path: "/account",

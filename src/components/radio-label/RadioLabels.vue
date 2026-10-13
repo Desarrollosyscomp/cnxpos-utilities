@@ -13,6 +13,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: RadioLabels ====================
+// Grupo de opciones tipo radio (p. ej. selección de almacén); emite la opción elegida.
 import { onMounted, ref, watch } from "vue-demi";
 import RadioLabel from "./RadioLabel.vue";
 
@@ -45,6 +47,7 @@ watch(
   }
 );
 
+// -------------------- Marca la opción y emite su meta --------------------
 const onSelect = (i: number, meta: any) => {
   if (selected.value === i) {
     selected.value = null;

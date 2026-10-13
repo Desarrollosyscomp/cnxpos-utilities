@@ -8,6 +8,8 @@
     </div>
 </template>
 <script setup>
+// ==================== COMPONENTE: BetoMessage (home) ====================
+// Asistente 'Beto' con mensaje de bienvenida.
 import BetoImg from "../../../../assets/avatars/beto.svg"
 
 </script>

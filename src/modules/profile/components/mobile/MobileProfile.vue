@@ -47,6 +47,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: MobileProfile ====================
+// Maqueta móvil del perfil; el botón de guardar contraseña no hace nada.
 // import {
 //   mdiFileChart,
 //   mdiChartBar,

@@ -1,3 +1,5 @@
+<!-- ==================== COMPONENTE: BottomMenu ==================== -->
+<!-- Barra inferior de navegación (móvil); recibe las opciones por slot. -->
 <template>
     <div class="bottom-menu"> 
       <slot></slot>

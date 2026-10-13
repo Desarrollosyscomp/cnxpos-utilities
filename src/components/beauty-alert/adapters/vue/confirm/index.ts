@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT VUE: confirm ====================
+// Monta ConfirmComponent en el body y resuelve la respuesta del usuario.
 import { createApp } from "vue";
 import ConfirmComponent from "./ConfirmComponent.vue";
 

@@ -1,3 +1,5 @@
+// ==================== STORE: cartera ====================
+// Cuentas por pagar y por cobrar de un rango y almacén, con paginación.
 import { defineStore } from "pinia";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
 import { accountsPayableReceivableService } from "../services/accounts-payable-receivable.services";
@@ -10,6 +12,7 @@ export const useAccountsPayableReceivableStore = defineStore("accounts-payable-r
     totalPages: 0,
   }),
   actions: {
+    // -------------------- Cuentas por pagar --------------------
     async accountsPayable(
       init_date: string,
       end_date: string,
@@ -42,6 +45,7 @@ export const useAccountsPayableReceivableStore = defineStore("accounts-payable-r
     //     data: response,
     //   };
     // },
+    // -------------------- Cuentas por cobrar --------------------
     async accountsReceivable(
       init_date: string,
       end_date: string,

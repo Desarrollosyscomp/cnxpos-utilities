@@ -222,6 +222,8 @@
 </template>
 
 <script setup lang="ts">
+// ==================== COMPONENTE: MobileAccountsPayableReceivable ====================
+// Cartera en móvil con filtros y tarjetas por documento.
 import { computed, onMounted, ref } from "vue";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoImgSad from "../../../../../../assets/avatars/beto-sad.png";
@@ -262,6 +264,7 @@ const rangeDates = ref({
 });
 const selectedAccount = ref(true);
 
+// -------------------- Alterna entre por pagar y por cobrar --------------------
 const toogleAccounts = () => {
   selectedAccount.value = !selectedAccount.value;
   beto_state.value = BetoState.WELCOME;
@@ -272,6 +275,7 @@ const toogleAccounts = () => {
   };
 };
 
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -282,6 +286,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Consulta cuentas por pagar --------------------
 const loadAccountsPayable = async () => {
   appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
@@ -303,6 +308,7 @@ const loadAccountsPayable = async () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Consulta cuentas por cobrar --------------------
 const loadAccountsReceivable = async () => {
   appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
@@ -324,6 +330,7 @@ const loadAccountsReceivable = async () => {
   beto_state.value = BetoState.WELCOME;
 };
 
+// -------------------- Vuelve a los filtros --------------------
 const onBack = () => {
   accountsPayableReceivableStore.page = 1
   params.value = true;
@@ -345,6 +352,7 @@ const disabledButton = computed(() => {
 });
 
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (accountsPayableReceivableStore.page !== emmited.data.page) {
     accountsPayableReceivableStore.page = emmited.data.page;

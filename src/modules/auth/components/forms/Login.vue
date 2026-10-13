@@ -49,6 +49,9 @@
 </template>
 
 <script setup lang="ts">
+// ==================== FORMULARIO: Login ====================
+// Valida usuario y contraseña con Yup, llama a authStore.login y va a /home/welcome.
+// Si falla, muestra el mensaje de la API en una alerta temporizada.
 import { reactive, ref } from "vue";
 import { useAuthStore } from "../../store/auth.store";
 import { type TFormLogin } from "../../interfaces/auth.type";
@@ -93,6 +96,7 @@ const validations = {
 const validationSchema = Yup.object(validations);
 
 // validar campo individual
+// -------------------- Valida un campo con Yup --------------------
 const validateField = async (field: "username" | "password") => {
   try {
     await validations[field].validate(authForm[field]);
@@ -103,12 +107,14 @@ const validateField = async (field: "username" | "password") => {
 };
 
 // cuando pierde focus
+// -------------------- Marca el campo como tocado y lo valida --------------------
 const handleBlur = (field: "username" | "password") => {
   touched[field] = true;
   validateField(field);
 };
 
 // submit
+// -------------------- Envía el login y redirige o muestra el error --------------------
 const onSubmit = async () => {
   try {
     await validationSchema.validate(authForm, { abortEarly: false });

@@ -1,3 +1,5 @@
+// ==================== UTILIDAD: notificaciones HTTP (desactivado) ====================
+// Código comentado que mostraba avisos según el código HTTP de error.
 // import { forbidden, conflict, unauthorized } from "./http-notifications-popups";
 
 // import { type HttpErrors, type HttpErrorsAndExceptions } from "./interfaces";

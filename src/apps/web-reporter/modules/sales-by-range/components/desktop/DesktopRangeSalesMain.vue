@@ -215,6 +215,9 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: DesktopRangeSalesMain ====================
+// Ventas acumuladas en escritorio: rango de fechas, almacén (o todos = 0), resumen y tabla por fecha.
+// El botón Buscar se deshabilita sin fechas o sin almacén, sin mensaje.
 import { computed, onMounted, ref, watch } from "vue-demi";
 import BetoImg from "../../../../../../assets/avatars/beto.svg";
 import BetoSad from "../../../../../../assets/avatars/beto-sad.png";
@@ -269,6 +272,7 @@ const rangeDates = ref({
 });
 
 const appStore = useAppStore();
+// -------------------- Carga los almacenes para el filtro --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -309,6 +313,7 @@ const loadWarehouses = async () => {
 //   }
 // };
 
+// -------------------- Consulta el reporte con los filtros actuales --------------------
 const getSales = async () => {
   appStore.showLoadingScreen = true;
 
@@ -334,11 +339,13 @@ const getSales = async () => {
   appStore.showLoadingScreen = false;
 };
 
+// -------------------- Nueva búsqueda desde la página 1 --------------------
 const searchSales = async () => {
   rangeSalesStore.page = 1;
   await getSales();
 };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (rangeSalesStore.page !== emmited.data.page) {
     rangeSalesStore.page = emmited.data.page;
@@ -356,6 +363,7 @@ const disableButton = computed(() => {
   return noDates || noWarehouseSelected;
 });
 
+// -------------------- Al elegir 'todos' se limpia el almacén seleccionado --------------------
 watch(all_warehouses, (val) => {
   if (val) {
     selectedWarehouse.value = null;

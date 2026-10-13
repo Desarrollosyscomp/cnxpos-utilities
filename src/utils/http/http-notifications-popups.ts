@@ -1,3 +1,5 @@
+// ==================== UTILIDAD: popups de error HTTP (desactivado) ====================
+// Código comentado de avisos Notiflix para 401, 403 y 409.
 // import Notiflix from "notiflix/build/notiflix-aio";
 // const defaultParams = {
 //   position: "right-bottom",

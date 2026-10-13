@@ -1,3 +1,5 @@
+// ==================== SERVICIO: ventas acumuladas ====================
+// Endpoint del reporte por rango; el token se lee de authStore al importar el archivo.
 import { Http as axios } from "../../../../../utils/http/http";
 import { getApiUrl } from "../../../../../utils/http/get-api-url";
 // import { FakerService } from "../../../../../utils/faker/Faker";
@@ -8,6 +10,7 @@ const URL_API = getApiUrl();
 const authStore = useAuthStore();
 
 export const rangeSalesService = {
+  // -------------------- GET /reports/cumulative-sales (init_date, end_date, warehouse_id, page, limit) --------------------
   rangeSales: async (
     init_date: string,
     end_date: string,

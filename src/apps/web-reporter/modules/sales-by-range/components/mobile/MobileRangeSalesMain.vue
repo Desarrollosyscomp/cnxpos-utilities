@@ -323,6 +323,8 @@
 </template>
 
 <script setup lang="ts">
+// ==================== COMPONENTE: MobileRangeSalesMain ====================
+// Ventas acumuladas en móvil: filtros en modales, resumen y tarjetas por fecha.
 import { computed, onMounted, ref } from "vue";
 import CenterAndScroll from "../../../../../../components/CenterAndScroll.vue";
 import type { TOptionsType } from "../../../../../../components/radio-label/RadioLabels.vue";
@@ -370,13 +372,16 @@ const rangeDates = ref({
 
 const appStore = useAppStore();
 
+// -------------------- Abre el modal de filtros --------------------
 const clickOpenModal = () => {
   return (openModal.value = true);
 };
 
+// -------------------- Cierra el modal de filtros --------------------
 const closeModal = () => {
   return (openModal.value = false);
 };
+// -------------------- Carga los almacenes --------------------
 const loadWarehouses = async () => {
   const warehouses = await appStore.getWarehouses();
   warehouses_array.value = warehouses.data.map((warehouse: any) => {
@@ -387,6 +392,7 @@ const loadWarehouses = async () => {
   });
 };
 
+// -------------------- Consulta el reporte --------------------
 const searchSales = async () => {
   appStore.showLoadingScreen = true;
   const parseInitialDate = rangeDates.value.init_date.replace(/-/g, "");
@@ -402,6 +408,7 @@ const searchSales = async () => {
   appStore.showLoadingScreen = false;
 };
 
+// -------------------- Cambia de página --------------------
 const onChangePage = (emmited: any) => {
   if (rangeSalesStore.page !== emmited.data.page) {
     rangeSalesStore.page = emmited.data.page;
@@ -409,6 +416,7 @@ const onChangePage = (emmited: any) => {
   }
 };
 
+// -------------------- Vuelve a los filtros --------------------
 const onBack = () => {
   rangeSalesStore.page = 1
   params.value = true;
@@ -421,19 +429,23 @@ const onBack = () => {
 };
 
 const selectedItem = ref<TRangeSales>({} as TRangeSales);
+// -------------------- Abre el detalle de una fecha --------------------
 const openModalDetails = (item: TRangeSales) => {
   selectedItem.value = item;
   modalDetails.value = true;
 };
 
+// -------------------- Cierra el detalle --------------------
 const closeModalDetails = () => {
   return (modalDetails.value = false);
 };
 
+// -------------------- Abre la selección de almacén --------------------
 const openModalWarehouses = () => {
   return (modalWarehouses.value = true);
 };
 
+// -------------------- Cierra la selección de almacén --------------------
 const closeModalWarehouses = () => {
   return (modalWarehouses.value = false);
 };

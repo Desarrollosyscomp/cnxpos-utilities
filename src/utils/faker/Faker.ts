@@ -1,3 +1,5 @@
+// ==================== UTILIDAD DE DESARROLLO: FakerService ====================
+// Genera filas de datos falsos a partir de una definición de columnas (usado en servicios fake comentados).
 import { DefinitionParser } from "./Parser";
 import { GeneratorFactory } from "./Factory";
 
@@ -7,6 +9,7 @@ export type FakerConfig = {
 };
 
 export class FakerService {
+  // -------------------- Genera 'limit' filas con las columnas definidas --------------------
   generate(config: FakerConfig): any[] {
     const result = [];
 

@@ -8,6 +8,8 @@
 </template>
 
 <script setup>
+// ==================== COMPONENTE: Modal ====================
+// Ventana modal genérica controlada por la prop openModal; emite el cierre.
 import { ref, watch } from 'vue-demi';
 const props = defineProps({
   openModal: {
@@ -36,6 +38,7 @@ watch(() => props.openModal, (newVal) => {
   open_modal.value = newVal;
 });
 
+// -------------------- Cierra el modal y avisa al padre --------------------
 function closeModal() {
   if (props.block) return;
   open_modal.value = false;

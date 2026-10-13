@@ -1,3 +1,5 @@
+// ==================== RUTAS: home móvil (sin uso) ====================
+// Variante móvil de /home/welcome; no está registrada en router/index.mobile.ts.
 export const HomeRouter = [
     {
         path: "/home",

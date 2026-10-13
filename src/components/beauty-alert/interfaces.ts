@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT: tipos ====================
+// Opciones y resultados de cada tipo de alerta: confirm, doubleInput y timer.
 export type AlertMap = {
   confirm: {
     title: string;

@@ -1,7 +1,11 @@
+// ==================== CLIENTE HTTP: Http (axios) ====================
+// Envuelve get/post/put/patch/delete de axios y agrega queries con buildQueryString.
+// Los errores no se lanzan: se devuelven como { status, data } (notificaciones comentadas).
 import axios, { type AxiosRequestConfig } from "axios";
 import { type HttpErrors, type HttpErrorsAndExceptions } from "./interfaces";
 import { buildQueryString } from "./helpers"; 
 export const Http = {
+  // -------------------- POST con cuerpo --------------------
   async post(
     params: {
       url: string;
@@ -35,6 +39,7 @@ export const Http = {
       };
     }
   },
+  // -------------------- PATCH con cuerpo --------------------
   async patch(
     params: {
       url: string;
@@ -67,6 +72,7 @@ export const Http = {
       };
     }
   },
+  // -------------------- PUT con cuerpo --------------------
   async put(
     params: {
       url: string;
@@ -99,6 +105,7 @@ export const Http = {
       };
     }
   },
+  // -------------------- DELETE --------------------
   async delete(
     params: {
       url: string;
@@ -129,6 +136,7 @@ export const Http = {
       };
     }
   },
+  // -------------------- GET (los reportes envían params y Authorization en config) --------------------
   async get(
     params: {
       url: string;

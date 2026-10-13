@@ -73,6 +73,8 @@
   </Modal>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: DesktopDashboard ====================
+// Tarjetas con el resumen del día y de cartera, y gráfica de ventas de los últimos 7 días.
 import BarChart from "../utils/BarChart.vue";
 import { useDashboardStore } from "../../store/dashboard.store";
 import { onMounted, ref } from "vue";
@@ -91,6 +93,7 @@ const cumulativeSales = ref([] as any);
 const dates = ref([] as any);
 const values = ref([] as any);
 const openModal = ref(false);
+// -------------------- Carga el resumen y prepara los datos de la gráfica --------------------
 const setDashboardSummary = async () => {
   const parsedInitDate = formDates.value.init_date?.replace(/-/g, "");
   const parsedEndDate = formDates.value.end_date?.replace(/-/g, "");
@@ -120,6 +123,7 @@ const setDashboardSummary = async () => {
 //   dates.value = uniqueDates;
 // };
 
+// -------------------- Fechas YYYY-MM-DD del eje de la gráfica --------------------
 const extractDatesOfCumulativeSales = async () => {
   dates.value = cumulativeSales.value.map((item: any) => {
     const date = item.date.toString();
@@ -130,6 +134,7 @@ const extractDatesOfCumulativeSales = async () => {
     return formatted;
   });
 };
+// -------------------- Totales de venta por día de la gráfica --------------------
 const extractValuesOfCumulativeSales = () => {
   values.value = cumulativeSales.value.map((item: any) => {
     if (item.date) return item.totalSales;

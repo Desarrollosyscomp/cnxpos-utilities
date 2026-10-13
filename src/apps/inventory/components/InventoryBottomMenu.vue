@@ -4,6 +4,8 @@
     </BottomMenu>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: InventoryBottomMenu ====================
+// Menú inferior (móvil) con MenuOptions.
 import BottomMenu from "../../../components/menu/BottomMenu.vue";
 import MenuOptions from "./MenuOptions.vue";
 

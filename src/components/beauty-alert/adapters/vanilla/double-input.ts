@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT VANILLA: doubleInput ====================
+// Alerta con dos campos de texto; resuelve sus valores o null.
 import {
   createOverlay,
   createModal,

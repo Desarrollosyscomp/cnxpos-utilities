@@ -5,6 +5,8 @@
 </template>
 
 <script setup>
+// ==================== COMPONENTE: Card ====================
+// Tarjeta contenedora (clara u oscura) para las cifras del resumen.
 
 const props = defineProps({
   dark: {

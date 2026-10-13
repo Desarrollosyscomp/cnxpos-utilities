@@ -1,3 +1,5 @@
+// ==================== RUTAS: web reporter móvil (sin uso) ====================
+// Exporta HomeRouter con un layout inexistente; no se importa en ningún router.
 export const HomeRouter = [
     {
         path: '/web-report-v2',

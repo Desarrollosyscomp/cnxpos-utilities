@@ -7,6 +7,8 @@
     </div>
 </template>
 <script setup>
+// ==================== COMPONENTE: BetoMessage (dashboard) ====================
+// Asistente 'Beto' con mensaje para el dashboard.
 import BetoImg from "../../../../assets/avatars/beto.svg"
 
 </script>

@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT VANILLA: utilidades DOM ====================
+// Crea, monta y desmonta el overlay y el modal con animación.
 export function createOverlay() {
   const overlay = document.createElement("div");
   overlay.classList.add("ba-vanilla-overlay");

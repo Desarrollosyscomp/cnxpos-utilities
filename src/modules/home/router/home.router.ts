@@ -1,3 +1,5 @@
+// ==================== RUTAS: home (/home/welcome) ====================
+// Pantalla de bienvenida dentro de LayoutOne.
 export const HomeRouter = [
     {
         path: "/home",

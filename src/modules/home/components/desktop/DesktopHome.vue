@@ -25,6 +25,8 @@
   </div>
 </template>
 <script setup>
+// ==================== COMPONENTE: DesktopHome ====================
+// Accesos a las aplicaciones: Web Reporter (dashboard) e Inventario.
 import {
   mdiFileChart,
   mdiChartBar,

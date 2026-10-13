@@ -1,3 +1,5 @@
+// ==================== TIPOS: ventas del día por almacén ====================
+// Fila del resumen por almacén y datos del modal de detalle.
 
 export type TWarehouseDaySale = {
   id: number;

@@ -1,3 +1,5 @@
+// ==================== BEAUTY-ALERT VUE: timer ====================
+// Monta TimerComponent; el login lo usa para mostrar errores durante unos segundos.
 import { createApp } from "vue";
 import TimerComponent from "./TimerComponent.vue";
 

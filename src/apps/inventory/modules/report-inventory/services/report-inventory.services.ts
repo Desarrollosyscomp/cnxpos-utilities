@@ -1,3 +1,5 @@
+// ==================== SERVICIO: inventario ====================
+// Endpoint de inventario; el token se lee de authStore al importar el archivo.
 import { Http as axios } from "../../../../../utils/http/http";
 import { getApiUrl } from "../../../../../utils/http/get-api-url";
 // import { FakerService } from "../../../../../utils/faker/Faker";
@@ -8,6 +10,7 @@ const URL_API = getApiUrl();
 const authStore = useAuthStore();
 
 export const reportInventoryService = {
+  // -------------------- GET /reports/inventory (warehouse_id, page, limit, search) --------------------
   reportInventory: async (
     warehouse_id: number,
     page: number,

@@ -1,3 +1,5 @@
+// ==================== SERVICIO: ventas del día ====================
+// Endpoints del reporte diario; el token se lee de authStore al importar el archivo.
 import { Http as axios } from "../../../../../utils/http/http";
 import { getApiUrl } from "../../../../../utils/http/get-api-url";
 // import { FakerService } from "../../../../../utils/faker/Faker";
@@ -8,6 +10,7 @@ const URL_API = getApiUrl();
 const authStore = useAuthStore();
 
 export const dailySalesService = {
+  // -------------------- GET /reports/sales-day?init_date=YYYYMMDD --------------------
   dailySales: async (date: string) => {
     return axios.get({
       url: `${URL_API}/reports/sales-day`,
@@ -22,6 +25,7 @@ export const dailySalesService = {
     });
   },
 
+  // -------------------- GET /reports/sales-day/:date/:warehouse_id (page, limit) --------------------
   dailyInvoices: async (
     date: string,
     warehouse_id: string,
@@ -42,6 +46,7 @@ export const dailySalesService = {
     });
   },
 
+  // -------------------- GET /reports/invoice-detail/:warehouse_id/:invoice_id --------------------
   dailyInvoiceDetails: async (warehouse_id: string, invoice_id: string) => {
     return axios.get({
       url: `${URL_API}/reports/invoice-detail/${warehouse_id}/${invoice_id}`,

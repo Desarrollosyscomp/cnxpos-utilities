@@ -17,6 +17,8 @@
   </div>
 </template>
 <script setup>
+// ==================== FORMULARIO: Nueva contraseña ====================
+// Solo interfaz: no llama a ninguna API.
 import { ref } from "vue";
 let showPassword = ref(false);
 </script>

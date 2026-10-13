@@ -1,3 +1,6 @@
+// ==================== RUTAS: ventas del día ====================
+// /web-report-v2/daily-sales, invoices/:date/:warehouse_id e invoice-details/:warehouse_id/:invoice_id;
+// todas con meta.requiresAuth.
 export const DailySalesRouter = [
   // {
   //   path: "daily-sales",

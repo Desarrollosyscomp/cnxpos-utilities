@@ -1,3 +1,5 @@
+// ==================== STORE: dashboard ====================
+// Pide el resumen del dashboard y devuelve { error, data }.
 import { defineStore } from "pinia";
 import { DashboardService } from "../services/dashboard.services";
 import type { IStoreResponse } from "../../../../../interfaces/store-response.interface";
@@ -5,6 +7,7 @@ import type { IStoreResponse } from "../../../../../interfaces/store-response.in
 export const useDashboardStore = defineStore("dashboard", {
   state: () => ({}),
   actions: {
+    // -------------------- GET /reports/dashboard/summary --------------------
     async getDashboardSummary(
       init_date: string,
       end_date: string

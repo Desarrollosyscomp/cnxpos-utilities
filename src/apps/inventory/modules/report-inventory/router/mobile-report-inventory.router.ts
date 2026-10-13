@@ -1,3 +1,5 @@
+// ==================== RUTAS: inventario móvil ====================
+// Misma ruta con InventoryLayoutMobile.
 export const ReportInventoryRouterMobile = [
   {
     path: "/inventory",

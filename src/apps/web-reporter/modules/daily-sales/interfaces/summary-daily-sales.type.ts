@@ -1,3 +1,5 @@
+// ==================== TIPOS: resúmenes de ventas del día ====================
+// Resumen del día, de las facturas de un almacén, medios de pago y detalle de factura.
 export type TSummary = {
   totalSales: number;
   totalProducts: number;

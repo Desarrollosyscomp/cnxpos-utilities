@@ -1,3 +1,5 @@
+// ==================== SERVICIO: AppService ====================
+// Llamadas compartidas a la API; hoy solo GET /warehouses con el token de authStore.
 // import type { IServiceResponse } from "../interfaces/service-response.interface";
 // import { FakerService } from "../utils/faker/Faker";
 import { Http as axios } from "../utils/http/http";
@@ -7,6 +9,7 @@ import { useAuthStore } from "../modules/auth/store/auth.store";
 const URL_API = getApiUrl();
 
 export const AppService = {
+  // -------------------- GET /warehouses — almacenes activos del cliente --------------------
   getWarehouses: async () => {
     const authStore = useAuthStore();
     return axios.get({

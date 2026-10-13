@@ -1,3 +1,5 @@
+<!-- ==================== COMPONENTE: RightMenu ==================== -->
+<!-- Barra lateral derecha de navegación (escritorio); recibe las opciones por slot. -->
 <template>
     <div class="right-menu">
         <div class="right-menu-box-wrapper">

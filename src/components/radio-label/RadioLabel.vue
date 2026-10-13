@@ -13,6 +13,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: RadioLabel ====================
+// Opción individual con título, subtítulo y estado marcado.
 import { ref, watch } from "vue-demi";
 
 const props = defineProps({

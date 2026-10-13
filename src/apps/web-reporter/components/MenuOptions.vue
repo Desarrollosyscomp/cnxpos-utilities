@@ -16,6 +16,8 @@
   </div>
 </template>
 <script setup lang="ts">
+// ==================== COMPONENTE: MenuOptions (web reporter) ====================
+// Iconos de navegación: ventas acumuladas, ventas del día, dashboard, arqueos y cartera.
 // @ts-ignore
 import DashboardIcon from "../../../assets/general/icons/DashboardIcon.vue";
 // @ts-ignore
@@ -30,10 +32,12 @@ import { useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 
+// -------------------- Resalta la opción de la ruta actual --------------------
 const isActive = (routeName: string) => {
   return route.name === routeName ? 'active-bottom-menu-icon' : '';
 }
 
+// -------------------- Navega a /web-report-v2/<ruta> --------------------
 const redirect = (routeName: string) => {
   if(route.name === routeName) return;
   router.push(`/web-report-v2/${routeName}`);

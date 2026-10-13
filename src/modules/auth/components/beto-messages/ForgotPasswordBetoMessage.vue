@@ -1,3 +1,5 @@
+<!-- ==================== MENSAJE DEL ASISTENTE: ForgotPassword ==================== -->
+<!-- Texto del asistente para la pantalla de olvidé mi contraseña (meta.headerComponent). -->
 <template>
     <span class="text-title">¿No puedes entrar?</span>
     <span class="text-content">Ingresa el email de tu cuenta para proceder con la recuperación de tu contraseña</span>
